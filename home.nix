@@ -4,7 +4,12 @@
   home.username = "makano";
   home.homeDirectory = "/home/makano";
 
-  # xsession.windowManager.i3.enable = true;
+  xsession.windowManager.i3 = {
+  	enable = true;
+  	config = rec {
+  		modifier = "Mod4";
+  	};
+  };
 
   wayland.windowManager.hyprland = {
   	enable = true;
@@ -1074,6 +1079,9 @@ binds {
     	package = pkgs.dracula-icon-theme;
     	name = "Dracula";
     };
+    theme = {
+    	name = "Catppuccin-Mocha-Standard-Mauve-dark";
+    };
     cursorTheme = {
     	# package = pkgs.gnome.adwaita-icon-theme;
     	# name = "Adwaita";
@@ -1161,6 +1169,11 @@ binds {
   catppuccin = {
     enable = true;
     flavour = "mocha";
+  };
+
+  dconf = {
+    enable = true;
+  	settings."org/gnome/desktop/interface".color-scehem = "prefer-dark";	
   };
 
   home.pointerCursor = {

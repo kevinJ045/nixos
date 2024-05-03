@@ -7,6 +7,7 @@
       ./hardware-configuration.nix
     ];
   boot.loader.grub.enable = true;
+  boot.loader.grub.memtest86.enable = true;
   boot.loader.grub.device = "/dev/sda";
   boot.loader.systemd-boot.configurationLimit = 10;
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -20,6 +21,8 @@
   nix.settings.auto-optimise-store = true;
     
   nixpkgs.config.allowUnfree = true;
+
+  hardware.opengl.driSupport32Bit = true;
 
   networking.hostName = "Decile";
   networking.networkmanager.enable = true;
@@ -83,6 +86,7 @@
     podman
     distrobox
     dmenu
+    dxvk
     gimp
     gnome.gnome-tweaks
     gparted
@@ -97,18 +101,20 @@
     libnotify
     lm_sensors
     lshw
+    lutris
     lxappearance
     mate.caja-with-extensions
     mate.caja-extensions
     # mongodb
     ncdu
     # nix-autobahn
-    ngrok
+    # ngrok
     nodejs
     openjdk17-bootstrap
     pamixer
     playerctl
     python3
+    python311Packages.pip
     ranger
     rcm
     rofi
@@ -162,6 +168,18 @@
   services.flatpak.enable = true;
   services.udisks2.enable = true;
   services.gnome.gnome-keyring.enable = true;
+  # services.xserver = {
+  	# enable = true;
+  	# displayManager.gdm.enable = true;
+  	# desktopManager.gnome.enable = true;
+  	# desktopManager.xfce.enable = true;
+  	# desktopManager.default = "none";
+  	# desktopManager.xterm.enabe = false;
+  	# displayManager.lightdm.enable = true;
+  	# windowManager.i3.enable = true;
+  # };
+
+  # services.xserver.desktopManager.xfce.enable = true;
 
   services.openssh.enable = true;
 
