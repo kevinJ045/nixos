@@ -9,6 +9,7 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.memtest86.enable = true;
   boot.loader.grub.device = "/dev/sda";
+  # boot.loader.grub.theme = pkgs.catppuccin-grub;
   boot.loader.systemd-boot.configurationLimit = 10;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
