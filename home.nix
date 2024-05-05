@@ -846,7 +846,7 @@ binds {
 			tooltip-format = "{title}";
 			on-click = "activate";
 			on-click-middle = "close";
-			ignore-list = ["Alacritty"];
+			ignore-list = ["Alacritty" "foot" "Foot"];
 		};
 		
 		backlight = {
@@ -1188,8 +1188,12 @@ binds {
    	  	substitutions = {
    	  		"Documents" = "󰈙 ";
    	  		"Downloads" = " ";
-   	  		"Music" = " ";
+   	  		"Music" = "󰎇";
    	  		"Pictures" = " ";
+   	  		"workspace" = "󰆧";
+   	  		"data" = "";
+   	  		"Archives" = "";
+   	  		"Junk" = "";
    	  	};
    	  };
    	  c = {
