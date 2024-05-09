@@ -1,9 +1,9 @@
-
-{ config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
   boot.loader.grub.enable = true;
@@ -20,7 +20,7 @@
     options = "--delete-older-than 1w";
   };
   nix.settings.auto-optimise-store = true;
-    
+
   nixpkgs.config.allowUnfree = true;
 
   hardware.opengl.driSupport32Bit = true;
@@ -43,16 +43,16 @@
       wants = [ "graphical-session.target" ];
       after = [ "graphical-session.target" ];
       serviceConfig = {
-          Type = "simple";
-          ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-          Restart = "on-failure";
-          RestartSec = 1;
-          TimeoutStopSec = 10;
-        };
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
     };
   };
 
-  security.pam.services.swaylock = {};
+  security.pam.services.swaylock = { };
 
   security.rtkit.enable = true;
   services.pipewire = {
@@ -69,7 +69,7 @@
     isNormalUser = true;
     home = "/home/makano";
     description = "Makano";
-    extraGroups = ["wheel" "networkmanager"];
+    extraGroups = [ "wheel" "networkmanager" ];
     packages = with pkgs; [
       flatpak
     ];
@@ -130,7 +130,7 @@
     wine
     wine64
     wl-clipboard
-	xorg.xinit
+    xorg.xinit
     xdg-utils
     zsh-autosuggestions
     zsh-completions
@@ -141,7 +141,7 @@
     zip
     unzip
   ];
-  
+
   fonts.fontDir.enable = true;
   fonts.packages = with pkgs; [
     noto-fonts
@@ -170,14 +170,14 @@
   services.udisks2.enable = true;
   services.gnome.gnome-keyring.enable = true;
   # services.xserver = {
-  	# enable = true;
-  	# displayManager.gdm.enable = true;
-  	# desktopManager.gnome.enable = true;
-  	# desktopManager.xfce.enable = true;
-  	# desktopManager.default = "none";
-  	# desktopManager.xterm.enabe = false;
-  	# displayManager.lightdm.enable = true;
-  	# windowManager.i3.enable = true;
+  # enable = true;
+  # displayManager.gdm.enable = true;
+  # desktopManager.gnome.enable = true;
+  # desktopManager.xfce.enable = true;
+  # desktopManager.default = "none";
+  # desktopManager.xterm.enabe = false;
+  # displayManager.lightdm.enable = true;
+  # windowManager.i3.enable = true;
   # };
 
   # services.xserver.desktopManager.xfce.enable = true;
@@ -186,27 +186,33 @@
 
   services.pcscd.enable = true;
   programs.gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
+    enable = true;
+    enableSSHSupport = true;
   };
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
   programs.dconf.enable = true;
-  
+
   programs.nix-ld.enable = true;
 
   zramSwap.enable = true;
 
   virtualisation.containers.enable = true;
   virtualisation = {
-  	podman = {
-  		enable = true;
-  		dockerCompat = true;
-  		defaultNetwork.settings.dns_enabled = true;	
-  	};
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
   };
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      linuxPackages_latest = inputs.linux.legacyPackages.x86_64-linux.linuxPackages_latest;
+    })
+  ];
 
   system.stateVersion = "23.11";
 }
