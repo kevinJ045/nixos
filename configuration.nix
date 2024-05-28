@@ -13,11 +13,15 @@
   boot.loader.systemd-boot.configurationLimit = 10;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  boot.extraModprobeConfig = ''
+	options usbcore use_both_schemes=y
+  '';
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "--delete-older-than 1w";
+    options = "--delete-older-than 7d";
   };
   nix.settings.auto-optimise-store = true;
     
@@ -29,6 +33,7 @@
   networking.networkmanager.enable = true;
   networking.networkmanager.wifi.backend = "iwd";
   networking.wireless.iwd.enable = true;
+  # networking.useDHCP = false;
   networking.firewall.checkReversePath = false;
 
   time.timeZone = "Africa/Addis_Ababa";
@@ -80,14 +85,19 @@
     stdenv
     alacritty
     blueman
+    blender
     bun
     brightnessctl
     chromium
+    cliphist
     gnome.nautilus
     podman
+    dart
     distrobox
     dmenu
     dxvk
+	firefox
+	flutter
     gimp
     gnome.gnome-tweaks
     gparted
@@ -140,6 +150,9 @@
     zsh-fast-syntax-highlighting
     zip
     unzip
+    usbutils
+    lan-mouse
+    wineWow64Packages.waylandFull
   ];
   
   fonts.fontDir.enable = true;
@@ -182,7 +195,17 @@
 
   # services.xserver.desktopManager.xfce.enable = true;
 
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    ports = [ 22 ];
+    settings = {
+      PasswordAuthentication = false;
+      AllowUsers = null; # Allows all users by default. Can be [ "user1" "user2" ]
+      UseDns = true;
+      X11Forwarding = false;
+      PermitRootLogin = "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
+    };
+  };
 
   services.pcscd.enable = true;
   programs.gnupg.agent = {

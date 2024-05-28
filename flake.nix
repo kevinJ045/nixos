@@ -5,9 +5,10 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    catppuccin.url = "github:catppuccin/nix?rev=ccc188e244e8fb3248e3c8f19f70280076bf1408";
+    catppuccin.url = "github:catppuccin/nix";
+    # nvimdots.url = "github:ayamir/nvimdots";
   };
-
+	# nvimdots
   outputs = inputs@{ nixpkgs, home-manager, catppuccin, ... }: {
     nixosConfigurations = {
       Decile = nixpkgs.lib.nixosSystem {
@@ -23,6 +24,7 @@
               imports = [
                 ./home.nix
                 catppuccin.homeManagerModules.catppuccin
+                # nvimdots.homeManagerModules.nvimdots
               ];
             };
           }
