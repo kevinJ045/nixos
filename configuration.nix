@@ -26,6 +26,7 @@
   nix.settings.auto-optimise-store = true;
     
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowInsecure = true;
 
   hardware.opengl.driSupport32Bit = true;
 
@@ -126,9 +127,13 @@
     playerctl
     python3
     python311Packages.pip
+    python311Packages.inquirerpy
+    python311Packages.requests
+    python311Packages.tqdm 
     ranger
     rcm
     rofi
+    scrcpy
     slurp
     swappy
     swww
@@ -154,6 +159,8 @@
     lan-mouse
     wineWow64Packages.waylandFull
   ];
+
+  virtualisation.waydroid.enable = true;
   
   fonts.fontDir.enable = true;
   fonts.packages = with pkgs; [
