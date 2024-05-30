@@ -653,6 +653,8 @@
             \ }
       map <leader>ac :lua vim.lsp.buf.code_action()<CR>
       set ts=2
+      set undofile
+      set undodir=$HOME/.vim/undodir
       set number
       nnoremap <c-z> :u<CR>      
       inoremap <c-z> <c-o>:u<CR>
