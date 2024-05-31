@@ -41,7 +41,7 @@
 
   xsession.windowManager.i3 = {
     enable = true;
-    config = rec {
+    config = {
       modifier = "Mod4";
     };
   };
@@ -471,7 +471,7 @@
   wayland.windowManager.sway = {
     enable = true;
     systemd.enable = true;
-    config = rec {
+    config = {
       modifier = "Mod4";
       terminal = "kitty";
       menu = "wofi";
@@ -652,6 +652,11 @@
             \ 'colorscheme': 'catppuccin_mocha',
             \ }
       map <leader>ac :lua vim.lsp.buf.code_action()<CR>
+      map <leader><space> :nohl<CR>
+      nnoremap <leader>ff <cmd>Telescope find_files<cr>
+      nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+      nnoremap <leader>fb <cmd>Telescope buffers<cr>
+      nnoremap <leader>fh <cmd>Telescope help_tags<cr>
       set ts=2
       set undofile
       set undodir=$HOME/.vim/undodir
@@ -699,27 +704,28 @@
       inoremap <expr> <C-U> <SID>start_delete("\<C-U>")
     '';
     plugins = [
-      pkgs.vimPlugins.nvim-lspconfig
-      pkgs.vimPlugins.lsp-format-nvim
-      pkgs.vimPlugins.nvim-cmp
-      pkgs.vimPlugins.luasnip
+      pkgs.vimPlugins.catppuccin-vim
       pkgs.vimPlugins.cmp_luasnip
       pkgs.vimPlugins.cmp-nvim-lsp
-      pkgs.vimPlugins.friendly-snippets
-      pkgs.vimPlugins.catppuccin-vim
       pkgs.vimPlugins.commentary
+      pkgs.vimPlugins.friendly-snippets
       pkgs.vimPlugins.fugitive
       pkgs.vimPlugins.gitgutter
       pkgs.vimPlugins.lightline-vim
+      pkgs.vimPlugins.lsp-format-nvim
+      pkgs.vimPlugins.luasnip
+      pkgs.vimPlugins.nvim-cmp
+      pkgs.vimPlugins.nvim-lspconfig
+      pkgs.vimPlugins.nvim-tree-lua
+      pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+      pkgs.vimPlugins.nvim-web-devicons
       pkgs.vimPlugins.plenary-nvim
       pkgs.vimPlugins.sensible
       pkgs.vimPlugins.sleuth
       pkgs.vimPlugins.surround
+      pkgs.vimPlugins.telescope-nvim
       pkgs.vimPlugins.todo-comments-nvim
-      pkgs.vimPlugins.fzf-vim
-      pkgs.vimPlugins.nvim-treesitter.withAllGrammars
       pkgs.vimPlugins.vim-coffee-script
-      pkgs.vimPlugins.nvim-tree-lua
     ];
   };
 
