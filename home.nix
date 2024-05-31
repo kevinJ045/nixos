@@ -187,7 +187,7 @@
 
       # assign apps
       # $term = alacritty
-      $term = foot
+      $term = kitty
       $editor = code --disable-gpu
       $file = nautilus
       $browser = chromium
@@ -473,7 +473,7 @@
     systemd.enable = true;
     config = rec {
       modifier = "Mod4";
-      terminal = "foot";
+      terminal = "kitty";
       menu = "wofi";
       fonts = {
         names = [ "Noto Sans" "FontAwesome" ];
@@ -1171,6 +1171,18 @@
 
 
       };
+    };
+  };
+  programs.kitty = {
+    enable = true;
+    font = {
+      name = "Fira Code Nerdfont";
+      size = 12.0;
+    };
+    shellIntegration.mode = "no-cursor";
+    settings = {
+      cursor_shape = "block";
+      cursor_blink_interval = 0;
     };
   };
   programs.foot = {
