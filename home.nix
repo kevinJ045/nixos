@@ -50,425 +50,256 @@
 
   wayland.windowManager.hyprland = {
   	enable = true;
-  	extraConfig = ''
-$scrPath = ~/.config/scripts
-exec-once = $scrPath/resetxdgportal.sh # reset XDPH for screenshare
-exec-once = $scrPath/lowbattery.sh # reset XDPH for screenshare
-exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP # for XDPH
-exec-once = dbus-update-activation-environment --systemd --all # for XDPH
-exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP # for XDPH
-exec-once = /usr/lib/polkit-kde-authentication-agent-1 # authentication dialogue for GUI apps
-exec-once = waybar # launch the system panel
-exec-once = blueman-applet # systray app for BT
-exec-once = nm-applet --indicator # systray app for Network/Wifi
-exec-once = dunst # start notification demon
-exec-once = wl-paste --type text --watch cliphist store # clipboard store text data
-exec-once = wl-paste --type image --watch cliphist store # clipboard store image data
-exec-once = hyprpaper
-exec-once = $scrPath/batterynotify.sh # battery notification
-
-
-# Main modifier
-$mainMod = SUPER # windows key
-
-# █▀▀ █▄░█ █░█
-# ██▄ █░▀█ ▀▄▀
-
-# Some default env vars.
-
-env = XDG_CURRENT_DESKTOP,Hyprland
-env = XDG_SESSION_TYPE,wayland
-env = XDG_SESSION_DESKTOP,Hyprland
-# env = QT_QPA_PLATFORM,wayland
-# env = QT_STYLE_OVERRIDE,kvantum
-# env = QT_QPA_PLATFORMTHEME,qt6ct
-env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1
-env = QT_AUTO_SCREEN_SCALE_FACTOR,1
-env = MOZ_ENABLE_WAYLAND,1
-env = XCURSOR_THEME,GoogleDot-Black
-
-env = XDG_DESKTOP_DIR,$HOME/Desktop
-env = XDG_DOWNLOAD_DIR,$HOME/Downloads
-env = XDG_TEMPLATES_DIR,$HOME/Templates
-env = XDG_PUBLICSHARE_DIR,$HOME/Public
-env = XDG_DOCUMENTS_DIR,$HOME/Documents
-env = XDG_MUSIC_DIR,$HOME/Music
-env = XDG_PICTURES_DIR,$HOME/Pictures
-env = XDG_VIDEOS_DIR,$HOME/Videos
-
-
-
-
-# █ █▄░█ █▀█ █░█ ▀█▀
-# █ █░▀█ █▀▀ █▄█ ░█░
-
-# For all categories, see https://wiki.hyprland.org/Configuring/Variables/
-
-input {
-    kb_layout = us
-    follow_mouse = 1
-    natural_scroll = yes
-
-    touchpad {
-        natural_scroll = yes
-        disable_while_typing = no
-    }
-
-    sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
-    force_no_accel = 1
-}
-
-# Example per-device config
-# See https://wiki.hyprland.org/Configuring/Keywords/#executing for more
-
-# device:epic mouse V1 {
-#     sensitivity = -0.5
-# }
-
-# See https://wiki.hyprland.org/Configuring/Variables/ for more
-
-gestures {
-    workspace_swipe = true
-    workspace_swipe_fingers = 3
-}
-
-
-
-# █░░ ▄▀█ █▄█ █▀█ █░█ ▀█▀ █▀
-# █▄▄ █▀█ ░█░ █▄█ █▄█ ░█░ ▄█
-
-# See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
-
-dwindle {
-    pseudotile = yes # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
-    preserve_split = yes # you probably want this
-}
-
-# See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-
-master {
-    new_is_master = true
-}
-
-
-
-# █▀▄▀█ █ █▀ █▀▀
-# █░▀░█ █ ▄█ █▄▄
-
-# See https://wiki.hyprland.org/Configuring/Variables/ for more
-
-misc {
-    vrr = 0
-    disable_hyprland_logo = true
-    disable_splash_rendering = true
-}
-
-animations {
-    enabled = yes
-    bezier = wind, 0.05, 0.9, 0.1, 1.05
-    bezier = winIn, 0.1, 1.1, 0.1, 1.1
-    bezier = winOut, 0.3, -0.3, 0, 1
-    bezier = liner, 1, 1, 1, 1
-    animation = windows, 1, 6, wind, slide
-    animation = windowsIn, 1, 6, winIn, slide
-    animation = windowsOut, 1, 5, winOut, slide
-    animation = windowsMove, 1, 5, wind, slide
-    animation = borderangle, 1, 30, liner, loop
-    animation = fade, 1, 10, default
-    animation = workspaces, 1, 5, wind
-}
-
-
-# █▄▀ █▀▀ █▄█ █▄▄ █ █▄░█ █▀▄ █ █▄░█ █▀▀ █▀
-# █░█ ██▄ ░█░ █▄█ █ █░▀█ █▄▀ █ █░▀█ █▄█ ▄█
-
-
-# See https://wiki.hyprland.org/Configuring/Keywords/ for more
-# Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-
-# assign apps
-# $term = alacritty
-# $term = foot
-$term = kitty
-$editor = code --disable-gpu
-$file = nautilus
-$browser = chromium
-
-
-# Window/Session actions
-bind = $mainMod, Q, exec, $scrPath/dontkillsteam.sh # killactive, kill the window on focus
-bind = $mainMod, delete, exit, # kill hyperland session
-bind = $mainMod, W, togglefloating, # toggle the window on focus to float
-bind = $mainMod, G, togglegroup, # toggle the window on focus to float
-bind = $mainMod, F, fullscreen, # toggle the window on focus to fullscreen
-bind = $mainMod, L, exec, swaylock # lock screen
-bind = $mainMod, backspace, exec, $scrPath/logoutlaunch.sh 1 # logout menu
-
-# Application shortcuts
-bind = $mainMod, T, exec, $term  # open terminal
-bind = $mainMod, Z, exec, $file # open file manager
-bind = $mainMod, C, exec, $editor # open vscode
-bind = $mainMod, B, exec, $browser # open browser
-bind = $CONTROL SHIFT, ESCAPE, exec, $scrPath/sysmonlaunch.sh  # open htop/btop if installed or default to top (system monitor)
-
-# Rofi is toggled on/off if you repeat the key presses
-bind = $mainMod, D, exec, pkill -x wofi || wofi
-bind = $mainMod, tab, workspace, previous
-
-# Audio control
-# bindl  = , F10, exec, $scrPath/volumecontrol.sh -o m # toggle audio mute
-# bindel = , F11, exec, $scrPath/volumecontrol.sh -o d # decrease volume
-# bindel = , F12, exec, $scrPath/volumecontrol.sh -o i # increase volume
-bindl  = , XF86AudioMute, exec, $scrPath/volumecontrol.sh -o m # toggle audio mute
-bindl  = , XF86AudioMicMute, exec, $scrPath/volumecontrol.sh -i m # toggle microphone mute
-bindel = , XF86AudioLowerVolume, exec, $scrPath/volumecontrol.sh -o d # decrease volume
-bindel = , XF86AudioRaiseVolume, exec, $scrPath/volumecontrol.sh -o i # increase volume
-bindl  = , XF86AudioPlay, exec, playerctl play-pause
-bindl  = , XF86AudioPause, exec, playerctl play-pause
-bindl  = , XF86AudioNext, exec, playerctl next
-bindl  = , XF86AudioPrev, exec, playerctl previous
-
-# Brightness control
-bindel = , XF86MonBrightnessUp, exec, $scrPath/brightnesscontrol.sh i # increase brightness
-bindel = , XF86MonBrightnessDown, exec, $scrPath/brightnesscontrol.sh d # decrease brightness
-
-# Screenshot/Screencapture
-bind = $mainMod, P, exec, $scrPath/screenshot.sh p # drag to snip an area / click on a window to print it
-bind = $mainMod CTRL, P, exec, $scrPath/screenshot.sh sf # frozen screen, drag to snip an area / click on a window to print it
-bind = $mainMod ALT, P, exec, $scrPath/screenshot.sh m # print focused monitor
-bind = ,print, exec, $scrPath/screenshot.sh s  # print all monitor outputs
-
-# Exec custom scripts
-bind = $mainMod ALT, G, exec, $scrPath/gamemode.sh # disable hypr effects for gamemode
-bind = $mainMod ALT, right, exec, $scrPath/swwwallpaper.sh -n # next wallpaper
-bind = $mainMod ALT, left, exec, $scrPath/swwwallpaper.sh -p # previous wallpaper
-bind = $mainMod ALT, up, exec, $scrPath/wbarconfgen.sh n # next waybar mode
-bind = $mainMod ALT, down, exec, $scrPath/wbarconfgen.sh p # previous waybar mode
-bind = $mainMod SHIFT, D, exec, $scrPath/wallbashtoggle.sh  # toggle wallbash on/off
-bind = $mainMod, R, exec, pkill -x wmenu-run || ${pkgs.wmenu}/bin/wmenu-run -i -N 1e1e2e -n 89b4fa -M 1e1e2e -m 89b4fa -S 89b4fa -s cdd6f4
-bind = $mainMod SHIFT, T, exec, pkill -x rofi || $scrPath/themeselect.sh # theme select menu
-bind = $mainMod SHIFT, A, exec, pkill -x rofi || $scrPath/rofiselect.sh # rofi style select menu
-bind = $mainMod SHIFT, W, exec, pkill -x rofi || $scrPath/swwwallselect.sh # rofi wall select menu
-bind = $mainMod, V, exec, pkill -x rofi || $scrPath/cliphist.sh c  # open Pasteboard in screen center
-bind = $mainMod, K, exec, $scrPath/keyboardswitch.sh # change keyboard layout
-
-# Move focus with mainMod + arrow keys
-bind = $mainMod, left, movefocus, l
-bind = $mainMod, right, movefocus, r
-bind = $mainMod, up, movefocus, u
-bind = $mainMod, down, movefocus, d
-bind = ALT, Tab, movefocus, d
-
-# Switch workspaces with mainMod + [0-9]
-bind = $mainMod, 1, workspace, 1
-bind = $mainMod, 2, workspace, 2
-bind = $mainMod, 3, workspace, 3
-bind = $mainMod, 4, workspace, 4
-bind = $mainMod, 5, workspace, 5
-bind = $mainMod, 6, workspace, 6
-bind = $mainMod, 7, workspace, 7
-bind = $mainMod, 8, workspace, 8
-bind = $mainMod, 9, workspace, 9
-bind = $mainMod, 0, workspace, 10
-
-# Switch workspaces relative to the active workspace with mainMod + CTRL + [←→]
-bind = $mainMod CTRL, right, workspace, r+1 
-bind = $mainMod CTRL, left, workspace, r-1
-
-# move to the first empty workspace instantly with mainMod + CTRL + [↓]
-bind = $mainMod CTRL, down, workspace, empty 
-
-# Resize windows
-binde = $mainMod SHIFT, right, resizeactive, 30 0
-binde = $mainMod SHIFT, left, resizeactive, -30 0
-binde = $mainMod SHIFT, up, resizeactive, 0 -30
-binde = $mainMod SHIFT, down, resizeactive, 0 30
-
-# Move active window to a workspace with mainMod + SHIFT + [0-9]
-bind = $mainMod SHIFT, 1, movetoworkspace, 1
-bind = $mainMod SHIFT, 2, movetoworkspace, 2
-bind = $mainMod SHIFT, 3, movetoworkspace, 3
-bind = $mainMod SHIFT, 4, movetoworkspace, 4
-bind = $mainMod SHIFT, 5, movetoworkspace, 5
-bind = $mainMod SHIFT, 6, movetoworkspace, 6
-bind = $mainMod SHIFT, 7, movetoworkspace, 7
-bind = $mainMod SHIFT, 8, movetoworkspace, 8
-bind = $mainMod SHIFT, 9, movetoworkspace, 9
-bind = $mainMod SHIFT, 0, movetoworkspace, 10
-
-# Move active window to a relative workspace with mainMod + CTRL + ALT + [←→]
-bind = $mainMod CTRL ALT, right, movetoworkspace, r+1
-bind = $mainMod CTRL ALT, left, movetoworkspace, r-1
-
-# Move active window around current workspace with mainMod + SHIFT + CTRL [←→↑↓]
-bind = $mainMod SHIFT $CONTROL, left, movewindow, l
-bind = $mainMod SHIFT $CONTROL, right, movewindow, r
-bind = $mainMod SHIFT $CONTROL, up, movewindow, u
-bind = $mainMod SHIFT $CONTROL, down, movewindow, d
-
-# Scroll through existing workspaces with mainMod + scroll
-bind = $mainMod, mouse_down, workspace, e+1
-bind = $mainMod, mouse_up, workspace, e-1
-
-# Move/Resize windows with mainMod + LMB/RMB and dragging
-bindm = $mainMod, mouse:272, movewindow
-bindm = $mainMod, mouse:273, resizewindow
-
-# Special workspaces (scratchpad)
-bind = $mainMod ALT, S, movetoworkspacesilent, special
-bind = $mainMod, S, togglespecialworkspace,
-
-# Toggle Layout
-bind = $mainMod, J, togglesplit, # dwindle
-
-# Move window silently to workspace Super + Alt + [0-9]
-bind = $mainMod ALT, 1, movetoworkspacesilent, 1
-bind = $mainMod ALT, 2, movetoworkspacesilent, 2
-bind = $mainMod ALT, 3, movetoworkspacesilent, 3
-bind = $mainMod ALT, 4, movetoworkspacesilent, 4
-bind = $mainMod ALT, 5, movetoworkspacesilent, 5
-bind = $mainMod ALT, 6, movetoworkspacesilent, 6
-bind = $mainMod ALT, 7, movetoworkspacesilent, 7
-bind = $mainMod ALT, 8, movetoworkspacesilent, 8
-bind = $mainMod ALT, 9, movetoworkspacesilent, 9
-bind = $mainMod ALT, 0, movetoworkspacesilent, 10
-
-# Trigger when the switch is turning off
-bindl= , switch:on:Lid Switch, exec, swaylock && systemctl suspend
-
-
-# █░█░█ █ █▄░█ █▀▄ █▀█ █░█░█   █▀█ █░█ █░░ █▀▀ █▀
-# ▀▄▀▄▀ █ █░▀█ █▄▀ █▄█ ▀▄▀▄▀   █▀▄ █▄█ █▄▄ ██▄ ▄█
-
-
-# Example windowrule v1
-# windowrule = float, ^(kitty)$
-# Example windowrule v2
-# windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
-# See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
-
-# windowrulev2 = opacity 0.90 0.90,class:^(firefox)$
-windowrulev2 = opacity 0.90 0.90,class:^(Brave-browser)$
-windowrulev2 = opacity 0.80 0.80,class:^(Steam)$
-windowrulev2 = opacity 0.80 0.80,class:^(steam)$
-windowrulev2 = opacity 0.80 0.80,class:^(steamwebhelper)$
-windowrulev2 = opacity 0.80 0.80,class:^(Spotify)$
-windowrulev2 = opacity 0.80 0.80,class:^(code-url-handler)$
-windowrulev2 = opacity 0.80 0.80,class:^(kitty)$
-windowrulev2 = opacity 0.80 0.80,class:^(org.kde.dolphin)$
-windowrulev2 = opacity 0.80 0.80,class:^(org.kde.ark)$
-windowrulev2 = opacity 0.80 0.80,class:^(nwg-look)$
-windowrulev2 = opacity 0.80 0.80,class:^(qt5ct)$
-
-windowrulev2 = opacity 0.90 0.90,class:^(com.github.rafostar.Clapper)$ #Clapper-Gtk
-windowrulev2 = opacity 0.80 0.80,class:^(com.github.tchx84.Flatseal)$ #Flatseal-Gtk
-windowrulev2 = opacity 0.80 0.80,class:^(hu.kramo.Cartridges)$ #Cartridges-Gtk
-windowrulev2 = opacity 0.80 0.80,class:^(com.obsproject.Studio)$ #Obs-Qt
-windowrulev2 = opacity 0.80 0.80,class:^(gnome-boxes)$ #Boxes-Gtk
-windowrulev2 = opacity 0.80 0.80,class:^(discord)$ #Discord-Electron
-windowrulev2 = opacity 0.80 0.80,class:^(WebCord)$ #WebCord-Electron
-windowrulev2 = opacity 0.80 0.80,class:^(app.drey.Warp)$ #Warp-Gtk
-windowrulev2 = opacity 0.80 0.80,class:^(net.davidotek.pupgui2)$ #ProtonUp-Qt
-windowrulev2 = opacity 0.80 0.80,class:^(yad)$ #Protontricks-Gtk
-windowrulev2 = opacity 0.80 0.80,class:^(Signal)$ #Signal-Gtk
-windowrulev2 = opacity 0.80 0.80,class:^(io.gitlab.theevilskeleton.Upscaler)$ #Upscaler-Gtk
-
-windowrulev2 = opacity 0.80 0.70,class:^(pavucontrol)$
-windowrulev2 = opacity 0.80 0.70,class:^(blueman-manager)$
-windowrulev2 = opacity 0.80 0.70,class:^(nm-applet)$
-windowrulev2 = opacity 0.80 0.70,class:^(nm-connection-editor)$
-windowrulev2 = opacity 0.80 0.70,class:^(org.kde.polkit-kde-authentication-agent-1)$
-
-windowrulev2 = float,class:^(qt5ct)$
-windowrulev2 = float,class:^(nwg-look)$
-windowrulev2 = float,class:^(org.kde.ark)$
-windowrulev2 = float,class:^(Signal)$ #Signal-Gtk
-windowrulev2 = float,class:^(com.github.rafostar.Clapper)$ #Clapper-Gtk
-windowrulev2 = float,class:^(app.drey.Warp)$ #Warp-Gtk
-windowrulev2 = float,class:^(net.davidotek.pupgui2)$ #ProtonUp-Qt
-windowrulev2 = float,class:^(yad)$ #Protontricks-Gtk
-windowrulev2 = float,class:^(eog)$ #Imageviewer-Gtk
-windowrulev2 = float,class:^(io.gitlab.theevilskeleton.Upscaler)$ #Upscaler-Gtk
-windowrulev2 = float,class:^(pavucontrol)$
-windowrulev2 = float,class:^(blueman-manager)$
-windowrulev2 = float,class:^(nm-applet)$
-windowrulev2 = float,class:^(nm-connection-editor)$
-windowrulev2 = float,class:^(org.kde.polkit-kde-authentication-agent-1)$
-
-
-
-#█▀▀ █░█ █▀█ █▀ █▀█ █▀█
-#█▄▄ █▄█ █▀▄ ▄█ █▄█ █▀▄
-
-#env = XCURSOR_THEME,Bibata-Modern-Ice
-#env = XCURSOR_SIZE,12
-
-exec = hyprctl setcursor GoogleDot-Black 12
-# exec = gsettings set org.gnome.desktop.interface cursor-theme 'GoogleDot-Black'
-# exec = gsettings set org.gnome.desktop.interface icon-theme 'Tela-circle-dark'
-
-
-#█▀▀ █▀█ █▄░█ ▀█▀
-#█▀░ █▄█ █░▀█ ░█░
-
-exec = gsettings set org.gnome.desktop.interface font-name 'JetBrains Mono Bold'
-exec = gsettings set org.gnome.desktop.interface document-font-name 'JetBrains Mono Bold'
-exec = gsettings set org.gnome.desktop.interface monospace-font-name 'JetBrains Mono Bold'
-exec = gsettings set org.gnome.desktop.interface font-antialiasing 'rgba'
-exec = gsettings set org.gnome.desktop.interface font-hinting 'full'
-
-
-#█▀ █▀█ █▀▀ █▀▀ █ ▄▀█ █░░
-#▄█ █▀▀ ██▄ █▄▄ █ █▀█ █▄▄
-
-decoration {
-    dim_special = 0.3
-    blur {
-        special = true
-    }
-    rounding = 10
-}
-
-general {
-    border_size = 0
-}
-
-
-#█░█ █▀ █▀▀ █▀█   █▀█ █▀█ █▀▀ █▀▀ █▀
-#█▄█ ▄█ ██▄ █▀▄   █▀▀ █▀▄ ██▄ █▀░ ▄█
-
-
-# Set your personal hyprland configuration here
-# for sample file, please refer https://github.com/prasanthrangan/hyprdots/blob/main/Configs/.config/hypr/userprefs.t2
-
-bind = $mainMod, D, exec, dmenu_run -nb "#1e1e2e" -nf "#cdd6f4" -sb "#89dceb" -sf "#1e1e2e"
-
-animations {
-    # enabled = no
-	# first_launch_animation = no
-}
-
-decoration {
-	blur {
-		enabled = no
-		size = 2
-		passes = 2
-	}
-}
-
-binds {
-	workspace_back_and_forth = yes
-	allow_workspace_cycles = yes
-}
-
-# devic:yspringtech-usb-optical-mouse {
-	# natural_scroll = yes
-# }
-
-
-
-
-  	'';
+  	settings = {
+  		"$asrcPath" = "~/.config/scripts";
+  		"$mainMod" = "SUPER";
+  		"$term" = "foot";
+  		"$editor" = "code --disable-gpu";
+  		"$file" = "nautilus";
+  		"$browser" = "chromium";
+  		"exec-once" = [
+  			"$asrcPath/lowbattery.sh"
+  			"waybar"
+  			"blueman-applet"
+  			"nm-applet --indicator"
+  			"mako"
+  			"wl-paste --type text --watch cliphist store"
+  			"wl-paste --type image --watch cliphist store"
+  			"hyprpaper"
+  		];
+  		exec = [
+  			# Cursor
+  			"hyprctl setcursor GoogleDot-Black 12"
+
+  			# HyprFonts
+  			"gsettings set org.gnome.desktop.interface font-name 'JetBrains Mono Bold'"
+  			"gsettings set org.gnome.desktop.interface document-font-name 'JetBrains Mono Bold'"
+  			"gsettings set org.gnome.desktop.interface monospace-font-name 'JetBrains Mono Bold'"
+  			"gsettings set org.gnome.desktop.interface font-antialiasing 'rgba'"
+  			"gsettings set org.gnome.desktop.interface font-hinting 'full'"
+  		];
+  		env = [
+  			"XDG_DESKTOP_DIR,$HOME/Desktop"
+  			"XDG_DOWNLOAD_DIR,$HOME/Downloads"
+  			"XDG_TEMPLATES_DIR,$HOME/Templates"
+  			"XDG_PUBLICSHARE_DIR,$HOME/Public"
+  			"XDG_DOCUMENTS_DIR,$HOME/Documents"
+  			"XDG_MUSIC_DIR,$HOME/Music"
+  			"XDG_PICTURES_DIR,$HOME/Pictures"
+  			"XDG_VIDEOS_DIR,$HOME/Videos"
+  			"XDG_CURRENT_DESKTOP,Hyprland"
+  			"XDG_SESSION_TYPE,wayland"
+  			"XDG_SESSION_DESKTOP,Hyprland"
+  			# "QT_QPA_PLATFORM,wayland"
+  			# "QT_STYLE_OVERRIDE,kvantum"
+  			# "QT_QPA_PLATFORMTHEME,qt6ct"
+  			"QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+  			"QT_AUTO_SCREEN_SCALE_FACTOR,1"
+  			"MOZ_ENABLE_WAYLAND,1"
+  			"XCURSOR_THEME,GoogleDot-Black"
+  		];
+  		input = {
+  		    kb_layout = "us";
+  		    follow_mouse = 1;
+  		    natural_scroll = "yes";
+  		    touchpad = {
+  		        natural_scroll = "yes";
+  		        disable_while_typing = "no";
+  		    };
+  		    sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
+  		    force_no_accel = 1;
+  		};
+  		gestures = {
+  		    workspace_swipe = true;
+  		    workspace_swipe_fingers = 3;
+  		};
+  		dwindle = {
+  		    pseudotile = "yes"; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+  		    preserve_split = "yes"; # you probably want this
+  		};
+  		master = {
+  		    new_is_master = true;
+  		};
+  		misc = {
+  		    vrr = 0;
+  		    disable_hyprland_logo = true;
+  		    disable_splash_rendering = true;
+  		};
+  		animations = {
+  		    enabled = "yes";
+  		    bezier = [
+  		    	"wind, 0.05, 0.9, 0.1, 1.05"
+  		    	"winIn, 0.1, 1.1, 0.1, 1.1"
+  		    	"winOut, 0.3, -0.3, 0, 1"
+  		    	"liner, 1, 1, 1, 1"
+  		    ];
+  		    animation = [
+  		    	"windows, 1, 6, wind, slide"
+  		    	"windowsIn, 1, 6, winIn, slide"
+  		    	"windowsOut, 1, 5, winOut, slide"
+  		    	"windowsMove, 1, 5, wind, slide"
+  		    	"borderangle, 1, 30, liner, loop"
+  		    	"fade, 1, 10, default"
+  		    	"workspaces, 1, 5, wind"
+  		    ];
+  		};
+  		bind = [
+  			"$mainMod, Q, exec, $asrcPath/dontkillsteam.sh"
+  			"$mainMod, delete, exit, "
+  			"$mainMod, W, togglefloating, "
+  			"$mainMod, G, togglegroup, "
+  			"$mainMod, F, fullscreen, "
+  			"$mainMod, L, exec, swaylock "
+  			"$mainMod, backspace, exec, $asrcPath/logoutlaunch.sh 1 "
+  			
+  			"$mainMod, T, exec, $term  "
+  			"$mainMod, Z, exec, $file "
+  			"$mainMod, C, exec, $editor "
+  			"$mainMod, B, exec, $browser "
+  			"$CONTROL SHIFT, ESCAPE, exec, $asrcPath/sysmonlaunch.sh  "
+  			
+  			"$mainMod, D, exec, pkill -x wofi || wofi"
+  			"$mainMod, tab, workspace, previous"
+  			
+  			"$mainMod, P, exec, $asrcPath/screenshot.sh p "
+  			"$mainMod CTRL, P, exec, $asrcPath/screenshot.sh sf "
+  			"$mainMod ALT, P, exec, sh $asrcPath/screenshot.sh m "
+  			" , print, exec, $asrcPath/screenshot.sh s  "
+  			# '' ,print, exec, kitty -e sh -c "cat $srcPath/screenshot.sh && read -p '$srcPath/screenshot.sh' -r"''
+  			
+  			
+  			"$mainMod ALT, G, exec, $asrcPath/gamemode.sh "
+  			"$mainMod, R, exec, pkill -x wmenu-run || ${pkgs.wmenu}/bin/wmenu-run -i -N 1e1e2e -n 89b4fa -M 1e1e2e -m 89b4fa -S 89b4fa -s cdd6f4"
+  			"$mainMod, V, exec, pkill -x rofi || $scrPath/cliphist.sh c  "
+  			"$mainMod, K, exec, $scrPath/keyboardswitch.sh "
+  			
+  			
+  			"$mainMod, left, movefocus, l"
+  			"$mainMod, right, movefocus, r"
+  			"$mainMod, up, movefocus, u"
+  			"$mainMod, down, movefocus, d"
+  			"ALT, Tab, movefocus, d"
+  			
+  			
+  			"$mainMod, 1, workspace, 1"
+  			"$mainMod, 2, workspace, 2"
+  			"$mainMod, 3, workspace, 3"
+  			"$mainMod, 4, workspace, 4"
+  			"$mainMod, 5, workspace, 5"
+  			"$mainMod, 6, workspace, 6"
+  			"$mainMod, 7, workspace, 7"
+  			"$mainMod, 8, workspace, 8"
+  			"$mainMod, 9, workspace, 9"
+  			"$mainMod, 0, workspace, 10"
+  			
+  			
+  			"$mainMod CTRL, right, workspace, r+1 "
+  			"$mainMod CTRL, left, workspace, r-1"
+  			
+  			"$mainMod CTRL, down, workspace, empty "
+  			"$mainMod SHIFT, 1, movetoworkspace, 1"
+  			"$mainMod SHIFT, 2, movetoworkspace, 2"
+  			"$mainMod SHIFT, 3, movetoworkspace, 3"
+  			"$mainMod SHIFT, 4, movetoworkspace, 4"
+  			"$mainMod SHIFT, 5, movetoworkspace, 5"
+  			"$mainMod SHIFT, 6, movetoworkspace, 6"
+  			"$mainMod SHIFT, 7, movetoworkspace, 7"
+  			"$mainMod SHIFT, 8, movetoworkspace, 8"
+  			"$mainMod SHIFT, 9, movetoworkspace, 9"
+  			"$mainMod SHIFT, 0, movetoworkspace, 10"
+  			
+  			"$mainMod CTRL ALT, right, movetoworkspace, r+1"
+  			"$mainMod CTRL ALT, left, movetoworkspace, r-1"
+  			
+  			
+  			"$mainMod SHIFT $CONTROL, left, movewindow, l"
+  			"$mainMod SHIFT $CONTROL, right, movewindow, r"
+  			"$mainMod SHIFT $CONTROL, up, movewindow, u"
+  			"$mainMod SHIFT $CONTROL, down, movewindow, d"
+  			
+  			
+  			"$mainMod, mouse_down, workspace, e+1"
+  			"$mainMod, mouse_up, workspace, e-1"
+  			
+  			
+  			"$mainMod ALT, S, movetoworkspacesilent, special"
+  			"$mainMod, S, togglespecialworkspace,"
+  			
+  			
+  			"$mainMod, J, togglesplit, "
+  			
+  			
+  			"$mainMod ALT, 1, movetoworkspacesilent, 1"
+  			"$mainMod ALT, 2, movetoworkspacesilent, 2"
+  			"$mainMod ALT, 3, movetoworkspacesilent, 3"
+  			"$mainMod ALT, 4, movetoworkspacesilent, 4"
+  			"$mainMod ALT, 5, movetoworkspacesilent, 5"
+  			"$mainMod ALT, 6, movetoworkspacesilent, 6"
+  			"$mainMod ALT, 7, movetoworkspacesilent, 7"
+  			"$mainMod ALT, 8, movetoworkspacesilent, 8"
+  			"$mainMod ALT, 9, movetoworkspacesilent, 9"
+  			"$mainMod ALT, 0, movetoworkspacesilent, 10"
+  		];
+  		bindm = [
+  			"$mainMod, mouse:272, movewindow"
+  			"$mainMod, mouse:273, resizewindow"
+  		];
+  		binde = [
+  			"$mainMod SHIFT, right, resizeactive, 30 0"
+  			"$mainMod SHIFT, left, resizeactive, -30 0"
+  			"$mainMod SHIFT, up, resizeactive, 0 -30"
+  			"$mainMod SHIFT, down, resizeactive, 0 30"
+  		];
+  		bindel = [
+  			", XF86AudioLowerVolume, exec, $asrcPath/volumecontrol.sh -o d "
+  			", XF86AudioRaiseVolume, exec, $asrcPath/volumecontrol.sh -o i "
+  			", XF86MonBrightnessUp, exec, $asrcPath/brightnesscontrol.sh i "
+  			", XF86MonBrightnessDown, exec, $asrcPath/brightnesscontrol.sh d "
+  		];
+  		bindl = [
+  			" , XF86AudioMute, exec, $asrcPath/volumecontrol.sh -o m "
+  			" , XF86AudioMicMute, exec, $asrcPath/volumecontrol.sh -i m "
+  			" , XF86AudioPlay, exec, playerctl play-pause"
+  			" , XF86AudioPause, exec, playerctl play-pause"
+  			" , XF86AudioNext, exec, playerctl next"
+  			" , XF86AudioPrev, exec, playerctl previous"
+  			" , switch:on:Lid Switch, exec, swaylock && systemctl suspend"
+  		];
+  		windowrulev2 = [
+  			"opacity 0.80 0.70,class:^(nm-applet)$"
+  			
+  			"float,class:^(qt5ct)$"
+  			"float,class:^(nwg-look)$"
+  			"float,class:^(org.kde.ark)$"
+  			"float,class:^(Signal)$ #Signal-Gtk"
+  			"float,class:^(com.github.rafostar.Clapper)$ #Clapper-Gtk"
+  			"float,class:^(app.drey.Warp)$ #Warp-Gtk"
+  			"float,class:^(net.davidotek.pupgui2)$ #ProtonUp-Qt"
+  			"float,class:^(yad)$ #Protontricks-Gtk"
+  			"float,class:^(eog)$ #Imageviewer-Gtk"
+  			"float,class:^(io.gitlab.theevilskeleton.Upscaler)$ #Upscaler-Gtk"
+  			"float,class:^(pavucontrol)$"
+  			"float,class:^(blueman-manager)$"
+  			"float,class:^(nm-applet)$"
+  			"float,class:^(nm-connection-editor)$"
+  			"float,class:^(org.kde.polkit-kde-authentication-agent-1)$"
+  		];
+  		decoration = {
+  		    dim_special = 0.3;
+  		    blur = {
+  		    	enabled = "no";
+  		        special = true;
+  		    };
+  		    rounding = 10;
+  		};
+  		general = {
+  		    border_size = 0;
+  		};
+  		binds = {
+  			workspace_back_and_forth = "yes";
+  			allow_workspace_cycles = "yes";
+  		};
+  	};
   };
   
   wayland.windowManager.sway = {
