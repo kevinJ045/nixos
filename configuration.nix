@@ -19,9 +19,9 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 7d";
+    automatic = false;
+    # dates = "weekly";
+    # options = "--delete-older-than 7d";
   };
   nix.settings.auto-optimise-store = true;
     
@@ -85,6 +85,7 @@
   environment.systemPackages = with pkgs; [
     stdenv
     alacritty
+    android-tools
     blueman
     blender
     bun
@@ -112,6 +113,7 @@
     hyprpaper
     libnotify
     lm_sensors
+    logseq
     lshw
     lutris
     lxappearance
@@ -131,6 +133,7 @@
     python311Packages.requests
     python311Packages.tqdm 
     ranger
+    remmina
     rcm
     rofi
     scrcpy

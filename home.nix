@@ -22,6 +22,7 @@
       ctags
       efm-langserver
       eza
+      inter
       grim
       jdt-language-server
       nodejs
@@ -187,7 +188,8 @@ animations {
 
 # assign apps
 # $term = alacritty
-$term = foot
+# $term = foot
+$term = kitty
 $editor = code --disable-gpu
 $file = nautilus
 $browser = chromium
@@ -243,6 +245,7 @@ bind = $mainMod ALT, left, exec, $scrPath/swwwallpaper.sh -p # previous wallpape
 bind = $mainMod ALT, up, exec, $scrPath/wbarconfgen.sh n # next waybar mode
 bind = $mainMod ALT, down, exec, $scrPath/wbarconfgen.sh p # previous waybar mode
 bind = $mainMod SHIFT, D, exec, $scrPath/wallbashtoggle.sh  # toggle wallbash on/off
+bind = $mainMod, R, exec, pkill -x wmenu-run || ${pkgs.wmenu}/bin/wmenu-run -i -N 1e1e2e -n 89b4fa -M 1e1e2e -m 89b4fa -S 89b4fa -s cdd6f4
 bind = $mainMod SHIFT, T, exec, pkill -x rofi || $scrPath/themeselect.sh # theme select menu
 bind = $mainMod SHIFT, A, exec, pkill -x rofi || $scrPath/rofiselect.sh # rofi style select menu
 bind = $mainMod SHIFT, W, exec, pkill -x rofi || $scrPath/swwwallselect.sh # rofi wall select menu
@@ -408,11 +411,11 @@ exec = hyprctl setcursor GoogleDot-Black 12
 #█▀▀ █▀█ █▄░█ ▀█▀
 #█▀░ █▄█ █░▀█ ░█░
 
-# exec = gsettings set org.gnome.desktop.interface font-name 'Cantarell 10'
-# exec = gsettings set org.gnome.desktop.interface document-font-name 'Cantarell 10'
-# exec = gsettings set org.gnome.desktop.interface monospace-font-name 'CaskaydiaCove Nerd Font Mono 9'
-# exec = gsettings set org.gnome.desktop.interface font-antialiasing 'rgba'
-# exec = gsettings set org.gnome.desktop.interface font-hinting 'full'
+exec = gsettings set org.gnome.desktop.interface font-name 'JetBrains Mono Bold'
+exec = gsettings set org.gnome.desktop.interface document-font-name 'JetBrains Mono Bold'
+exec = gsettings set org.gnome.desktop.interface monospace-font-name 'JetBrains Mono Bold'
+exec = gsettings set org.gnome.desktop.interface font-antialiasing 'rgba'
+exec = gsettings set org.gnome.desktop.interface font-hinting 'full'
 
 
 #█▀ █▀█ █▀▀ █▀▀ █ ▄▀█ █░░
@@ -471,6 +474,9 @@ binds {
   wayland.windowManager.sway = {
     enable = true;
     systemd.enable = true;
+    extraConfig = ''
+	exec "/home/makano/.config/scripts/swaystart.sh"
+    '';
     config = rec {
       modifier = "Mod4";
       terminal = "foot"; 
@@ -492,7 +498,7 @@ binds {
         };
       };
       bars = [{
-        command = "waybar";
+        command = "sh -c 'pgrep -x waybar > /dev/null || waybar &'";
       }];
       window = {
         titlebar = false;
@@ -504,6 +510,8 @@ binds {
       		dwt = "disabled";
       		tap = "enabled";
       		natural_scroll = "enabled";
+      		pointer_accel = "0";
+      		# accel_profile = "flat";
       	};
       };
       floating = {
@@ -653,6 +661,8 @@ binds {
               \ }
         map <leader>ac :lua vim.lsp.buf.code_action()<CR>
         set ts=2
+        set undofile
+        set undodir=$HOME/.vim/undodir
         set number
         nnoremap <c-z> :u<CR>      
         inoremap <c-z> <c-o>:u<CR>
@@ -745,7 +755,7 @@ binds {
       set -g @plugin 'tmux-plugins/tmux-sensible'
       set -g @plugin 'tmux-plugins/tmux-resurrect'
       unbind C-b
-      set -g prefix C-a
+      set -g prefix A-a
       bind C-a send-prefix
       bind-key C-a last-window
       bind-key a send-prefix
@@ -1028,7 +1038,7 @@ binds {
 			tooltip-format = "{title}";
 			on-click = "activate";
 			on-click-middle = "close";
-			ignore-list = ["Alacritty" "foot" "Foot"];
+			ignore-list = ["Alacritty" "foot" "kitty" "Foot"];
 		};
 		
 		backlight = {
@@ -1248,6 +1258,9 @@ binds {
 	export PATH="$PATH:$HOME/portables/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/.local/share/scripts/bin"
 	export MICRO_TRUECOLOR=1
 
+	alias game64="WINEPREFIX=/home/makano/Games/wine64 wine64"
+	alias game32="WINEPREFIX=/home/makano/Games/wine32 wine"
+
 	bindkey '^H' backward-kill-word
     '';
   };
@@ -1293,6 +1306,21 @@ binds {
   		colorscheme = "catppuccin-mocha";
   		mkparents = true;
   	};
+  };
+
+  programs.kitty = {
+    enable = true;
+    font = {
+      name = "Fira Code Nerdfont";
+      size = 12.0;
+    };
+    shellIntegration.enableZshIntegration = true;
+    shellIntegration.mode = "no-cursor";
+    settings = {
+      cursor_shape = "block";
+      window_padding_width = 5;
+      cursor_blink_interval = 0;
+    };
   };
 
   programs.alacritty = {
