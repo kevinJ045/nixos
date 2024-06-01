@@ -19,6 +19,7 @@
       aerc
       bat
       clang-tools
+      pkg-config
       ctags
       efm-langserver
       eza
@@ -493,6 +494,10 @@
         set undofile
         set undodir=$HOME/.vim/undodir
         set number
+        set autoindent
+        set whichwrap+=<,h
+        set whichwrap+=>,l
+        set whichwrap+=[,]
         nnoremap <c-z> :u<CR>      
         inoremap <c-z> <c-o>:u<CR>
         nnoremap <c-y> :redo<CR>
@@ -502,12 +507,36 @@
         nnoremap <C-b> :NvimTreeToggle<CR>
         nnoremap <C-f> <C-x><C-o>
         nnoremap <C-p> :Files<CR>
-        nnoremap <C-q> :q!
-        nnoremap <C-c> y
-        nnoremap <C-v> p
-        vnoremap <C-c> y
-        vnoremap <C-v> p
-        inoremap <C-v> <C-r>
+        nnoremap <C-q> :q!<CR>
+        inoremap <C-q> <Esc>:q!<CR>
+        nnoremap <C-s> :w!<CR>
+        inoremap <C-s> <Esc>:w!<CR>
+
+        vnoremap <C-c> "+y
+        nnoremap <C-v> "+p
+        vnoremap <C-v> "+p
+        vnoremap <C-x> "+x
+        inoremap <C-v> <C-r>+
+                
+        nnoremap <S-Left> v
+        nnoremap <S-Right> v
+        nnoremap <S-Up> v
+        nnoremap <S-Down> v
+
+        nnoremap <C-S-Left> vbiw
+        nnoremap <C-S-Right> veiw
+        nnoremap <C-S-Up> v{k
+        nnoremap <C-S-Down> v}j
+
+        inoremap <S-Left> <Esc>v
+        inoremap <S-Right> <Esc>v
+        inoremap <S-Up> <Esc>v
+        inoremap <S-Down> <Esc>v
+        
+        inoremap <C-S-Left> <Esc>vbiw
+        inoremap <C-S-Right> <Esc>veiw
+        inoremap <C-S-Up> <Esc>v{k
+        inoremap <C-S-Down> <Esc>v}j
 
         function! s:start_delete(key)
             let l:result = a:key
