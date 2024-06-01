@@ -171,8 +171,6 @@
   			"$mainMod ALT, G, exec, $asrcPath/gamemode.sh "
   			"$mainMod, R, exec, pkill -x wmenu-run || ${pkgs.wmenu}/bin/wmenu-run -i -N 1e1e2e -n 89b4fa -M 1e1e2e -m 89b4fa -S 89b4fa -s cdd6f4"
   			"$mainMod, V, exec, pkill -x rofi || $scrPath/cliphist.sh c  "
-  			"$mainMod, K, exec, $scrPath/keyboardswitch.sh "
-  			
   			
   			"$mainMod, left, movefocus, l"
   			"$mainMod, right, movefocus, r"
@@ -874,7 +872,7 @@
 		
 		backlight = {
 			device = "intel_backlight";
-			format = "{icon} {percent}%";
+			format = "{icon}  {percent}%";
 			format-icons = ["" "" "" "" "" "" "" "" ""];
 			on-scroll-up = "brightnessctl set 1%+";
 			on-scroll-down = "brightnessctl set 1%-";
@@ -882,12 +880,12 @@
 		};
 		
 		network = {
-			format-wifi = "󰤨 {essid}";
+			format-wifi = "󰤨  {essid}";
 			format-ethernet = "󱘖 Wired";
-			tooltip-format = "󱘖 {ipaddr}  {bandwidthUpBytes}  {bandwidthDownBytes}";
-			format-linked = "󱘖 {ifname} (No IP)";
+			tooltip-format = "󱘖  {ipaddr}   {bandwidthUpBytes}   {bandwidthDownBytes}";
+			format-linked = "󱘖  {ifname} (No IP)";
 			format-disconnected = " Disconnected";
-			format-alt = "󰤨 {signalStrength}%";
+			format-alt = "󰤨  {signalStrength}%";
 			interval = 5;
 		};
 		
@@ -902,7 +900,7 @@
 		
 		pulseaudio = {
 			format = "{icon} {volume}";
-			format-muted = "婢";
+			format-muted = "󰝟 ";
 			on-click = "pavucontrol -t 3";
 			on-click-middle = "~/.config/hypr/scripts/volumecontrol.sh -o m";
 			on-scroll-up = "~/.config/hypr/scripts/volumecontrol.sh -o i";
@@ -916,7 +914,7 @@
 	            phone = "";
 	            portable = "";
 	            car = "";
-	            default = ["" "" ""];
+	            default = ["" " " " "];
 	        };
 		};
 	
