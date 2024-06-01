@@ -110,6 +110,7 @@
     inkscape
     jq
     killall
+    kooha
     hyprpaper
     libnotify
     lm_sensors

@@ -159,6 +159,8 @@
   			"$mainMod, B, exec, $browser "
   			"$CONTROL SHIFT, ESCAPE, exec, $asrcPath/sysmonlaunch.sh  "
   			
+  			"$mainMod SHIFT, B, exec, pkill waybar -SIGUSR1"
+  			
   			"$mainMod, D, exec, pkill -x wofi || wofi"
   			"$mainMod, tab, workspace, previous"
   			
@@ -502,7 +504,9 @@
         inoremap <c-z> <c-o>:u<CR>
         nnoremap <c-y> :redo<CR>
         inoremap <c-y> <c-o>:redo<CR>                        
-        inoremap <C-BS> <C-\><C-o>db
+        inoremap <C-BS> <C-w>
+        nnoremap <C-a> ggVG
+        inoremap <C-a> <Esc>ggVG
         inoremap <C-Del> <C-\><C-o>de
         nnoremap <C-b> :NvimTreeToggle<CR>
         nnoremap <C-f> <C-x><C-o>
@@ -511,6 +515,9 @@
         inoremap <C-q> <Esc>:q!<CR>
         nnoremap <C-s> :w!<CR>
         inoremap <C-s> <Esc>:w!<CR>
+
+        vnoremap <BS> d
+        vnoremap <Del> d
 
         vnoremap <C-c> "+y
         nnoremap <C-v> "+p
@@ -613,7 +620,7 @@
       set -g @plugin 'tmux-plugins/tmux-sensible'
       set -g @plugin 'tmux-plugins/tmux-resurrect'
       unbind C-b
-      set -g prefix A-a
+      set -g prefix M-a
       bind C-a send-prefix
       bind-key C-a last-window
       bind-key a send-prefix
