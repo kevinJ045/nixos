@@ -96,6 +96,7 @@
     podman
     dart
     distrobox
+    # droidmote
     dmenu
     dxvk
 	firefox
@@ -106,8 +107,11 @@
     grim
     glib
     grimblast
+    gvfs
+    gnome.gvfs
     htop
     inkscape
+    inetutils
     jq
     killall
     kooha
@@ -124,15 +128,17 @@
     ncdu
     # nix-autobahn
     # ngrok
-    nodejs
+    nodePackages_latest.nodejs
     openjdk17-bootstrap
     pamixer
     playerctl
+    ppsspp
     python3
     python311Packages.pip
     python311Packages.inquirerpy
     python311Packages.requests
     python311Packages.tqdm 
+    python311Packages.tkinter 
     ranger
     remmina
     rcm
