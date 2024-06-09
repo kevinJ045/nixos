@@ -1,0 +1,3 @@
+#!/bin/sh
+
+java /home/makano/.bin/bin/exec/fsrch/main.java $*

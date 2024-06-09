@@ -1,0 +1,22 @@
+#!/bin/sh
+
+
+url=$1
+ddirname=""
+
+if [[ $url == *.iso ]];
+then
+	ddirname="Archives/iso"
+elif [[ $url == *.tar.* ]]; then
+	ddirname="Archives/tar"
+elif [[ $url == *.rar ]]; then
+	ddirname="Archives/rar"
+elif [[ $url == *.zip ]]; then
+	ddirname="Archives/zip"
+else
+	ddirname="Misc"
+fi
+
+echo Downloading $url at $ddirname
+
+curl -L -O --output-dir ~/Downloads/$ddirname --retry 999 --retry-max-time 0 -C - $url

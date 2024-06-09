@@ -1,0 +1,4 @@
+#!/bin/sh
+
+
+wl-paste --watch sh -c "curl -X POST http://192.168.0.104:52913 -d \"\$(wl-paste)\""

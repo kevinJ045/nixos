@@ -1,0 +1,3 @@
+#!/bin/bash
+
+node /home/makano/.bin/bin/exec/stars/main.js

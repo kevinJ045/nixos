@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ $1 ] ; then
+	# cp $1 ~/.config/background
+	filepath=$(realpath $1)
+	echo Setting background to $filepath
+	if [[ $2 == "u" ]] ; then
+		cp $filepath ~/.config/background
+	else
+		rm /usr/share/backgrounds/custom/current/default
+		ln -s $filepath /usr/share/backgrounds/custom/current/default
+	fi
+	# cp $(realpath $1) ~/.config/swww/wall.rofi
+	convert -strip -scale 10% -blur 0x3 -resize 100% "$filepath" "$HOME/.config/swww/wall.blur"
+	convert -strip -resize 2000 -gravity center -extent 2000 -quality 90 "$filepath" "$HOME/.config/swww/wall.rofi"
+fi

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+
+function loopit(){
+	clear
+	e="Executing $*"
+	echo $e
+	
+	$*
+	sleep 1
+	loopit $*
+}
+
+loopit $*

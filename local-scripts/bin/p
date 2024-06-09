@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+
+CONFIG_FILE="/etc/nixos/configuration.nix"
+
+add_packages() {
+    local packages="$1"
+    sed -i "s|\(environment\.systemPackages = with pkgs; \[\)|\1\n    ${packages}|g" "$CONFIG_FILE"
+}
+
+remove_packages() {
+    local packages="$1"
+    
+    IFS=' ' read -r -a package_array <<< "$packages"
+    
+    while read -r line; do
+        for package in "${package_array[@]}"; do
+            line=$(echo "$line" | sed "s/\\b$package\\b//g")
+        done
+        echo "$line"
+    done < "$CONFIG_FILE" > temp_file
+    
+    mv temp_file "$CONFIG_FILE"
+}
+
+execute_package() {
+    local package="$1"
+    shift 
+    local args=("$@")  
+    
+    echo "Executing package $package with args: ${args[*]}"
+
+    nix shell "nixpkgs#$package" --command "${args[@]}"
+}
+
+help_message(){
+	echo "Usage: $0 [-p /path/to/config.nix] -i|-r|-e|-b packages"
+}
+
+main() {
+    local command
+    local packages
+    local option_p
+    local config_file_argument
+    
+    while [[ "$#" -gt 0 ]]; do
+        case $1 in
+            -p)
+                option_p=true
+                config_file_argument="$2"
+                shift 2
+                ;;
+            -b)
+                command="$1"
+                shift 1
+                ;;
+            -i|-r|-e)
+                command="$1"
+                packages="$2"
+                shift 2
+                ;;
+            *)
+				help_message
+                exit 1
+                ;;
+        esac
+    done
+
+
+    if [[ $option_p == true ]]; then
+        CONFIG_FILE="$config_file_argument"
+    fi
+
+
+    if [[ "$command" == "-i" ]]; then
+        add_packages "$packages"
+    elif [[ "$command" == "-r" ]]; then
+        remove_packages "$packages"
+    elif [[ "$command" == "-e" ]]; then
+        execute_package "$packages"
+        exit 0
+    elif [[ "$command" == "-b" ]]; then
+        echo "Rebuilding...";
+    else
+		help_message
+        exit 1
+    fi
+    
+   	nixos-rebuild switch
+}
+
+
+if [ "$(id -u)" -ne 0 ]; then
+    echo "This script must be run as root (using sudo)."
+    exit 1
+fi
+
+
+main "$@"
+

@@ -1,0 +1,49 @@
+#!/usr/bin/env sh
+
+# Usage: srch [-i <exclude_folders>] [-v] <name|content> <search_string> <folder_path>
+
+exclude_folders=""
+verbose=false
+
+while getopts ":i:v" opt; do
+    case $opt in
+        i)
+            exclude_folders="$OPTARG"
+            ;;
+        v)
+            verbose=true
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG"
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [ $# -ne 3 ]; then
+    echo "Usage: $0 [-i <exclude_folders>] [-v] <name|content> <search_string> <folder_path>"
+    exit 1
+fi
+
+mode="$1"
+search_string="$2"
+folder_path="$3"
+
+if [ "$mode" = "name" ]; then
+    if [ "$verbose" = true ]; then
+    	echo "Verbose is on"
+        find "$folder_path" -type f \( ! -path "*/$exclude_folders/*" \) -name "$search_string"
+    else
+        find "$folder_path" -type f \( ! -path "*/$exclude_folders/*" \) -name "$search_string" -print0 | xargs -0 echo
+    fi
+elif [ "$mode" = "content" ]; then
+    if [ "$verbose" = true ]; then
+    	echo "Verbose is on"
+        grep -rl "$search_string" "$folder_path" $(printf -- '--exclude-dir=%s ' $(echo "$exclude_folders" | tr ',' ' '))
+    else
+        grep -rl "$search_string" "$folder_path" $(printf -- '--exclude-dir=%s ' $(echo "$exclude_folders" | tr ',' ' ')) | xargs -I {} echo "Results: {}"
+    fi
+else
+    echo "Invalid mode. Use 'name' or 'content'."
+fi

