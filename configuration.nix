@@ -6,11 +6,13 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
-  boot.loader.grub.enable = true;
-  boot.loader.grub.memtest86.enable = true;
-  boot.loader.grub.device = "/dev/sda";
+  # boot.loader.grub.enable = true;
+  # boot.loader.grub.memtest86.enable = true;
+  # boot.loader.grub.device = "/dev/sda";
   # boot.loader.grub.theme = pkgs.catppuccin-grub;
-  boot.loader.systemd-boot.configurationLimit = 10;
+  # boot.loader.systemd-boot.configurationLimit = 10;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.extraModprobeConfig = ''
@@ -28,9 +30,10 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowInsecure = true;
 
+  hardware.opengl.enable = true;
   hardware.opengl.driSupport32Bit = true;
 
-  networking.hostName = "Decile";
+  networking.hostName = "nixos";
   networking.networkmanager.enable = true;
   networking.networkmanager.wifi.backend = "iwd";
   networking.wireless.iwd.enable = true;
@@ -88,6 +91,7 @@
     android-tools
     blueman
     blender
+    baobab
     bun
     brightnessctl
     chromium
@@ -96,12 +100,15 @@
     podman
     dart
     distrobox
+    gnome.dconf-editor
     # droidmote
     dmenu
     dxvk
 	firefox
 	flutter
+	gnome.file-roller
     gimp
+    gthumb
     gnome.gnome-tweaks
     gparted
     grim
@@ -118,7 +125,7 @@
     hyprpaper
     libnotify
     lm_sensors
-    logseq
+    # logseq
     lshw
     lutris
     lxappearance
@@ -168,6 +175,22 @@
     usbutils
     lan-mouse
     wineWow64Packages.waylandFull
+
+    (let base = pkgs.appimageTools.defaultFhsEnvArgs; in
+      pkgs.buildFHSUserEnv (base // {
+      name = "fhs";
+      targetPkgs = pkgs: (
+        (base.targetPkgs pkgs) ++ [
+          pkgs.pkg-config
+          pkgs.ncurses
+          libffi
+          pcre2
+        ]
+      );
+      profile = "export FHS=1";
+      runScript = "zsh";
+      extraOutputsToInstall = ["dev"];
+    }))
   ];
 
   virtualisation.waydroid.enable = true;
@@ -196,6 +219,7 @@
     };
   };
 
+  services.gvfs.enable = true;
   services.flatpak.enable = true;
   services.udisks2.enable = true;
   services.gnome.gnome-keyring.enable = true;

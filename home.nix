@@ -300,6 +300,9 @@
   			workspace_back_and_forth = "yes";
   			allow_workspace_cycles = "yes";
   		};
+  		debug = {
+  			disable_logs = false;
+  		};
   	};
   };
   
@@ -1132,17 +1135,29 @@
 
   gtk = {
     enable = true;
-    iconTheme = {
+    # iconTheme = {
     	# package = pkgs.gnome.adwaita-icon-theme;
     	# name = "Adwaita";
 
     	# package = pkgs.dracula-icon-theme;
     	# name = "Dracula";
+    # };
+    iconTheme = {
+    	package = pkgs.dracula-icon-theme;
+    	name = "Dracula";
     };
     cursorTheme = {
     	package = lib.mkForce pkgs.google-cursor;
     	name = lib.mkForce "GoogleDot-Black";
     	size = 12;
+    };
+    # theme = {
+    # 	package = pkgs.tokyonight-gtk-theme;
+    # 	name = "Tokyonight-Dark-BL";
+    # };
+    theme = {
+    	package = pkgs.dracula-theme;
+    	name = "Dracula";
     };
   };
 
@@ -1348,6 +1363,8 @@
   #   setBuildEnv = true;
   #   withBuildTools = true;
   # };
+
+  # programs.home-manager.
 
   home.stateVersion = "23.11";
   programs.home-manager.enable = true;

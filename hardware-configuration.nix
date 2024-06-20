@@ -8,42 +8,32 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "firewire_ohci" "usb_storage" "sd_mod" "sr_mod" "sdhci_pci" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/ba67ec94-3141-4365-b6f9-0bbca62cde26";
+    { device = "/dev/disk/by-uuid/539ffceb-e36e-4691-9ec6-964b921857a0";
       fsType = "btrfs";
-      options = [ "subvol=root" ];
     };
 
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/ba67ec94-3141-4365-b6f9-0bbca62cde26";
-      fsType = "btrfs";
-      options = [ "subvol=home" ];
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/5217-31AB";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/ba67ec94-3141-4365-b6f9-0bbca62cde26";
-      fsType = "btrfs";
-      options = [ "subvol=nix" ];
-    };
-
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/c1114da3-68a4-4076-b535-cd690c8979af"; }
-    ];
+  swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp0s25.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlo1.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp1s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp2s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  hardware.opengl.enable = true;
 }
