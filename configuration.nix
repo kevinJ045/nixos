@@ -26,9 +26,11 @@
     # options = "--delete-older-than 7d";
   };
   nix.settings.auto-optimise-store = true;
-    
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowInsecure = true;
+  
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowInsecure = true;
+  };
 
   hardware.opengl.enable = true;
   hardware.opengl.driSupport32Bit = true;
@@ -92,10 +94,12 @@
     blueman
     blender
     baobab
+    bottles
     bun
     brightnessctl
     chromium
     cliphist
+    cacert
     gnome.nautilus
     podman
     dart
@@ -174,6 +178,7 @@
     unzip
     usbutils
     lan-mouse
+    wineWowPackages.full
     wineWow64Packages.waylandFull
 
     (let base = pkgs.appimageTools.defaultFhsEnvArgs; in
@@ -185,6 +190,8 @@
           pkgs.ncurses
           libffi
           pcre2
+          xorg.libXpm
+          libepoxy
         ]
       );
       profile = "export FHS=1";
@@ -214,7 +221,8 @@
       enable = true;
       wlr.enable = true;
       extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
+        # xdg-desktop-portal-gtk
+        xdg-desktop-portal-hyprland
       ];
     };
   };

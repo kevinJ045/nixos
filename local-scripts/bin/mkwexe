@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+const fs = require('fs');
+const { execSync } = require('child_process');
+
+const mkFile = (name, is64) => `#!/bin/sh
+
+WINEPREFIX=/home/makano/Games/wine${is64?'64':'32'} wine${is64?'64':''} ${name}`
+
+if(!process.argv[2]) process.exit(1);
+else {
+	const fp = process.cwd()+'/open.sh';
+	fs.writeFileSync(fp, mkFile(process.argv[2], process.argv[3]))
+	execSync(`chmod +x "${fp}"`);
+}

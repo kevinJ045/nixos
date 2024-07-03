@@ -1,5 +1,19 @@
 { config, pkgs, lib, ... }:
 
+let
+  catppuccin-gtk-theme = import ./catppuccin-gtk-theme.nix {
+  	# inherit pkgs;
+    lib = pkgs.lib;
+    stdenv = pkgs.stdenv;
+    fetchFromGitHub = pkgs.fetchFromGitHub;
+    gtk-engine-murrine = pkgs.gtk-engine-murrine;
+    jdupes = pkgs.jdupes;
+    sassc = pkgs.sassc;
+    accent = ["default"];  # You can adjust these based on your preference
+    shade = "dark";
+    size = "standard";
+  };
+in
 {
   home.username = "makano";
   home.homeDirectory = "/home/makano";
@@ -125,6 +139,7 @@
   		    vrr = 0;
   		    disable_hyprland_logo = true;
   		    disable_splash_rendering = true;
+  		    always_follow_on_dnd = true;
   		};
   		animations = {
   		    enabled = "yes";
@@ -153,6 +168,8 @@
   			"$mainMod, L, exec, swaylock "
   			"$mainMod, backspace, exec, $asrcPath/logoutlaunch.sh 1 "
   			
+  			''$mainMod SHIFT, P, exec, foot -e sh -c "hyprctl activewindow && read"''
+  			
   			"$mainMod, T, exec, $term  "
   			"$mainMod, Z, exec, $file "
   			"$mainMod, C, exec, $editor "
@@ -173,7 +190,7 @@
   			
   			"$mainMod ALT, G, exec, $asrcPath/gamemode.sh "
   			"$mainMod, R, exec, pkill -x wmenu-run || ${pkgs.wmenu}/bin/wmenu-run -i -N 1e1e2e -n 89b4fa -M 1e1e2e -m 89b4fa -S 89b4fa -s cdd6f4"
-  			"$mainMod, V, exec, pkill -x rofi || $scrPath/cliphist.sh c  "
+  			"$mainMod, V, exec, pkill -x rofi || $ascrPath/cliphist.sh c  "
   			
   			"$mainMod, left, movefocus, l"
   			"$mainMod, right, movefocus, r"
@@ -264,11 +281,12 @@
   			" , XF86AudioPause, exec, playerctl play-pause"
   			" , XF86AudioNext, exec, playerctl next"
   			" , XF86AudioPrev, exec, playerctl previous"
-  			" , switch:on:Lid Switch, exec, swaylock && systemctl suspend"
+  			" , switch:on:Lid Switch, exec, $asrcPath/lock.sh"
   		];
   		windowrulev2 = [
   			"opacity 0.80 0.70,class:^(nm-applet)$"
   			
+  			"float,class:^(Rofi)$"
   			"float,class:^(qt5ct)$"
   			"float,class:^(nwg-look)$"
   			"float,class:^(org.kde.ark)$"
@@ -314,8 +332,8 @@
     '';
     config = rec {
       modifier = "Mod4";
-      terminal = "foot"; 
-      menu = "wofi";
+      terminal = "foot";
+      menu = "pkill -x wmenu-run || ${pkgs.wmenu}/bin/wmenu-run -i -N 1e1e2e -n 89b4fa -M 1e1e2e -m 89b4fa -S 89b4fa -s cdd6f4";
       fonts = {
         names = [ "Noto Sans" "FontAwesome" ];
         style = "Bold Semi-Condensed";
@@ -324,16 +342,11 @@
       output = {
         "*" = {
           bg = "${builtins.fetchurl { url = "https://images.hdqwalls.com/download/1/beach-seaside-digital-painting-4k-05.jpg"; sha256 = "2877925e7dab66e7723ef79c3bf436ef9f0f2c8968923bb0fff990229144a3fe"; }} fill";
-        };
-        "Dell Inc. Dell AW3821DW #GTIYMxgwABhF" = {
-          mode = "3840x1600@143.998Hz";
-          adaptive_sync = "on";
-          max_render_time = "1";
-          subpixel = "none";
+          # bg = "/home/makano/.config/background fill"; # "${builtins.fetchurl { url = "https://images.hdqwalls.com/download/1/beach-seaside-digital-painting-4k-05.jpg"; sha256 = "2877925e7dab66e7723ef79c3bf436ef9f0f2c8968923bb0fff990229144a3fe"; }} fill";
         };
       };
       bars = [{
-        command = "sh -c 'pgrep -x waybar > /dev/null || waybar &'";
+        command = "waybar";#"sh -c 'pgrep -x waybar > /dev/null || waybar &'";
       }];
       window = {
         titlebar = false;
@@ -354,23 +367,23 @@
         border = 0;
       };
       gaps = {
-        inner = 15;
-        smartGaps = true;
+        inner = 6;
+        smartGaps = false;
       };
       focus.followMouse = true;
       workspaceAutoBackAndForth = true;
-      keybindings = let modifier = config.wayland.windowManager.sway.config.modifier; in lib.mkOptionDefault {
-        "${modifier}+t" = "exec alacritty";
+      keybindings = let modifier = config.wayland.windowManager.sway.config.modifier;  in lib.mkOptionDefault {
+        "${modifier}+b" = "exec chromium";
+        "${modifier}+c" = "exec code";
+        "${modifier}+shift+d" = "exec wofi";
+        
+        "${modifier}+Tab" = "workspace back_and_forth";
+        
+        "${modifier}+t" = "exec foot";
         "${modifier}+p" = "exec swaylock";
         "${modifier}+q" = "kill";
-        "${modifier}+shift+u" = "exec playerctl play-pause";
-        "${modifier}+shift+y" = "exec playerctl previous";
-        "${modifier}+shift+i" = "exec playerctl next";
-        "Control+space" = "exec makoctl dismiss";
-        "${modifier}+Control+space" = "exec makoctl restore";
-        "${modifier}+shift+x" = "exec ~/.local/bin/screenshot";
-        "${modifier}+x" = "exec ~/.local/bin/screenshot-select";
-      };
+        "Print" = "exec /home/makano/.config/scripts/screenshot.sh s";
+     };
     };
   };
   programs.swaylock = {
@@ -941,9 +954,9 @@
 			format = "{icon} {volume}";
 			format-muted = "󰝟 ";
 			on-click = "pavucontrol -t 3";
-			on-click-middle = "~/.config/hypr/scripts/volumecontrol.sh -o m";
-			on-scroll-up = "~/.config/hypr/scripts/volumecontrol.sh -o i";
-			on-scroll-down = "~/.config/hypr/scripts/volumecontrol.sh -o d";
+			on-click-middle = "~/.config/scripts/volumecontrol.sh -o m";
+			on-scroll-up = "~/.config/scripts/volumecontrol.sh -o i";
+			on-scroll-down = "~/.config/scripts/volumecontrol.sh -o d";
 			tooltip-format = "{icon} {desc} // {volume}%";
 			scroll-step = 5;
 			format-icons = {
@@ -978,9 +991,9 @@
 		"custom/wallchange" = {
 			format = "󰆊{}";
 			exec = "echo ; echo 󰆊 switch wallpaper";
-			on-click = "~/.config/hypr/scripts/swwwallpaper.sh -n";
-			on-click-right = "~/.config/hypr/scripts/swwwallpaper.sh -p";
-			on-click-middle = "sleep 0.1 && ~/.config/hypr/scripts/swwwallselect.sh";
+			on-click = "~/.config/scripts/swwwallpaper.sh -n";
+			on-click-right = "~/.config/scripts/swwwallpaper.sh -p";
+			on-click-middle = "sleep 0.1 && ~/.config/scripts/swwwallselect.sh";
 			interval = 86400;
 			tooltip = true;
 		};
@@ -988,9 +1001,9 @@
 		"custom/cliphist" = {
 			format = "{}";
 			exec = "echo ; echo 󰅇 clipboard history";
-			on-click = "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh c";
-			on-click-right = "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh d";
-			on-click-middle = "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh w";
+			on-click = "sleep 0.1 && ~/.config/scripts/cliphist.sh c";
+			on-click-right = "sleep 0.1 && ~/.config/scripts/cliphist.sh d";
+			on-click-middle = "sleep 0.1 && ~/.confi/scripts/cliphist.sh w";
 			interval = 86400;
 			tooltip = true;
 		};
@@ -998,7 +1011,7 @@
 		"custom/power" = {
 			format = "{}";
 			exec = "echo ; echo  logout";
-			on-click = "~/.config/hypr/scripts/logoutlaunch.sh 2";
+			on-click = "~/.config/scripts/logoutlaunch.sh 2";
 			interval = 86400;
 			tooltip = true;
 		};
@@ -1146,6 +1159,10 @@
     	package = pkgs.dracula-icon-theme;
     	name = "Dracula";
     };
+    # iconTheme = {
+    # 	package = pkgs.kora-icon-theme;
+    # 	name = "kora";
+    # };
     cursorTheme = {
     	package = lib.mkForce pkgs.google-cursor;
     	name = lib.mkForce "GoogleDot-Black";
@@ -1156,9 +1173,17 @@
     # 	name = "Tokyonight-Dark-BL";
     # };
     theme = {
-    	package = pkgs.dracula-theme;
-    	name = "Dracula";
+    	package = catppuccin-gtk-theme;
+    	name = "Catppuccin-Dark";
     };
+    # theme = {
+    # 	package = pkgs.dracula-theme;
+    # 	name = "Dracula";
+    # };
+    # theme = {
+    # 	package = pkgs.nightfox-gtk-theme;
+    # 	name = "Nightfox-Dusk-BL";
+    # };
   };
 
   qt = {
@@ -1250,7 +1275,7 @@
     settings = {
       format = lib.concatStrings [
    	    "[](#a3aed2)"
-   	    "[ ](bg:#a3aed2 fg:#090c0c)"
+   	    "[ ](bg:#a3aed2 fg:#090c0c)"
    	    "[](bg:#769ff0 fg:#a3aed2)"
    	    "$directory"
    	    "[](fg:#769ff0 bg:#394260)"
