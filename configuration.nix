@@ -32,8 +32,8 @@
     allowInsecure = true;
   };
 
-  hardware.opengl.enable = true;
-  hardware.opengl.driSupport32Bit = true;
+  hardware.graphics.enable = true;
+  hardware.graphics.enable32Bit = true;
 
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
@@ -100,20 +100,19 @@
     chromium
     cliphist
     cacert
-    gnome.nautilus
     podman
     dart
     distrobox
-    gnome.dconf-editor
+    dconf-editor
     # droidmote
     dmenu
     dxvk
 	firefox
 	flutter
-	gnome.file-roller
+	file-roller
     gimp
     gthumb
-    gnome.gnome-tweaks
+    gnome-tweaks
     gparted
     grim
     glib
@@ -137,6 +136,7 @@
     mate.caja-extensions
     # mongodb
     ncdu
+    nautilus
     # nix-autobahn
     # ngrok
     nodePackages_latest.nodejs
@@ -149,7 +149,8 @@
     python311Packages.inquirerpy
     python311Packages.requests
     python311Packages.tqdm 
-    python311Packages.tkinter 
+    python311Packages.tkinter
+    python311Packages.setuptools
     ranger
     remmina
     rcm
@@ -167,6 +168,7 @@
     wine64
     wl-clipboard
 	xorg.xinit
+	xorg.xorgserver
     xdg-utils
     zsh-autosuggestions
     zsh-completions
@@ -231,6 +233,11 @@
   services.flatpak.enable = true;
   services.udisks2.enable = true;
   services.gnome.gnome-keyring.enable = true;
+  services.libinput = {
+  	enable = true;
+  	touchpad.tapping = true;
+  	
+  };
   # services.xserver = {
   	# enable = true;
   	# displayManager.gdm.enable = true;
@@ -238,8 +245,15 @@
   	# desktopManager.xfce.enable = true;
   	# desktopManager.default = "none";
   	# desktopManager.xterm.enabe = false;
-  	# displayManager.lightdm.enable = true;
+  	# displayManager.lightdm.enable = false;
   	# windowManager.i3.enable = true;
+  	# autorun = false;
+
+  	# libinput.enable = true;
+
+  	# libinput.enable = true;
+  	# libinput.mouse.scrollMehod = "twofinger";
+  	# libinput.touchpad.scrollMehod = "twofinger";
   # };
 
   # services.xserver.desktopManager.xfce.enable = true;
