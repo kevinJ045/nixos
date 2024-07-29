@@ -34,6 +34,7 @@
 
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
+  # hardware.pulseaudio.enable = true;
 
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
@@ -80,7 +81,7 @@
     isNormalUser = true;
     home = "/home/makano";
     description = "Makano";
-    extraGroups = ["wheel" "networkmanager"];
+    extraGroups = ["wheel" "networkmanager" "audio" "sound" "video"];
     packages = with pkgs; [
       flatpak
     ];
@@ -107,6 +108,7 @@
     # droidmote
     dmenu
     dxvk
+    errands
 	firefox
 	flutter
 	file-roller
@@ -120,6 +122,7 @@
     gvfs
     gnome.gvfs
     htop
+    hdparm
     inkscape
     inetutils
     jq
@@ -157,6 +160,7 @@
     rofi
     scrcpy
     slurp
+    smartctl
     swappy
     swww
     steam
@@ -181,6 +185,7 @@
     usbutils
     lan-mouse
     wineWowPackages.full
+    winetricks
     wineWow64Packages.waylandFull
 
     (let base = pkgs.appimageTools.defaultFhsEnvArgs; in
