@@ -148,19 +148,19 @@
     playerctl
     ppsspp
     python3
-    python311Packages.pip
-    python311Packages.inquirerpy
-    python311Packages.requests
-    python311Packages.tqdm 
-    python311Packages.tkinter
-    python311Packages.setuptools
+    python312Packages.pip
+    python312Packages.inquirerpy
+    python312Packages.requests
+    python312Packages.tqdm 
+    python312Packages.tkinter
+    python312Packages.setuptools
     ranger
     remmina
     rcm
     rofi
     scrcpy
     slurp
-    smartctl
+    smartmontools
     swappy
     swww
     steam
