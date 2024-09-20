@@ -390,11 +390,11 @@ in
         
         "${modifier}+Tab" = "workspace back_and_forth";
         "${modifier}+Shift+p" = ''
-		  sh -c "swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true) | {app_id, pid, name, id, shell, window}' | jq -r 'to_entries[] | \"\(.key | ascii_upcase)\t\n\(.value)\"' | zenity --list --title=\"Window Properties\" --column=\"Field\" --column=\"Value\" --width=400 --height=300"
+		  exec sh -c "swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true) | {app_id, pid, name, id, shell, window}' | jq -r 'to_entries[] | \"\(.key | ascii_upcase)\t\n\(.value)\"' | zenity --list --title=\"Window Properties\" --column=\"Field\" --column=\"Value\" --width=400 --height=300"
 		'';
         
-        "${modifier}+Shift+b" = "bar mode toggle";
-
+        "${modifier}+Shift+b" = "exec pkill -SIGUSR1 waybar";
+        
         "${modifier}+Delete" = ''
           exec sh -c "echo -e 'No\nYes' | ${pkgs.wmenu}/bin/wmenu -l 2 -p 'Exit Sway?' | grep -q Yes && swaymsg exit"
         '';
