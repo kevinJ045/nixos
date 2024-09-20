@@ -42,6 +42,12 @@
   networking.wireless.iwd.enable = true;
   # networking.useDHCP = false;
   networking.firewall.checkReversePath = false;
+  networking.firewall.allowedTCPPorts = [
+      20    # FTP Data Port
+      21    # FTP Command Port
+      10000 # Passive FTP range start
+      10100 # Passive FTP range end
+  ];
 
   time.timeZone = "Africa/Addis_Ababa";
 
@@ -88,6 +94,30 @@
     shell = pkgs.zsh;
   };
 
+  environment.sessionVariables = rec {
+    XDG_CACHE_HOME  = "$HOME/.cache";
+    XDG_CONFIG_HOME = "$HOME/.config";
+    XDG_DATA_HOME   = "$HOME/.local/share";
+    XDG_STATE_HOME  = "$HOME/.local/state";
+
+    XDG_DESKTOP_DIR = "$HOME/Desktop";
+  	XDG_DOWNLOAD_DIR = "$HOME/Downloads";
+  	XDG_TEMPLATES_DIR = "$HOME/Templates";
+  	XDG_PUBLICSHARE_DIR = "$HOME/Public";
+  	XDG_DOCUMENTS_DIR = "$HOME/Documents";
+  	XDG_MUSIC_DIR = "$HOME/Music";
+  	XDG_PICTURES_DIR = "$HOME/Pictures";
+  	XDG_VIDEOS_DIR = "$HOME/Videos";
+  	XDG_CURRENT_DESKTOP = "sway";
+  	XDG_SESSION_TYPE = "wayland";
+  	XDG_SESSION_DESKTOP = "sway";
+  	QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+  	QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+  	MOZ_ENABLE_WAYLAND = "1";
+  	XCURSOR_THEME = "GoogleDot-Black";
+    
+  };
+
   environment.systemPackages = with pkgs; [
     stdenv
     alacritty
@@ -99,6 +129,7 @@
     bun
     brightnessctl
     chromium
+    clang
     cliphist
     cacert
     podman
@@ -112,6 +143,7 @@
 	firefox
 	flutter
 	file-roller
+	gcc-unwrapped
     gimp
     gthumb
     gnome-tweaks
@@ -140,11 +172,13 @@
     # mongodb
     ncdu
     nautilus
+    networkmanagerapplet
     # nix-autobahn
     # ngrok
     nodePackages_latest.nodejs
     openjdk17-bootstrap
     pamixer
+    pciutils
     playerctl
     ppsspp
     python3
@@ -187,6 +221,7 @@
     wineWowPackages.full
     winetricks
     wineWow64Packages.waylandFull
+    zenity
 
     (let base = pkgs.appimageTools.defaultFhsEnvArgs; in
       pkgs.buildFHSUserEnv (base // {
@@ -243,6 +278,43 @@
   	touchpad.tapping = true;
   	
   };
+
+  services.vsftpd = {
+      enable = true;
+  
+      # Enable local users to log in
+      # localEnable = true;
+      localUsers = true;
+  
+      # Enable write permissions for FTP users
+      writeEnable = true;
+  
+      # Set the local root directory for the user 'makano'
+      localRoot = "/home/makano";
+  
+      # Enable passive mode
+      # pasvEnable = true;
+      # pasvMinPort = 10000;
+      # pasvMaxPort = 10100;
+  
+      # Disable anonymous login
+      # anonymousEnable = false;
+  	  # extraConfig = ''
+		# anonymousEnable=Yes
+  	  # '';
+  	  extraConfig = ''
+  	    pasv_enable=Yes
+  	    pasv_min_port=10000
+  	    pasv_max_port=10100
+  	  '';
+      # Chroot local users to their home directory
+      # chrootLocalUser = true;
+
+      userlist = [ "makano" ];
+      userlistEnable = true;
+  };
+  networking.firewall.allowedTCPPortRanges = [ { from = 10000; to = 10100; } ];
+    
   # services.xserver = {
   	# enable = true;
   	# displayManager.gdm.enable = true;

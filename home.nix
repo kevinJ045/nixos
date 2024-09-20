@@ -160,7 +160,7 @@ in
   		    ];
   		};
   		bind = [
-  			"$mainMod, Q, exec, $asrcPath/dontkillsteam.sh"
+  			"$mainMod, Q, killactive"
   			"$mainMod, delete, exit, "
   			"$mainMod, W, togglefloating, "
   			"$mainMod, G, togglegroup, "
@@ -328,14 +328,23 @@ in
     enable = true;
     systemd.enable = true;
     extraConfig = ''
-	exec "/home/makano/.config/scripts/swaystart.sh"
-    '';
+	bindgesture swipe:right workspace prev
+	bindgesture swipe:left workspace next
+	'';
     config = rec {
+      startup = [
+      	{ command = "$asrcPath/lowbattery.sh"; }
+      	{ command = "blueman-applet"; }
+      	{ command = "nm-applet --indicator"; }
+      	{ command = "nm-applet --indicator"; }
+      	{ command = "wl-paste --type text --watch cliphist store"; }
+      	{ command = "wl-paste --type image --watch cliphist store"; }
+      ];
       modifier = "Mod4";
       terminal = "foot";
       menu = "pkill -x wmenu-run || ${pkgs.wmenu}/bin/wmenu-run -i -N 1e1e2e -n 89b4fa -M 1e1e2e -m 89b4fa -S 89b4fa -s cdd6f4";
       fonts = {
-        names = [ "Noto Sans" "FontAwesome" ];
+        names = [ "JetBrains Mono" "FontAwesome" ];
         style = "Bold Semi-Condensed";
         size = 11.0;
       };
@@ -375,13 +384,39 @@ in
       keybindings = let modifier = config.wayland.windowManager.sway.config.modifier;  in lib.mkOptionDefault {
         "${modifier}+b" = "exec chromium";
         "${modifier}+c" = "exec code";
-        "${modifier}+shift+d" = "exec wofi";
+        "${modifier}+t" = "exec foot";
+        
+        "${modifier}+l" = "exec swaylock";
         
         "${modifier}+Tab" = "workspace back_and_forth";
+        "${modifier}+Shift+p" = ''
+		  sh -c "swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true) | {app_id, pid, name, id, shell, window}' | jq -r 'to_entries[] | \"\(.key | ascii_upcase)\t\n\(.value)\"' | zenity --list --title=\"Window Properties\" --column=\"Field\" --column=\"Value\" --width=400 --height=300"
+		'';
         
-        "${modifier}+t" = "exec foot";
+        "${modifier}+Shift+b" = "bar mode toggle";
+
+        "${modifier}+Delete" = ''
+          exec sh -c "echo -e 'No\nYes' | ${pkgs.wmenu}/bin/wmenu -l 2 -p 'Exit Sway?' | grep -q Yes && swaymsg exit"
+        '';
+        
         "${modifier}+p" = "exec swaylock";
         "${modifier}+q" = "kill";
+        
+        "${modifier}+a" = "exec pkill -x wofi || wofi";
+
+        "XF86AudioMute" = "exec /home/makano/.config/scripts/volumecontrol.sh -o m";
+        "XF86AudioMicMute" = "exec /home/makano/.config/scripts/volumecontrol.sh -i m";
+        "XF86AudioPlay" = "exec playerctl play-pause";
+        "XF86AudioPause" = "exec playerctl play-pause";
+        "XF86AudioNext" = "exec playerctl next";
+        "XF86AudioPrev" = "exec playerctl previous";
+        
+        "XF86AudioLowerVolume" = "exec /home/makano/.config/scripts/volumecontrol.sh -o d";
+        "XF86AudioRaiseVolume" = "exec /home/makano/.config/scripts/volumecontrol.sh -o i";
+        
+        "XF86MonBrightnessUp" = "exec /home/makano/.config/scripts/brightnesscontrol.sh i";
+        "XF86MonBrightnessDown" = "exec /home/makano/.config/scripts/brightnesscontrol.sh d";
+        
         "Print" = "exec /home/makano/.config/scripts/screenshot.sh s";
      };
     };
@@ -700,7 +735,7 @@ in
     	    transition: all 0.5s cubic-bezier(.55,-0.68,.48,1.682);
     	}
     	
-    	#workspaces button.active {
+    	#workspaces button.active, #workspaces button.focused {
     	    background: @wb-act-bg;
     	    color: @wb-act-fg;
     	    margin-left: 3px;
@@ -709,6 +744,10 @@ in
     	    margin-right: 3px;
     	    animation: gradient_f 20s ease-in infinite;
     	    transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
+    	}
+
+    	#workspaces button.urgent{
+    		background: @wb-hvr-bg;
     	}
     	
     	#workspaces button:hover {
@@ -842,7 +881,7 @@ in
         passthrough = false;
         gtk-layer-shell = true;
 
-        modules-left = ["custom/padd" "custom/l_end" "cpu" "memory" "custom/gpuinfo" "custom/r_end" "custom/l_end" "idle_inhibitor" "clock" "custom/r_end" "custom/l_end" "hyprland/workspaces" "custom/r_end" "custom/padd"];
+        modules-left = ["custom/padd" "custom/l_end" "cpu" "memory" "custom/gpuinfo" "custom/r_end" "custom/l_end" "idle_inhibitor" "clock" "custom/r_end" "custom/l_end" "sway/workspaces" "custom/r_end" "custom/padd"];
        	modules-center = ["custom/padd" "custom/l_end" "wlr/taskbar" "custom/r_end" "custom/padd"];
        	modules-right = ["custom/padd" "custom/l_end" "backlight" "network" "bluetooth" "pulseaudio" "custom/r_end" "custom/l_end" "tray" "battery" "custom/r_end" "custom/l_end" "custom/wallchange" "custom/cliphist" "custom/power" "custom/r_end" "custom/padd"];
 
@@ -903,12 +942,26 @@ in
 			};
 		};
 		
-		"hyprland/workspaces" = {
+		"sway/workspaces" = {
 			disable-scroll = true;
 			all-outputs = true;
-			active-only = false;
+			active-only = true;
 			on-click = "activate";
 			persistent-workspaces = {};
+			format = "{icon}";
+			format-icons = {
+				"1" = "";
+				"2" = "";
+				"3" = "";
+				"4" = "";
+				"5" = "";
+				"6" = "";
+				"7" = "";
+				"8" = "";
+				"9" = "󰌳";
+				"10" = "";
+				default = "";
+			};
 		};
 		
 		"wlr/taskbar" = {
