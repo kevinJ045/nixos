@@ -34,7 +34,8 @@
 
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
-  # hardware.pulseaudio.enable = true;
+  
+  services.pulseaudio.enable = false;
 
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
@@ -79,6 +80,7 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
+    wireplumber.enable = true;
   };
 
   programs.zsh.enable = true;
@@ -87,9 +89,10 @@
     isNormalUser = true;
     home = "/home/makano";
     description = "Makano";
-    extraGroups = ["wheel" "networkmanager" "audio" "sound" "video"];
+    extraGroups = ["wheel" "libvirtd" "kvm" "networkmanager" "audio" "sound" "video"];
     packages = with pkgs; [
       flatpak
+      godot_4
     ];
     shell = pkgs.zsh;
   };
@@ -124,6 +127,7 @@
     android-tools
     blueman
     blender
+    # nanovdb
     baobab
     bottles
     bun
@@ -143,10 +147,12 @@
 	firefox
 	flutter
 	file-roller
+	# fragments
 	gcc-unwrapped
     gimp
     gthumb
     gnome-tweaks
+    gnome-boxes
     gparted
     grim
     glib
@@ -159,9 +165,10 @@
     inetutils
     jq
     killall
-    kooha
+    # kooha
     hyprpaper
     libnotify
+    linuxHeaders
     lm_sensors
     # logseq
     lshw
@@ -177,6 +184,8 @@
     # ngrok
     nodePackages_latest.nodejs
     openjdk17-bootstrap
+    obs-studio
+    # pavucontrol
     pamixer
     pciutils
     playerctl
@@ -197,7 +206,7 @@
     smartmontools
     swappy
     swww
-    steam
+    # steam
     telegram-desktop
     vlc
     vscode
@@ -223,26 +232,46 @@
     wineWow64Packages.waylandFull
     zenity
 
-    (let base = pkgs.appimageTools.defaultFhsEnvArgs; in
-      pkgs.buildFHSUserEnv (base // {
-      name = "fhs";
-      targetPkgs = pkgs: (
-        (base.targetPkgs pkgs) ++ [
-          pkgs.pkg-config
-          pkgs.ncurses
-          libffi
-          pcre2
-          xorg.libXpm
-          libepoxy
-        ]
-      );
-      profile = "export FHS=1";
-      runScript = "zsh";
-      extraOutputsToInstall = ["dev"];
-    }))
+    # (let base = pkgs.appimageTools.defaultFhsEnvArgs; in
+    #   pkgs.buildFHSEnv (base // {
+    #   name = "fhs";
+    #   targetPkgs = pkgs: (
+    #     (base.targetPkgs pkgs) ++ [
+    #       pkgs.pkg-config
+    #       pkgs.ncurses
+    #       libffi
+    #       pcre2
+    #       xorg.libXpm
+    #       libepoxy
+    #     ]
+    #   );
+    #   profile = "export FHS=1";
+    #   runScript = "zsh";
+    #   extraOutputsToInstall = ["dev"];
+    # }))
   ];
 
   virtualisation.waydroid.enable = true;
+  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enableExtensionPack = true;
+  
+
+  virtualisation.libvirtd = {
+	enable = true;
+	qemu = {
+	    package = pkgs.qemu_kvm;
+	    runAsRoot = true;
+	    swtpm.enable = true;
+	    ovmf = {
+	      enable = true;
+	      packages = [(pkgs.OVMF.override {
+	        secureBoot = true;
+	        tpmSupport = true;
+	      }).fd];
+	    };
+	};
+  };
+	
   
   fonts.fontDir.enable = true;
   fonts.packages = with pkgs; [
@@ -253,7 +282,7 @@
     fira-code-symbols
     font-awesome
     jetbrains-mono
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    nerd-fonts.fira-code
   ];
 
   xdg = {

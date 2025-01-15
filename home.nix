@@ -330,10 +330,12 @@ in
     extraConfig = ''
 	bindgesture swipe:right workspace prev
 	bindgesture swipe:left workspace next
+	
+	for_window [app_id="zenity"] floating enable
 	'';
     config = rec {
       startup = [
-      	{ command = "$asrcPath/lowbattery.sh"; }
+      	{ command = "/home/makano/.config/scripts/lowbattery.sh"; }
       	{ command = "blueman-applet"; }
       	{ command = "nm-applet --indicator"; }
       	{ command = "nm-applet --indicator"; }
@@ -390,13 +392,13 @@ in
         
         "${modifier}+Tab" = "workspace back_and_forth";
         "${modifier}+Shift+p" = ''
-		  exec sh -c "swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true) | {app_id, pid, name, id, shell, window}' | jq -r 'to_entries[] | \"\(.key | ascii_upcase)\t\n\(.value)\"' | zenity --list --title=\"Window Properties\" --column=\"Field\" --column=\"Value\" --width=400 --height=300"
-		'';
+          exec swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true) | {app_id, pid, name, id, shell, window}' | jq -r 'to_entries[] | "\(.key | ascii_upcase)\t\n\(.value)"' | zenity --list --title="Window Properties" --column="Field" --column="Value" --width=400 --height=300
+        '';
         
         "${modifier}+Shift+b" = "exec pkill -SIGUSR1 waybar";
         
         "${modifier}+Delete" = ''
-          exec sh -c "echo -e 'No\nYes' | ${pkgs.wmenu}/bin/wmenu -l 2 -p 'Exit Sway?' | grep -q Yes && swaymsg exit"
+          exec sh -c "echo -e 'No\nYes' | ${pkgs.wmenu}/bin/wmenu -N 1e1e2e -n 89b4fa -M 1e1e2e -m 89b4fa -S 89b4fa -s cdd6f4 -l 2 -p 'Exit Sway?' | grep -q Yes && swaymsg exit"
         '';
         
         "${modifier}+p" = "exec swaylock";
@@ -1189,7 +1191,7 @@ in
     	LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
     };
     initExtra = ''
-	export PATH="$PATH:$HOME/portables/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/.local/share/scripts/bin"
+	export PATH="$PATH:$HOME/exploit/bin:$HOME/portables/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/.local/share/scripts/bin"
 	export MICRO_TRUECOLOR=1
 
 	alias game64="WINEPREFIX=/home/makano/Games/wine64 wine64"
