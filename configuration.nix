@@ -13,7 +13,8 @@
   # boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
   boot.extraModprobeConfig = ''
 	options usbcore use_both_schemes=y
@@ -35,7 +36,12 @@
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
   
-  services.pulseaudio.enable = false;
+  hardware.pulseaudio.enable = false;
+  hardware.pulseaudio.support32Bit = false;
+
+  hardware.graphics.extraPackages = [
+  	pkgs.gamescope-wsi
+  ];
 
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
@@ -46,6 +52,10 @@
   networking.firewall.allowedTCPPorts = [
       20    # FTP Data Port
       21    # FTP Command Port
+      22    # SSH
+      3000  # Server
+      3001  # Server
+      5000  # Server
       10000 # Passive FTP range start
       10100 # Passive FTP range end
   ];
@@ -54,24 +64,36 @@
 
   services.fwupd.enable = true;
 
+  services.ollama = {
+    enable = true;
+    # Optional: load models on startup
+    loadModels = [ "deepseek-r1:1.5b" ];
+  };
+
+  services.scx = {
+    enable = true;
+    scheduler = "scx_lavd"; # https://github.com/sched-ext/scx/blob/main/scheds/rust/scx_lavd/README.md
+  };
+
   security.polkit.enable = true;
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
-      wantedBy = [ "graphical-session.target" ];
-      wants = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
+      wantedBy = [ "sway-session.target" "graphical-session.target" ];
+      wants = [ "sway-session.target" "graphical-session.target" ];
+      after = [ "sway-session.target" "graphical-session.target" ];
       serviceConfig = {
           Type = "simple";
           ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
           Restart = "on-failure";
           RestartSec = 1;
           TimeoutStopSec = 10;
-        };
+      };
     };
   };
 
   security.pam.services.swaylock = {};
+  security.pam.services.systemd-run0 = {};
 
   security.rtkit.enable = true;
   services.pipewire = {
@@ -93,6 +115,7 @@
     packages = with pkgs; [
       flatpak
       godot_4
+      eza
     ];
     shell = pkgs.zsh;
   };
@@ -137,7 +160,7 @@
     cliphist
     cacert
     podman
-    dart
+    # darft
     distrobox
     dconf-editor
     # droidmote
@@ -147,12 +170,14 @@
 	firefox
 	flutter
 	file-roller
+	folio
+	freetype
 	# fragments
 	gcc-unwrapped
     gimp
     gthumb
     gnome-tweaks
-    gnome-boxes
+    # gnome-boxes
     gparted
     grim
     glib
@@ -165,6 +190,7 @@
     inetutils
     jq
     killall
+    krita
     # kooha
     hyprpaper
     libnotify
@@ -176,15 +202,19 @@
     lxappearance
     mate.caja-with-extensions
     mate.caja-extensions
+    micro
     # mongodb
     ncdu
+    ntfs3g
     nautilus
     networkmanagerapplet
     # nix-autobahn
     # ngrok
     nodePackages_latest.nodejs
+    # nodejs_22
     openjdk17-bootstrap
     obs-studio
+    onlyoffice-desktopeditors
     # pavucontrol
     pamixer
     pciutils
@@ -197,6 +227,7 @@
     python312Packages.tqdm 
     python312Packages.tkinter
     python312Packages.setuptools
+    pods
     ranger
     remmina
     rcm
@@ -206,8 +237,9 @@
     smartmontools
     swappy
     swww
-    # steam
+    sushi
     telegram-desktop
+    turtle
     vlc
     vscode
     weechat
@@ -232,30 +264,42 @@
     wineWow64Packages.waylandFull
     zenity
 
-    # (let base = pkgs.appimageTools.defaultFhsEnvArgs; in
-    #   pkgs.buildFHSEnv (base // {
-    #   name = "fhs";
-    #   targetPkgs = pkgs: (
-    #     (base.targetPkgs pkgs) ++ [
-    #       pkgs.pkg-config
-    #       pkgs.ncurses
-    #       libffi
-    #       pcre2
-    #       xorg.libXpm
-    #       libepoxy
-    #     ]
-    #   );
-    #   profile = "export FHS=1";
-    #   runScript = "zsh";
-    #   extraOutputsToInstall = ["dev"];
-    # }))
+    (let base = pkgs.appimageTools.defaultFhsEnvArgs; in
+      pkgs.buildFHSUserEnv (base // {
+      name = "fhs";
+      targetPkgs = pkgs: (
+        (base.targetPkgs pkgs) ++ [
+          pkgs.pkg-config
+          pkgs.ncurses
+          libffi
+          pcre2
+          xorg.libXpm
+          libepoxy
+          pkgs.python3
+        ]
+      );
+      profile = "export FHS=1";
+      runScript = "zsh";
+      extraOutputsToInstall = ["dev"];
+    }))
   ];
 
   virtualisation.waydroid.enable = true;
-  virtualisation.virtualbox.host.enable = true;
-  virtualisation.virtualbox.host.enableExtensionPack = true;
-  
+  # virtualisation.virtualbox.host.enable = true;
+  # virtualisation.virtualbox.host.enableExtensionPack = true;
 
+  programs.steam = {
+  	enable = true;
+  	extraCompatPackages = [ pkgs.proton-ge-bin ];
+    extest = {
+    	enable = true;
+    };
+    gamescopeSession = {
+    	enable = true;
+		args = [ "--expose-wayland" "-e" ];
+    };
+  };
+	
   virtualisation.libvirtd = {
 	enable = true;
 	qemu = {
@@ -282,7 +326,10 @@
     fira-code-symbols
     font-awesome
     jetbrains-mono
-    nerd-fonts.fira-code
+    # nerd-fonts.fira-code
+    (nerdfonts.override {
+    	fonts = [ "FiraCode" "DroidSansMono" ];
+    })
   ];
 
   xdg = {
@@ -342,8 +389,17 @@
       userlist = [ "makano" ];
       userlistEnable = true;
   };
-  networking.firewall.allowedTCPPortRanges = [ { from = 10000; to = 10100; } ];
-    
+  networking.firewall.allowedTCPPortRanges = [
+    { from = 10000; to = 10100; }
+    { from = 1714; to = 1764; }
+  ];
+  networking.firewall.allowedUDPPortRanges = [ 
+      { from = 1714; to = 1764; } # KDE Connect
+  ];
+  services.xserver.enable = true;
+  services.xserver.windowManager.i3.enable = true;
+  services.xserver.displayManager.startx.enable = true;
+        
   # services.xserver = {
   	# enable = true;
   	# displayManager.gdm.enable = true;
@@ -368,7 +424,7 @@
     enable = true;
     ports = [ 22 ];
     settings = {
-      PasswordAuthentication = false;
+      PasswordAuthentication = true;
       AllowUsers = null; # Allows all users by default. Can be [ "user1" "user2" ]
       UseDns = true;
       X11Forwarding = false;
@@ -382,10 +438,24 @@
       enableSSHSupport = true;
   };
 
+  # services.getty.autologinUser = "makano";
+    
+  services.greetd = {
+	enable = true;
+	settings = rec {
+		initial_session = {
+			command = "dbus-run-session sway";
+			user = "makano";
+		};
+		default_session = initial_session;
+	};
+  };
+
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
   programs.dconf.enable = true;
+  programs.kdeconnect.enable = true;
   
   programs.nix-ld.enable = true;
 

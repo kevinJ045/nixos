@@ -1,0 +1,57 @@
+#!/bin/sh
+
+# Function to calculate the health percentage of a device
+calculate_health() {
+    device=$1
+
+    # Check the overall SMART health
+    overall_health=$(smartctl -H $device | grep -i "SMART overall-health self-assessment test result" | awk '{print $6}')
+
+    # Initialize health at 100%
+    health=100
+
+    # If the device is failing, reduce health
+    if [[ "$overall_health" != "PASSED" ]]; then
+        echo "$device: SMART test result FAILED. Reducing health."
+        health=$((health - 40))  # Reduce health by 40 if test result is not passed
+    fi
+
+    # Get the Reallocated Sectors count
+    reallocated_sectors=$(smartctl -A $device | grep -i "Reallocated_Sector_Ct" | awk '{print $10}')
+    if [[ -n "$reallocated_sectors" && "$reallocated_sectors" -gt 0 ]]; then
+        echo "$device: Reallocated sectors detected. Reducing health."
+        health=$((health - 20))  # Reduce health by 20 for any reallocated sectors
+    fi
+
+    # Get the Power On Hours and assume that over 20,000 hours may reduce health
+    power_on_hours=$(smartctl -A $device | grep -i "Power_On_Hours" | awk '{print $10}')
+    if [[ -n "$power_on_hours" && "$power_on_hours" -gt 20000 ]]; then
+        echo "$device: High Power-On Hours ($power_on_hours). Reducing health."
+        health=$((health - 10))  # Reduce health by 10 for high power-on hours
+    fi
+
+    # Check temperature for very high temperatures (optional)
+    temperature=$(smartctl -A $device | grep -i "Temperature_Celsius" | awk '{print $10}')
+    if [[ -n "$temperature" && "$temperature" -gt 50 ]]; then
+        echo "$device: High temperature detected ($temperature°C). Reducing health."
+        health=$((health - 10))  # Reduce health by 10 if the temperature is high
+    fi
+
+    # Print the final health percentage
+    if (( health < 0 )); then
+        health=0
+    fi
+    echo "$device: Health is at $health%"
+}
+
+# List of devices (can add more devices as needed)
+devices=("/dev/sdb")
+
+# Loop through devices and calculate health for each
+for device in "${devices[@]}"; do
+    if [[ -b "$device" ]]; then
+        calculate_health $device
+    else
+        echo "$device: Device not found or not a block device."
+    fi
+done

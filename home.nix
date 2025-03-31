@@ -333,6 +333,10 @@ in
 	
 	for_window [app_id="zenity"] floating enable
 	'';
+	wrapperFeatures = {
+		base = true;
+		gtk = true;
+    };
     config = rec {
       startup = [
       	{ command = "/home/makano/.config/scripts/lowbattery.sh"; }
@@ -352,7 +356,7 @@ in
       };
       output = {
         "*" = {
-          bg = "${builtins.fetchurl { url = "https://images.hdqwalls.com/download/1/beach-seaside-digital-painting-4k-05.jpg"; sha256 = "2877925e7dab66e7723ef79c3bf436ef9f0f2c8968923bb0fff990229144a3fe"; }} fill";
+          bg = "${builtins.fetchurl { url = "https://raw.githubusercontent.com/Sahil-958/walls/refs/heads/main/hyprdots/Catppuccin-Mocha/cat_leaves.png"; sha256 = "1894y61nx3p970qzxmqjvslaalbl2skj5sgzvk38xd4qmlmi9s4i"; }} fill";
           # bg = "/home/makano/.config/background fill"; # "${builtins.fetchurl { url = "https://images.hdqwalls.com/download/1/beach-seaside-digital-painting-4k-05.jpg"; sha256 = "2877925e7dab66e7723ef79c3bf436ef9f0f2c8968923bb0fff990229144a3fe"; }} fill";
         };
       };
@@ -969,7 +973,7 @@ in
 		"wlr/taskbar" = {
 			format = "{icon}";
 			icon-size = 18;
-			icon-theme = "Dracula";
+			icon-theme = "ePapirus-Dark";
 			spacing = 0;
 			tooltip-format = "{title}";
 			on-click = "activate";
@@ -1198,11 +1202,32 @@ in
 	alias game32="WINEPREFIX=/home/makano/Games/wine32 wine"
 
 	bindkey '^H' backward-kill-word
+
+	alias -- exai='exa --icons'
+	alias -- la='exai -a'
+	alias -- ll='exai -l'
+	alias -- lla='exai -la'
+	alias -- ls=exai
+	alias -- lt='exai --tree'
+
+	#if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+		#exec dbus-run-session sway
+	#fi
+	
     '';
   };
 
   gtk = {
     enable = true;
+    gtk3.bookmarks = [
+    	"file:///home/makano/Documents"
+    	"file:///home/makano/Downloads"
+    	"file:///home/makano/Games"
+    	"file:///home/makano/Music"
+    	"file:///home/makano/Pictures"
+    	"file:///home/makano/Videos"
+    	"file:///home/makano/workspace"
+    ];
     # iconTheme = {
     	# package = pkgs.gnome.adwaita-icon-theme;
     	# name = "Adwaita";
@@ -1210,13 +1235,29 @@ in
     	# package = pkgs.dracula-icon-theme;
     	# name = "Dracula";
     # };
-    iconTheme = {
-    	package = pkgs.dracula-icon-theme;
-    	name = "Dracula";
-    };
+    # iconTheme = {
+    # 	package = pkgs.papirus-icon-theme;
+    # 	name = "Papirus-Dark";
+    # };
+    # iconTheme = {
+    # 	package = pkgs.colloid-icon-theme;
+    # 	name = "Colloid-Dark";
+    # };
     # iconTheme = {
     # 	package = pkgs.kora-icon-theme;
     # 	name = "kora";
+    # };
+    # iconTheme = {
+    # 	package = pkgs.reversal-icon-theme;
+    # 	name = "Reversal";
+    # };
+    iconTheme = {
+    	package = pkgs.epapirus-icon-theme;
+    	name = "ePapirus-Dark";
+    };
+    # iconTheme = {
+    # 	package = pkgs.marwaita-icons;
+    # 	name = "Marwaita-Dark";
     # };
     cursorTheme = {
     	package = lib.mkForce pkgs.google-cursor;
@@ -1253,6 +1294,8 @@ in
   xdg = {
     enable = true;
   };
+  home.preferXdgDirectories = true;
+  
 
   programs.fzf = {
     enable = true;
@@ -1410,14 +1453,14 @@ in
     };
   };
 
-  programs.eza = {
-  	enable = true;
-  	enableZshIntegration = true;
-  	enableBashIntegration = true;
-	extraOptions = [
-		"--icons"
-	];
-  };
+  # programs.eza = {
+  	# enable = true;
+    # enableZshIntegration = true;
+ 	# enableBashIntegration = true;
+	# extraOptions = [
+	# 	"--icons"
+	# ];
+  # };
 
   programs.gh = {
     enable = true;

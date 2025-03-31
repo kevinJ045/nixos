@@ -17,6 +17,13 @@ else
 	ddirname="Misc"
 fi
 
+maindir=~/Downloads
+
+if [[ $2 ]];
+then
+  maindir=$2
+fi
+
 echo Downloading $url at $ddirname
 
-curl -L -O --output-dir ~/Downloads/$ddirname --retry 999 --retry-max-time 0 -C - $url
+curl -L -O --output-dir $maindir/$ddirname --retry 999 --retry-max-time 0 -C - $url
