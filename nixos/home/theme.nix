@@ -40,6 +40,10 @@ in
     };
   };
 
+  home.file."${config.home.homeDirectory}/.themes/Catppuccin-Dark" = {
+    source = "${catppuccin-gtk-theme}/share/themes/Catppuccin-Dark";
+  };
+
   qt = {
     enable = true;
     platformTheme.name = "kvantum";

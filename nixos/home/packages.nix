@@ -279,6 +279,7 @@
     slurp
     vscode-langservers-extracted
     weechat
+    gsettings-desktop-schemas
   ];
 
   programs.direnv = {
