@@ -3,13 +3,18 @@
 {
   programs.vscode = {
     enable = true;
-    profiles.makano = {
+    # profiles.makano = {
       keybindings = [
         {
           key = "ctrl+d";
           command = "editor.action.duplicateSelection";
           when = "textInputFocus";
-        },
+        }
+        {
+          key = "ctrl+shift+d";
+          command = "editor.action.addSelectionToNextFindMatch";
+          when = "editorFocus";
+        }
       ];
       userSettings = {
         "editor.tabSize" = 2;
@@ -18,6 +23,6 @@
         "explorer.confirmPasteNative" = false;
         "explorer.confirmDragAndDrop" = false;
       };
-    };
+    # };
   };
 }
