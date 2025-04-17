@@ -1,3 +1,0 @@
-#!/bin/sh
-xinput set-prop "YSPRINGTECH USB OPTICAL MOUSE" "libinput Natural Scrolling Enabled" 1
-xinput set-prop "YK 2.4G Wireless Device Mouse" "libinput Natural Scrolling Enabled" 1

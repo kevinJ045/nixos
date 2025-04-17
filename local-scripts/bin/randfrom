@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-	node /home/makano/.bin/bin/exec/randfrom/index.js $*
