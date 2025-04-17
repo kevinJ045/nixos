@@ -1,5 +1,5 @@
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   imports =
@@ -32,12 +32,13 @@
     allowUnfree = true;
     allowInsecure = true;
   };
-
+	
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
-  
-  hardware.pulseaudio.enable = false;
-  hardware.pulseaudio.support32Bit = false;
+
+  # sound.enable = true;
+  # hardware.pulseaudio.enable = false;
+  # hardware.pulseaudio.support32Bit = false;
 
   hardware.graphics.extraPackages = [
   	pkgs.gamescope-wsi
@@ -111,7 +112,7 @@
     isNormalUser = true;
     home = "/home/makano";
     description = "Makano";
-    extraGroups = ["wheel" "libvirtd" "kvm" "networkmanager" "audio" "sound" "video"];
+    extraGroups = ["wheel" "bluetooth" "input" "libvirtd" "kvm" "networkmanager" "audio" "sound" "video"];
     packages = with pkgs; [
       flatpak
       godot_4
@@ -191,6 +192,7 @@
     jq
     killall
     krita
+    kando
     # kooha
     hyprpaper
     libnotify
@@ -208,6 +210,7 @@
     ntfs3g
     nautilus
     networkmanagerapplet
+    inputs.nix-software-center.packages.${system}.nix-software-center
     # nix-autobahn
     # ngrok
     nodePackages_latest.nodejs
@@ -218,6 +221,7 @@
     # pavucontrol
     pamixer
     pciutils
+    pulseaudio
     playerctl
     ppsspp
     python3
@@ -227,6 +231,7 @@
     python312Packages.tqdm 
     python312Packages.tkinter
     python312Packages.setuptools
+    python312Packages.ds4drv
     pods
     ranger
     remmina
@@ -241,7 +246,6 @@
     telegram-desktop
     turtle
     vlc
-    vscode
     weechat
     wine
     wine64
@@ -444,7 +448,7 @@
 	enable = true;
 	settings = rec {
 		initial_session = {
-			command = "dbus-run-session sway";
+			command = "sh -c 'LD_LIBRARY_PATH=\"\" dbus-run-session Hyprland'";
 			user = "makano";
 		};
 		default_session = initial_session;
@@ -452,6 +456,7 @@
   };
 
   hardware.bluetooth.enable = true;
+  # hardware.bluetooth.package = pkgs.bluezFull;
   hardware.bluetooth.powerOnBoot = true;
 
   programs.dconf.enable = true;

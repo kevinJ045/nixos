@@ -7,6 +7,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     catppuccin.url = "github:catppuccin/nix";
+    nix-software-center.url = "github:snowfallorg/nix-software-center";
     # nvimdots.url = "github:ayamir/nvimdots";
   };
 	# nvimdots
@@ -24,7 +25,8 @@
             home-manager.users.makano = {
               imports = [
                 ./home.nix
-                catppuccin.homeManagerModules.catppuccin
+                catppuccin.homeModules.catppuccin
+                # catppuccin.homeManagerModules.catppuccin
                 # nvimdots.homeManagerModules.nvimdots
               ];
             };

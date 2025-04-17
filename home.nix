@@ -13,6 +13,10 @@ let
     shade = "dark";
     size = "standard";
   };
+  bg_wallpaper = builtins.fetchurl {
+  	url = "https://raw.githubusercontent.com/Sahil-958/walls/refs/heads/main/hyprdots/Catppuccin-Mocha/cat_leaves.png";
+  	sha256 = "1894y61nx3p970qzxmqjvslaalbl2skj5sgzvk38xd4qmlmi9s4i";
+  };
 in
 {
   home.username = "makano";
@@ -62,6 +66,8 @@ in
   	};
   };
 
+  # wayland.windowManager.gnome
+
 
   wayland.windowManager.hyprland = {
   	enable = true;
@@ -81,6 +87,7 @@ in
   			"wl-paste --type text --watch cliphist store"
   			"wl-paste --type image --watch cliphist store"
   			"hyprpaper"
+  			"konda"
   		];
   		exec = [
   			# Cursor
@@ -167,6 +174,7 @@ in
   			"$mainMod, F, fullscreen, "
   			"$mainMod, L, exec, swaylock "
   			"$mainMod, backspace, exec, $asrcPath/logoutlaunch.sh 1 "
+  			"$mainMod, space, exec, kando -m main "
   			
   			''$mainMod SHIFT, P, exec, foot -e sh -c "hyprctl activewindow && read"''
   			
@@ -178,7 +186,8 @@ in
   			
   			"$mainMod SHIFT, B, exec, pkill waybar -SIGUSR1"
   			
-  			"$mainMod, D, exec, pkill -x wofi || wofi"
+  			"$mainMod, A, exec, pkill -x wofi || wofi"
+  			"$mainMod, D, exec, pkill -x wmenu-run || ${pkgs.wmenu}/bin/wmenu-run -i -N 1e1e2e -n 89b4fa -M 1e1e2e -m 89b4fa -S 89b4fa -s cdd6f4"
   			"$mainMod, tab, workspace, previous"
   			
   			"$mainMod, P, exec, $asrcPath/screenshot.sh p "
@@ -887,7 +896,7 @@ in
         passthrough = false;
         gtk-layer-shell = true;
 
-        modules-left = ["custom/padd" "custom/l_end" "cpu" "memory" "custom/gpuinfo" "custom/r_end" "custom/l_end" "idle_inhibitor" "clock" "custom/r_end" "custom/l_end" "sway/workspaces" "custom/r_end" "custom/padd"];
+        modules-left = ["custom/padd" "custom/l_end" "cpu" "memory" "custom/gpuinfo" "custom/r_end" "custom/l_end" "idle_inhibitor" "clock" "custom/r_end" "custom/l_end" "hyprland/workspaces" "custom/r_end" "custom/padd"];
        	modules-center = ["custom/padd" "custom/l_end" "wlr/taskbar" "custom/r_end" "custom/padd"];
        	modules-right = ["custom/padd" "custom/l_end" "backlight" "network" "bluetooth" "pulseaudio" "custom/r_end" "custom/l_end" "tray" "battery" "custom/r_end" "custom/l_end" "custom/wallchange" "custom/cliphist" "custom/power" "custom/r_end" "custom/padd"];
 
@@ -948,10 +957,10 @@ in
 			};
 		};
 		
-		"sway/workspaces" = {
+		"hyprland/workspaces" = {
 			disable-scroll = true;
 			all-outputs = true;
-			active-only = true;
+			active-only = false;
 			on-click = "activate";
 			persistent-workspaces = {};
 			format = "{icon}";
@@ -1312,6 +1321,319 @@ in
   	};
   };
 
+  # programs.kando = {
+  # 	enable = true;
+  # };
+
+  home.file.".config/kando/config.json".text = builtins.toJSON {
+      menuTheme = "neon-lights";
+      darkMenuTheme = "default";
+      menuThemeColors = {};
+      darkMenuThemeColors = {};
+      enableDarkModeForMenuThemes = false;
+      sidebarVisible = false;
+      enableVersionCheck = true;
+      zoomFactor = 1;
+  };
+
+    home.file.".config/kando/menus.json".text = builtins.toJSON {
+      menus = [
+        {
+          root = {
+            type = "submenu";
+            name = "Main Menu";
+            icon = "target";
+            iconTheme = "material-symbols-rounded";
+            children = [
+              {
+                type = "submenu";
+                name = "Apps";
+                icon = "apps";
+                iconTheme = "material-symbols-rounded";
+                children = [
+                  {
+                    type = "command";
+                    data = { command = "chromium"; };
+                    name = "Web Browser";
+                    icon = "globe";
+                    iconTheme = "material-symbols-rounded";
+                  }
+                  {
+                    type = "command";
+                    data = { command = "code"; delayed = true; };
+                    name = "Code";
+                    icon = "deployed_code";
+                    iconTheme = "material-symbols-rounded";
+                  }
+                  {
+                    type = "command";
+                    data = { command = "nautilus"; };
+                    name = "Files";
+                    icon = "folder_copy";
+                    iconTheme = "material-symbols-rounded";
+                  }
+                  {
+                    type = "command";
+                    data = { command = "vlc"; };
+                    name = "VLC";
+                    icon = "animated_images";
+                    iconTheme = "material-symbols-rounded";
+                  }
+                  {
+                    type = "command";
+                    data = { command = "foot"; };
+                    name = "Terminal";
+                    icon = "terminal";
+                    iconTheme = "material-symbols-rounded";
+                  }
+                ];
+              }
+  
+              {
+                type = "submenu";
+                name = "Web Links";
+                icon = "public";
+                iconTheme = "material-symbols-rounded";
+                children = [
+                  {
+                    type = "uri";
+                    data = { uri = "https://www.google.com"; };
+                    name = "Google";
+                    icon = "google";
+                    iconTheme = "simple-icons";
+                  }
+                  {
+                    type = "uri";
+                    data = { uri = "https://github.com"; };
+                    name = "Github";
+                    icon = "github";
+                    iconTheme = "simple-icons";
+                  }
+                  {
+                    type = "uri";
+                    data = { uri = "https://www.youtube.com/"; };
+                    name = "YouTube";
+                    icon = "youtube";
+                    iconTheme = "simple-icons";
+                  }
+                ];
+              }
+  
+              {
+                type = "hotkey";
+                data = {
+                  hotkey = "MetaLeft+Tab";
+                  delayed = false;
+                };
+                name = "Next Workspace";
+                icon = "arrow_forward";
+                iconTheme = "material-symbols-rounded";
+              }
+  
+              {
+                type = "submenu";
+                name = "Clipboard";
+                icon = "assignment";
+                iconTheme = "material-symbols-rounded";
+                children = [
+                  {
+                    type = "hotkey";
+                    data = {
+                      hotkey = "ControlLeft+KeyV";
+                      delayed = true;
+                    };
+                    name = "Paste";
+                    icon = "content_paste_go";
+                    iconTheme = "material-symbols-rounded";
+                    angle = 90;
+                  }
+                  {
+                    type = "hotkey";
+                    data = {
+                      hotkey = "ControlLeft+KeyC";
+                      delayed = true;
+                    };
+                    name = "Copy";
+                    icon = "content_copy";
+                    iconTheme = "material-symbols-rounded";
+                  }
+                  {
+                    type = "hotkey";
+                    data = {
+                      hotkey = "ControlLeft+KeyX";
+                      delayed = true;
+                    };
+                    name = "Cut";
+                    icon = "cut";
+                    iconTheme = "material-symbols-rounded";
+                  }
+                ];
+              }
+  
+              {
+                type = "submenu";
+                name = "Audio";
+                icon = "play_circle";
+                iconTheme = "material-symbols-rounded";
+                children = [
+                  {
+                    type = "hotkey";
+                    data = {
+                      hotkey = "MediaTrackNext";
+                      delayed = false;
+                    };
+                    name = "Next Track";
+                    icon = "skip_next";
+                    iconTheme = "material-symbols-rounded";
+                    angle = 90;
+                  }
+                  {
+                    type = "hotkey";
+                    data = {
+                      hotkey = "MediaPlayPause";
+                      delayed = false;
+                    };
+                    name = "Play / Pause";
+                    icon = "play_pause";
+                    iconTheme = "material-symbols-rounded";
+                  }
+                  {
+                    type = "hotkey";
+                    data = {
+                      hotkey = "AudioVolumeMute";
+                      delayed = false;
+                    };
+                    name = "Mute";
+                    icon = "music_off";
+                    iconTheme = "material-symbols-rounded";
+                  }
+                  {
+                    type = "hotkey";
+                    data = {
+                      hotkey = "MediaTrackPrevious";
+                      delayed = false;
+                    };
+                    name = "Previous Track";
+                    icon = "skip_previous";
+                    iconTheme = "material-symbols-rounded";
+                    angle = 270;
+                  }
+                ];
+              }
+  
+              {
+                type = "submenu";
+                name = "Games";
+                icon = "stadia_controller";
+                iconTheme = "material-symbols-rounded";
+                children = [
+                  {
+                    type = "command";
+                    data = {
+                      command = "bottles-cli run -p GenshinImpact -b 'Genshin'";
+                      delayed = false;
+                    };
+                    name = "Genshin";
+                    icon = "star";
+                    iconTheme = "material-symbols-rounded";
+                  }
+                ];
+              }
+  
+              {
+                type = "hotkey";
+                data = {
+                  hotkey = "MetaLeft+Tab";
+                  delayed = false;
+                };
+                name = "Previous Workspace";
+                icon = "arrow_back";
+                iconTheme = "material-symbols-rounded";
+              }
+  
+              {
+                type = "submenu";
+                name = "Bookmarks";
+                icon = "folder_special";
+                iconTheme = "material-symbols-rounded";
+                children = [
+                  {
+                    type = "command";
+                    data = {
+                      command = "xdg-open '$(xdg-user-dir DOWNLOAD)'";
+                    };
+                    name = "Downloads";
+                    icon = "download";
+                    iconTheme = "material-symbols-rounded";
+                  }
+                  {
+                    type = "command";
+                    data = {
+                      command = "xdg-open '$(xdg-user-dir VIDEOS)'";
+                    };
+                    name = "Videos";
+                    icon = "video_camera_front";
+                    iconTheme = "material-symbols-rounded";
+                  }
+                  {
+                    type = "command";
+                    data = {
+                      command = "xdg-open '$(xdg-user-dir PICTURES)'";
+                    };
+                    name = "Pictures";
+                    icon = "imagesmode";
+                    iconTheme = "material-symbols-rounded";
+                  }
+                  {
+                    type = "command";
+                    data = {
+                      command = "xdg-open '$(xdg-user-dir DOCUMENTS)'";
+                    };
+                    name = "Documents";
+                    icon = "text_ad";
+                    iconTheme = "material-symbols-rounded";
+                  }
+                  {
+                    type = "command";
+                    data = {
+                      command = "xdg-open '$(xdg-user-dir DESKTOP)'";
+                    };
+                    name = "Desktop";
+                    icon = "desktop_windows";
+                    iconTheme = "material-symbols-rounded";
+                  }
+                  {
+                    type = "command";
+                    data = {
+                      command = "xdg-open ~";
+                    };
+                    name = "Home";
+                    icon = "home";
+                    iconTheme = "material-symbols-rounded";
+                  }
+                  {
+                    type = "command";
+                    data = {
+                      command = "xdg-open '$(xdg-user-dir MUSIC)'";
+                    };
+                    name = "Music";
+                    icon = "music_note";
+                    iconTheme = "material-symbols-rounded";
+                  }
+                ];
+              }
+            ];
+          };
+          shortcut = "";
+          shortcutID = "main";
+          centered = false;
+          anchored = false;
+        }
+      ];
+      templates = [];
+    };
+  
+
   programs.kitty = {
     enable = true;
     font = {
@@ -1361,11 +1683,12 @@ in
   xdg.configFile.hyprpaper = {
   	target = "hypr/hyprpaper.conf";
   	text = ''
-	 preload = /home/makano/.config/background
-	 wallpaper = eDP-1,/home/makano/.config/background
+	 preload = ${bg_wallpaper}
+	 wallpaper = eDP-1,${bg_wallpaper}
 	 splash = false
   	'';
   };
+  
   # , 󰌽, 
   programs.starship = {
     enable = true;
@@ -1466,6 +1789,10 @@ in
     enable = true;
   };
 
+  programs.vscode = {
+  	enable = true;
+  };
+
   catppuccin = {
     enable = true;
     flavor = "mocha";
@@ -1474,6 +1801,13 @@ in
   dconf = {
     enable = true;
   	settings."org/gnome/desktop/interface".color-scehem = "prefer-dark";	
+  	settings."org/gnome/shell" = {
+      disable-user-extensions = false;
+      enabled-extensions = with pkgs.gnomeExtensions; [
+        blur-my-shell.extensionUuid
+        gsconnect.extensionUuid
+      ];
+    };
   };
 
   home.pointerCursor = {
