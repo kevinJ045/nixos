@@ -18,7 +18,8 @@
       ];
       userSettings = {
         "editor.tabSize" = 2;
-        "editor.fontFamily" = "JetBrainsMono Nerd Font";
+        "editor.fontFamily" = "Fira Code";
+        "editor.fontLigatures" = true;
         "explorer.confirmDelete" = false;
         "explorer.confirmPasteNative" = false;
         "explorer.confirmDragAndDrop" = false;

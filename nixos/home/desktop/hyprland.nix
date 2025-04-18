@@ -131,8 +131,8 @@
   			
   			
   			"$mainMod ALT, G, exec, $asrcPath/gamemode.sh "
-  			"$mainMod, R, exec, pkill -x wmenu-run || ${pkgs.wmenu}/bin/wmenu-run -i -N 1e1e2e -n 89b4fa -M 1e1e2e -m 89b4fa -S 89b4fa -s cdd6f4"
-  			"$mainMod, V, exec, pkill -x rofi || $ascrPath/cliphist.sh c  "
+  			# "$mainMod, R, exec, pkill -x wmenu-run || ${pkgs.wmenu}/bin/wmenu-run -i -N 1e1e2e -n 89b4fa -M 1e1e2e -m 89b4fa -S 89b4fa -s cdd6f4"
+  			"$mainMod, V, exec, $asrcPath/cliphist.sh c"
   			
   			"$mainMod, left, movefocus, l"
   			"$mainMod, right, movefocus, r"

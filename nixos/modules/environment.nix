@@ -64,6 +64,7 @@
       bottles
       bun
       brightnessctl
+      chromium
       clang
       cliphist
       cacert
@@ -80,7 +81,8 @@
       file-roller
       folio
       freetype
-      # fragments
+      fragments
+      fractal
       gcc-unwrapped
       gimp
       gthumb
@@ -89,6 +91,7 @@
       gparted
       grim
       glib
+      gpu-screen-recorder-gtk
       grimblast
       gvfs
       gnome.gvfs
@@ -100,6 +103,7 @@
       killall
       krita
       kando
+      kdenlive
       # kooha
       hyprpaper
       libnotify
@@ -112,6 +116,7 @@
       mate.caja-with-extensions
       mate.caja-extensions
       micro
+      mission-center
       # mongodb
       ncdu
       ntfs3g
@@ -125,7 +130,7 @@
       openjdk17-bootstrap
       obs-studio
       onlyoffice-desktopeditors
-      # pavucontrol
+      pavucontrol
       pamixer
       pciutils
       pulseaudio
@@ -140,6 +145,12 @@
       python312Packages.setuptools
       python312Packages.ds4drv
       pods
+      # gstreamer
+      # gst-plugins-base
+      # gst-plugins-good
+      # gst-plugins-bad
+      # gst-libav
+      # pipewire
       ranger
       remmina
       rcm

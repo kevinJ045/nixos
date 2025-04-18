@@ -198,7 +198,7 @@
 
         modules-left = ["custom/padd" "custom/l_end" "cpu" "memory" "custom/gpuinfo" "custom/r_end" "custom/l_end" "idle_inhibitor" "clock" "custom/r_end" "custom/l_end" "hyprland/workspaces" "custom/r_end" "custom/padd"];
        	modules-center = ["custom/padd" "custom/l_end" "wlr/taskbar" "custom/r_end" "custom/padd"];
-       	modules-right = ["custom/padd" "custom/l_end" "backlight" "network" "bluetooth" "pulseaudio" "custom/r_end" "custom/l_end" "tray" "battery" "custom/r_end" "custom/l_end" "custom/wallchange" "custom/cliphist" "custom/power" "custom/r_end" "custom/padd"];
+       	modules-right = ["custom/padd" "custom/l_end" "backlight" "network" "bluetooth" "pulseaudio" "custom/r_end" "custom/l_end" "tray" "battery" "custom/r_end" "custom/l_end" "custom/wallchange" "custom/system" "custom/power" "custom/r_end" "custom/padd"];
 
 		cpu = {
 			interval = 10;
@@ -366,12 +366,10 @@
 			tooltip = true;
 		};
 
-		"custom/cliphist" = {
-			format = "{}";
-			exec = "echo ; echo 󰅇 clipboard history";
-			on-click = "sleep 0.1 && ~/.config/scripts/cliphist.sh c";
-			on-click-right = "sleep 0.1 && ~/.config/scripts/cliphist.sh d";
-			on-click-middle = "sleep 0.1 && ~/.confi/scripts/cliphist.sh w";
+		"custom/system" = {
+			format = "󰘚{}";
+			exec = "echo ; echo 󰘚 system monitor";
+			on-click = "sleep 0.1 && missioncenter c";
 			interval = 86400;
 			tooltip = true;
 		};
