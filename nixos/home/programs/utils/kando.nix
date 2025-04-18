@@ -37,7 +37,7 @@
                   }
                   {
                     type = "command";
-                    data = { command = "code"; delayed = true; };
+                    data = { command = "code --ozone-platform-hint=auto"; delayed = true; };
                     name = "Code";
                     icon = "deployed_code";
                     iconTheme = "material-symbols-rounded";
@@ -207,7 +207,7 @@
                   {
                     type = "command";
                     data = {
-                      command = "bottles-cli run -p GenshinImpact -b 'Genshin'";
+                      command = "gamescope -f -- bottles-cli run -p GenshinImpact -b 'Genshin'";
                       delayed = false;
                     };
                     name = "Genshin";

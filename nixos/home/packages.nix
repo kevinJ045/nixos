@@ -5,6 +5,9 @@
     (writeShellScriptBin "spaste" ''
       ${curl}/bin/curl -X POST --data-binary @- https://p.seanbehan.ca
     '')
+    (writeShellScriptBin "codew" ''
+      ${vscode}/bin/code --ozone-platform-hint=auto
+    '')
     (writeShellScriptBin "almighty-push" ''
       ${git}/bin/git add .
       ${git}/bin/git commit -m "$2"

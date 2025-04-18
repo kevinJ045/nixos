@@ -13,6 +13,8 @@
     };
   };
 
+  programs.chromium.enable = true;
+
   fonts.fontDir.enable = true;
   fonts.packages = with pkgs; [
     noto-fonts
@@ -62,7 +64,6 @@
       bottles
       bun
       brightnessctl
-      chromium
       clang
       cliphist
       cacert

@@ -17,6 +17,9 @@
   programs.dconf.enable = true;
   zramSwap.enable = true;
   services = {
+    udev.extraRules = ''
+      KERNEL=="ntsync", MODE="0660", TAG+="uaccess"
+    '';
     fwupd.enable = true;
     ollama = {
       enable = true;

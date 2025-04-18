@@ -11,6 +11,9 @@
       enable = true;
       powerOnBoot = true;
     };
+    pulseaudio = {
+      enable = false;
+    };
   };
 
   security.rtkit.enable = true;

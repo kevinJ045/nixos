@@ -8,7 +8,7 @@
   		"$asrcPath" = "~/.config/scripts";
   		"$mainMod" = "SUPER";
   		"$term" = "foot";
-  		"$editor" = "code --disable-gpu";
+  		"$editor" = "code --disable-gpu --ozone-platform-hint=auto";
   		"$file" = "nautilus";
   		"$browser" = "chromium";
   		"exec-once" = [
@@ -20,7 +20,7 @@
   			"wl-paste --type text --watch cliphist store"
   			"wl-paste --type image --watch cliphist store"
   			"hyprpaper"
-  			"konda"
+  			"kando"
   		];
   		exec = [
   			# Cursor
@@ -255,6 +255,7 @@
   		};
   		general = {
   		    border_size = 0;
+					# no_vsync = true;
   		};
   		binds = {
   			workspace_back_and_forth = "yes";
