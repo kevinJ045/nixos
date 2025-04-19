@@ -263,7 +263,7 @@
 			active-only = false;
 			on-click = "activate";
 			persistent-workspaces = {};
-			format = "{icon} ";
+			format = "{icon}";
 			format-icons = {
 				"1" = "";
 				"2" = "";

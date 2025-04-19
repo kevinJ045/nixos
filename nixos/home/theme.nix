@@ -40,6 +40,11 @@ in
     };
   };
 
+  # programs.gnome-shell.theme = {
+  #   package = catppuccin-gtk-theme;
+  #   name = "Catppuccin-Dark";
+  # };
+
   home.file."${config.home.homeDirectory}/.themes/Catppuccin-Dark" = {
     source = "${catppuccin-gtk-theme}/share/themes/Catppuccin-Dark";
   };

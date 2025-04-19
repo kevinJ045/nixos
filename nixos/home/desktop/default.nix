@@ -13,6 +13,7 @@ in
     ./waybar.nix
     ./swaylock.nix
     ./sway.nix
+    ./gnome.nix
   ];
   
   xdg = {

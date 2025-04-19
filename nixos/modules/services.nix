@@ -38,6 +38,12 @@
       enable = true;
       touchpad.tapping = true;
     };
+    # xserver = {
+    #   enable = true;
+    #   displayManager.gdm.enable = true;
+    #   displayManager.startx.enable = true;
+    #   desktopManager.gnome.enable = true;
+    # };
     vsftpd = {
       enable = true;
       localUsers = true;

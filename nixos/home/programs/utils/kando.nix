@@ -46,7 +46,7 @@
                     type = "command";
                     data = { command = "missioncenter"; delayed = true; };
                     name = "Mission Center";
-                    icon = "󰘚";
+                    icon = "monitor_heart";
                     iconTheme = "material-symbols-rounded";
                   }
                   {
