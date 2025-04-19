@@ -263,7 +263,7 @@
 			active-only = false;
 			on-click = "activate";
 			persistent-workspaces = {};
-			format = "{icon}";
+			format = "{icon} ";
 			format-icons = {
 				"1" = "";
 				"2" = "";
@@ -369,7 +369,7 @@
 		"custom/system" = {
 			format = "󰘚{}";
 			exec = "echo ; echo 󰘚 system monitor";
-			on-click = "sleep 0.1 && missioncenter c";
+			on-click = "sleep 0.1 && missioncenter";
 			interval = 86400;
 			tooltip = true;
 		};

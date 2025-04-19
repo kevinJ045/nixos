@@ -44,6 +44,13 @@
                   }
                   {
                     type = "command";
+                    data = { command = "missioncenter"; delayed = true; };
+                    name = "Mission Center";
+                    icon = "󰘚";
+                    iconTheme = "material-symbols-rounded";
+                  }
+                  {
+                    type = "command";
                     data = { command = "nautilus"; };
                     name = "Files";
                     icon = "folder_copy";
