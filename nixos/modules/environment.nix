@@ -57,6 +57,7 @@
       stdenv
       alacritty
       android-tools
+      # android-studio
       blueman
       blender
       # nanovdb
@@ -83,6 +84,7 @@
       freetype
       fragments
       fractal
+      fd
       gcc-unwrapped
       gimp
       gthumb
@@ -123,6 +125,7 @@
       nautilus
       networkmanagerapplet
       inputs.nix-software-center.packages.${system}.nix-software-center
+      inputs.zen-browser.packages."${system}".default
       # nix-autobahn
       # ngrok
       nodePackages_latest.nodejs
@@ -161,6 +164,7 @@
       swappy
       swww
       sushi
+      # sunshine
       telegram-desktop
       turtle
       vlc

@@ -10,7 +10,7 @@
   		"$term" = "foot";
   		"$editor" = "code --disable-gpu --ozone-platform-hint=auto";
   		"$file" = "nautilus";
-  		"$browser" = "chromium";
+  		"$browser" = "xdg-open https://google.com";
   		"exec-once" = [
   			"$asrcPath/lowbattery.sh"
   			"waybar"
@@ -22,6 +22,7 @@
   			"hyprpaper"
   			"kando"
   		];
+  		# monitor = "VIRTUAL-1,1920x1080@60,1920x0,1";
   		exec = [
   			# Cursor
   			"hyprctl setcursor GoogleDot-Black 12"
