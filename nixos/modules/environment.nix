@@ -55,9 +55,10 @@
     };
     systemPackages = with pkgs; [
       stdenv
+      amberol
       alacritty
       android-tools
-      # android-studio
+      android-studio
       blueman
       blender
       # nanovdb
@@ -119,6 +120,7 @@
       mate.caja-extensions
       micro
       mission-center
+      musikcube
       # mongodb
       ncdu
       ntfs3g
