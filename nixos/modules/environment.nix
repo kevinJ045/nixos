@@ -45,9 +45,9 @@
       XDG_MUSIC_DIR = "$HOME/Music";
       XDG_PICTURES_DIR = "$HOME/Pictures";
       XDG_VIDEOS_DIR = "$HOME/Videos";
-      XDG_CURRENT_DESKTOP = "Hyprland";
+      # XDG_CURRENT_DESKTOP = "Hyprland";
       XDG_SESSION_TYPE = "wayland";
-      XDG_SESSION_DESKTOP = "Hyprland";
+      # XDG_SESSION_DESKTOP = "Hyprland";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       QT_AUTO_SCREEN_SCALE_FACTOR = "1";
       MOZ_ENABLE_WAYLAND = "1";
@@ -59,6 +59,7 @@
       alacritty
       android-tools
       android-studio
+      appimage-run
       blueman
       blender
       # nanovdb
@@ -107,6 +108,9 @@
       krita
       kando
       kdenlive
+      kdePackages.kdeconnect-kde
+      kdePackages.qt6ct
+      libsForQt5.qt5ct
       # kooha
       hyprpaper
       libnotify
@@ -166,6 +170,7 @@
       swappy
       swww
       sushi
+      # swaynotificationcenter
       # sunshine
       telegram-desktop
       turtle
@@ -176,6 +181,7 @@
       wl-clipboard
       xorg.xinit
       xorg.xorgserver
+      xdg-user-dirs
       xdg-utils
       zsh-autosuggestions
       zsh-completions

@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }:
 
+
 {
 
   wayland.windowManager.hyprland = {
@@ -21,6 +22,9 @@
   			"wl-paste --type image --watch cliphist store"
   			"hyprpaper"
   			"kando"
+  			"swaync"
+  			"kdeconnect-indicator"
+  			"hypr-autostart"
   		];
   		# monitor = "VIRTUAL-1,1920x1080@60,1920x0,1";
   		exec = [

@@ -127,8 +127,9 @@
     	#taskbar,
     	#tray,
     	#custom-updates,
-    	#custom-wallchange,
+    	#custom-swaync,
     	#custom-wbar,
+    	#custom-system,
     	#window,
     	#workspaces,
     	#custom-l_end,
@@ -198,7 +199,7 @@
 
         modules-left = ["custom/padd" "custom/l_end" "cpu" "memory" "custom/gpuinfo" "custom/r_end" "custom/l_end" "idle_inhibitor" "clock" "custom/r_end" "custom/l_end" "hyprland/workspaces" "custom/r_end" "custom/padd"];
        	modules-center = ["custom/padd" "custom/l_end" "wlr/taskbar" "custom/r_end" "custom/padd"];
-       	modules-right = ["custom/padd" "custom/l_end" "backlight" "network" "bluetooth" "pulseaudio" "custom/r_end" "custom/l_end" "tray" "battery" "custom/r_end" "custom/l_end" "custom/wallchange" "custom/system" "custom/power" "custom/r_end" "custom/padd"];
+       	modules-right = ["custom/padd" "custom/l_end" "backlight" "network" "bluetooth" "pulseaudio" "custom/r_end" "custom/l_end" "tray" "battery" "custom/r_end" "custom/l_end" "custom/swaync" "custom/system" "custom/power" "custom/r_end" "custom/padd"];
 
 		cpu = {
 			interval = 10;
@@ -356,14 +357,10 @@
 			format-icons = ["󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
 		};
 		
-		"custom/wallchange" = {
-			format = "󰆊{}";
-			exec = "echo ; echo 󰆊 switch wallpaper";
-			on-click = "~/.config/scripts/swwwallpaper.sh -n";
-			on-click-right = "~/.config/scripts/swwwallpaper.sh -p";
-			on-click-middle = "sleep 0.1 && ~/.config/scripts/swwwallselect.sh";
-			interval = 86400;
-			tooltip = true;
+		"custom/swaync" = {
+			format = "{}";
+			on-click = "swaync-client -t";
+			tooltip = false;
 		};
 
 		"custom/system" = {

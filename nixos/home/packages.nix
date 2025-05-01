@@ -2,11 +2,24 @@
 
 {
   home.packages = with pkgs; [
+    (writeShellScriptBin "hypr-autostart" ''
+		AUTOSTART_SCRIPT="$HOME/.config/hypr-autostart"
+		
+		if [ -x "$AUTOSTART_SCRIPT" ]; then
+		    echo "Running user autostart: $AUTOSTART_SCRIPT"
+		    sh "$AUTOSTART_SCRIPT"
+		else
+		    echo "#!/bin/sh" > "$AUTOSTART_SCRIPT"
+		    echo "# Add your autostart commands here" >> "$AUTOSTART_SCRIPT"
+		    chmod +x "$AUTOSTART_SCRIPT"
+		    echo "Created empty autostart file at: $AUTOSTART_SCRIPT"
+		fi
+    '')
     (writeShellScriptBin "spaste" ''
-      ${curl}/bin/curl -X POST --data-binary @- https://p.seanbehan.ca
+       ${curl}/bin/curl -X POST --data-binary @- https://p.seanbehan.ca
     '')
     (writeShellScriptBin "codew" ''
-      ${vscode}/bin/code --ozone-platform-hint=auto
+      ${vscode}/bin/code --ozone-platform-hint=auto $*
     '')
     (writeShellScriptBin "almighty-push" ''
       ${git}/bin/git add .

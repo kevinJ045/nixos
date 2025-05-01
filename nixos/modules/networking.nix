@@ -9,6 +9,7 @@
     };
     wireless.iwd.enable = true;
     firewall = {
+      # enable = false;
       checkReversePath = false;
       allowedTCPPorts = [
         20 21 22    # FTP and SSH
