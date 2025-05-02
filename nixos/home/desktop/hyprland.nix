@@ -8,7 +8,8 @@
   	settings = {
   		"$asrcPath" = "~/.config/scripts";
   		"$mainMod" = "SUPER";
-  		"$term" = "foot";
+  		# "$term" = "foot";
+  		"$term" = "warp-terminal";
   		"$editor" = "code --disable-gpu --ozone-platform-hint=auto";
   		"$file" = "nautilus";
   		"$browser" = "xdg-open https://google.com";

@@ -2,6 +2,64 @@
 
 {
   home.packages = with pkgs; [
+    (writeShellScriptBin "clipsynct" ''
+
+CLSPORT=''${1:-52111}
+IPLIST_PATH="$HOME/.config/clip-iplist"
+STATE_FILE="/tmp/last_clipboard_content"
+TMP_CLIP_FILE="/tmp/current_clip_content"
+LISTENER_LOG="/tmp/clipboard_listener.log"
+
+mkdir -p "$(dirname "$STATE_FILE")"
+
+touch "$STATE_FILE"
+touch "$TMP_CLIP_FILE"
+
+readarray -t IP_LIST < "$IPLIST_PATH"
+
+get_clipboard() {
+    wl-paste -n 2>/dev/null
+}
+
+set_clipboard() {
+    echo -n "$1" | wl-copy
+}
+
+listen_for_incoming() {
+    # while true; do
+        socat -u TCP4-LISTEN:$CLSPORT,reuseaddr,fork SYSTEM:"bash -c '
+            input=\$(cat)
+            current=\$(cat \"$STATE_FILE\")
+            if [ \"\$input\" != \"\$current\" ]; then
+                echo \"\$input\" > \"$STATE_FILE\"
+                echo -n \"\$input\" | wl-copy
+            fi
+        '" >> "$LISTENER_LOG" 2>&1
+    # done
+}
+
+watch_clipboard() {
+    while true; do
+        sleep 0.3
+        current="$(get_clipboard)"
+        last="$(cat "$STATE_FILE")"
+        if [[ "$current" != "$last" ]]; then
+            echo "$current" > "$STATE_FILE"
+            for ip in "''${IP_LIST[@]}"; do
+                echo -n "$current" | socat - TCP4:"$ip:$CLSPORT" >/dev/null 2>&1 &
+            done
+        fi
+    done
+}
+
+main() {
+    listen_for_incoming &
+    watch_clipboard
+}
+
+main
+
+    '')
     (writeShellScriptBin "hypr-autostart" ''
 		AUTOSTART_SCRIPT="$HOME/.config/hypr-autostart"
 		
@@ -287,6 +345,7 @@
     nodePackages.svelte-language-server
     nodePackages.typescript-language-server
     nodePackages.prettier
+    expect
     pylint
     pyright
     python3

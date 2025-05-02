@@ -15,7 +15,8 @@
     	
     	@define-color bar-bg rgba(0, 0, 0, 0);
     	
-    	@define-color main-bg #11111b;
+    	@define-color main-bg #1e1e2e;
+    	@define-color sec-bg #313244;
     	@define-color main-fg #cdd6f4;
     	
     	@define-color wb-act-bg #a6adc8;
@@ -144,6 +145,8 @@
     	    margin: 4px 0px 4px 0px;
     	    padding-left: 4px;
     	    padding-right: 4px;
+    	    border-top: 1px solid @sec-bg;
+    	    border-bottom: 1px solid @sec-bg;
     	}
     	
     	#workspaces,
@@ -155,12 +158,14 @@
     	    border-radius: 0px 21px 21px 0px;
     	    margin-right: 9px;
     	    padding-right: 3px;
+       	    border-right: 1px solid @sec-bg;
     	}
     	
     	#custom-l_end {
     	    border-radius: 21px 0px 0px 21px;
     	    margin-left: 9px;
     	    padding-left: 3px;
+       	    border-left: 1px solid @sec-bg;
     	}
     	
     	#custom-sr_end {
@@ -288,7 +293,7 @@
 			tooltip-format = "{title}";
 			on-click = "activate";
 			on-click-middle = "close";
-			ignore-list = ["Alacritty" "foot" "kitty" "Foot"];
+			ignore-list = ["Alacritty" "foot" "warp-terminal" "kitty" "Foot"];
 		};
 		
 		backlight = {

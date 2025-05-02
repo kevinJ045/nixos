@@ -1,6 +1,18 @@
 { config, lib, pkgs, inputs, ... }:
 
+
+# let 
+#   unstable = import (fetchTarball {
+#       url = "https://github.com/NixOS/nixpkgs/archive/refs/heads/nixos-unstable.tar.gz";
+#       sha256 = "1jbmp47jvvcs6qxa5ap8j9cp7bzbsbwpwrwaj6a2higkp4s7fy6b";
+#     }) {
+#       system = "x86_64-linux";
+#       config.allowUnfree = true;
+#     };
+#   in
 {
+  nixpkgs.config.allowUnfree = true;
+
   programs.steam = {
   	enable = true;
   	extraCompatPackages = [ pkgs.proton-ge-bin ];
@@ -71,6 +83,7 @@
       clang
       cliphist
       cacert
+      clipnotify
       podman
       # darft
       distrobox
@@ -170,6 +183,7 @@
       swappy
       swww
       sushi
+      socat
       # swaynotificationcenter
       # sunshine
       telegram-desktop
@@ -197,6 +211,10 @@
       winetricks
       wineWow64Packages.waylandFull
       zenity
+
+      warp-terminal
+
+      # unstable.deskflow
 
       (let base = pkgs.appimageTools.defaultFhsEnvArgs; in
         pkgs.buildFHSUserEnv (base // {
