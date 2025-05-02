@@ -269,6 +269,7 @@
 			active-only = false;
 			on-click = "activate";
 			persistent-workspaces = {};
+			# format = "{icon}";
 			format = "{icon}";
 			format-icons = {
 				"1" = "";
@@ -293,7 +294,7 @@
 			tooltip-format = "{title}";
 			on-click = "activate";
 			on-click-middle = "close";
-			ignore-list = ["Alacritty" "foot" "warp-terminal" "kitty" "Foot"];
+			ignore-list = ["Alacritty" "foot" "dev.warp.Warp" "kitty" "Foot"];
 		};
 		
 		backlight = {

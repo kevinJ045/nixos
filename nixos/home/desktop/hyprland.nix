@@ -261,7 +261,9 @@
   		};
   		general = {
   		    border_size = 0;
-					# no_vsync = true;
+  		    gaps_out = 5;
+  		    gaps_in = 0;
+			# no_vsync = true;
   		};
   		binds = {
   			workspace_back_and_forth = "yes";
