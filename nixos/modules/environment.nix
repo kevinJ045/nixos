@@ -132,6 +132,7 @@
       # logseq
       lshw
       lutris
+      # lunarvim
       lxappearance
       mate.caja-with-extensions
       mate.caja-extensions
@@ -142,6 +143,8 @@
       ncdu
       ntfs3g
       nautilus
+      # neovide
+      nixd
       networkmanagerapplet
       inputs.nix-software-center.packages.${system}.nix-software-center
       inputs.zen-browser.packages."${system}".default
@@ -177,6 +180,7 @@
       remmina
       rcm
       rofi
+      rust-analyzer
       scrcpy
       slurp
       smartmontools
@@ -210,6 +214,7 @@
       wineWowPackages.full
       winetricks
       wineWow64Packages.waylandFull
+	  wlrctl
       zenity
 
       warp-terminal

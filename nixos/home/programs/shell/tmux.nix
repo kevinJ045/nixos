@@ -10,7 +10,7 @@
       set -g @plugin 'tmux-plugins/tmux-sensible'
       set -g @plugin 'tmux-plugins/tmux-resurrect'
       unbind C-b
-      set -g prefix M-a
+      set -g prefix C-a
       bind C-a send-prefix
       bind-key C-a last-window
       bind-key a send-prefix

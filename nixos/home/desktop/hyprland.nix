@@ -262,7 +262,7 @@
   		general = {
   		    border_size = 0;
   		    gaps_out = 5;
-  		    gaps_in = 0;
+  		    gaps_in = 5;
 			# no_vsync = true;
   		};
   		binds = {
