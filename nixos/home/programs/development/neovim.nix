@@ -1,359 +1,383 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, nixvim, ... }:
 
 {
 
+  imports = [
+  	nixvim.homeManagerModules.nixvim
+  ];
 
   programs.neovide = {
   	enable = true;
   	settings = {
-  		font = {
-                        fork = true;
-	  		normal = ["FiraCode Nerd Font"];
-	  		size = 11.0;
-	  	};
+  	  font = {
+        fork = true;
+	    normal = ["FiraCode Nerd Font"];
+	    size = 11.0;
+	  };
   	};
   };
+
+  # programs.nixvim.package = nixvim;
+  # programs.nixvim.enable = true;
   
-  programs.neovim = {
-      enable = true;
-      defaultEditor = true;
-      extraLuaConfig = ''
-        require('nvim-treesitter.configs').setup {
-          auto_install = false,
-          ignore_install = {},
-          highlight = {
-            enable = true,
-            additional_vim_regex_highlighting = false,
-          },
-          indent = {
-            enable = true
-          },
-        }
+  programs.nixvim = {
+    enable = true;
+    colorschemes.catppuccin.enable = true;
+    
 
-        local on_attach = function(client, bufnr)
-          require("lsp-format").on_attach(client, bufnr)
-        end
-
-        require("lsp-format").setup{}
-        require('lspconfig').ts_ls.setup{ on_attach = on_attach }
-        require('lspconfig').eslint.setup{ on_attach = on_attach }
-        require('lspconfig').jdtls.setup{ on_attach = on_attach }
-        require('lspconfig').svelte.setup{ on_attach = on_attach }
-        require('lspconfig').bashls.setup{ on_attach = on_attach }
-        require('lspconfig').pyright.setup{ on_attach = on_attach }
-        require('lspconfig').nixd.setup{ on_attach = on_attach }
-        require('lspconfig').clangd.setup{ on_attach = on_attach }
-        require('lspconfig').html.setup{ on_attach = on_attach }
-		require("lspconfig").rust_analyzer.setup({
-		  settings = {
-		    ["rust-analyzer"] = {
-		      cargo = { allFeatures = true }
-		    }
-		  }
-		})
-	
-
-        vim.keymap.set('n', '<C-f>', require('telescope.builtin').current_buffer_fuzzy_find, { noremap = true, silent = true })
-
-        local prettier = {
-            formatCommand = [[prettier --stdin-filepath ''${INPUT} ''${--tab-width:tab_width}]],
-            formatStdin = true,
-        }
-        require("lspconfig").efm.setup {
-            on_attach = on_attach,
-            init_options = { documentFormatting = true },
-            settings = {
-                languages = {
-                    typescript = { prettier },
-                    html = { prettier },
-                    javascript = { prettier },
-                    json = { prettier },
-                },
-            },
-        }
-        
-        require("nvim-tree").setup()
-        vim.g.loaded_netrw = 1
-        vim.g.loaded_netrwPlugin = 1
-
-        local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-        local luasnip = require('luasnip')
-        require("luasnip.loaders.from_vscode").lazy_load()
-
-        local cmp = require('cmp')
-        cmp.setup {
-          snippet = {
-            expand = function(args)
-              luasnip.lsp_expand(args.body)
-            end,
-          },
-          mapping = cmp.mapping.preset.insert({
-            ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
-            ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
-            -- C-b (back) C-f (forward) for snippet placeholder navigation.
-            ['<C-Space>'] = cmp.mapping.complete(),
-            ['<C-z>'] = cmp.mapping(function()
-            	vim.cmd('undo')
-            end, { 'i', 's' }),
-            ['<CR>'] = cmp.mapping.confirm {
-              behavior = cmp.ConfirmBehavior.Replace,
-              select = true,
-            },
-            ['<Tab>'] = cmp.mapping(function(fallback)
-              if cmp.visible() then
-                cmp.select_next_item()
-              elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-              else
-                fallback()
-              end
-            end, { 'i', 's' }),
-            ['<S-Tab>'] = cmp.mapping(function(fallback)
-              if cmp.visible() then
-                cmp.select_prev_item()
-              elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
-              else
-                fallback()
-              end
-            end, { 'i', 's' }),
-          }),
-          sources = {
-            { name = 'nvim_lsp' },
-            { name = 'luasnip' },
-          },
-        }
-
-        local mru_tabs = {}
-        local current_tab = vim.api.nvim_get_current_tabpage()
-        
-        vim.api.nvim_create_autocmd("TabLeave", {
-            callback = function()
-                current_tab = vim.api.nvim_get_current_tabpage()
-            end
-        })
-        
-        vim.api.nvim_create_autocmd("TabEnter", {
-            callback = function()
-                local new_tab = vim.api.nvim_get_current_tabpage()
-                if new_tab ~= current_tab then
-                    -- Remove if already in list
-                    for i, tab in ipairs(mru_tabs) do
-                        if tab == new_tab then
-                            table.remove(mru_tabs, i)
-                            break
-                        end
-                    end
-                    table.insert(mru_tabs, 1, current_tab)
-                    current_tab = new_tab
-                end
-            end
-        })
-        
-        function SwitchToLastTab()
-            if #mru_tabs > 0 then
-                vim.api.nvim_set_current_tabpage(mru_tabs[1])
-            end
-        end
-        
-        vim.keymap.set('n', '<C-Tab>', SwitchToLastTab, { noremap = true, silent = true })
-      
-        local function delete_word_before_cursor()
-          local col = vim.fn.col('.')
-          if col == 1 then return end
-          vim.cmd('normal! db')
-        end
-
-        local function delete_word_after_cursor()
-          vim.cmd('normal! dw')
-        end
-
-        vim.keymap.set('i', '<C-Del>', delete_word_after_cursor, { noremap = true })
-        vim.keymap.set('i', '<C-BS>', delete_word_before_cursor, { noremap = true })
-      
-        vim.opt.autoindent = true
-        vim.opt.smartindent = true
-        vim.opt.formatoptions:append("r")
-        
-        vim.keymap.set("v", "<S-Tab>", "<gv", { noremap = true, silent = true })
-        vim.keymap.set("v", "<Tab>", ">gv", { noremap = true, silent = true })
-        vim.keymap.set("i", "<S-Tab>", function()
-          vim.api.nvim_feedkeys("yyP", "<gv", true)
-          vim.api.nvim_feedkeys("i", "n", true)
-        end, { noremap = true, silent = true })
-        
-   		vim.keymap.set("n", "<C-_>", function() require("Comment.api").toggle.linewise.current() end, { noremap = true, silent = true })
-        vim.keymap.set("v", "<C-_>", "<ESC><CMD>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", { noremap = true, silent = true })
-        
-        vim.keymap.set("n", "<C-m>", "%", { noremap = true, silent = true })
-        vim.keymap.set("v", "<C-m>", "%", { noremap = true, silent = true })
-        vim.keymap.set("i", "<C-m>", "<Esc>%i", { noremap = true, silent = true })
-
-        require("Comment").setup()
-
-        vim.keymap.set("n", "<C-d>", 'yyp', { noremap = true, silent = true }) -- normal mode: yank and paste line below
-        vim.keymap.set("v", "<C-d>", 'y`>p', { noremap = true, silent = true }) -- visual mode: yank selection
-        
-        vim.keymap.set("i", "<C-d>", function()
-          vim.api.nvim_feedkeys("yyP", "n", true)
-          vim.api.nvim_feedkeys("i", "n", true)
-        end, { noremap = true, silent = true })
-
-        require('treesitter-context').setup({
-          enable = true,   -- Enable the plugin
-          max_lines = 0,   -- Maximum number of lines to display for context
-          min_window_height = 0,  -- Minimum window height before the context appears
-        })
-
-        require("ibl").setup()
-	require("toggleterm").setup()
-		
-        vim.keymap.set("n", "<C-`>", "<cmd>ToggleTerm direction=vertical name=Terminal<CR>", { noremap = true, silent = true })
-        
-
-        require('dashboard').setup {
-          theme = 'doom',
-          config = {
-            week_header = {
-                enable = true,
-            },
-            shortcut = {
-              {
-                desc = " Projects",
-                key = "p",
-                action = "Telescope find_files cwd='",
-              },
-            },
-            project = { enable = true, limit = 8, icon = ' ', label = 'Project', action = 'Telescope find_files cwd=' },
-          },
-        }
-
-      '';
-      extraConfig = ''
-        set guicursor=n-v-c-i:block
-        set nowrap
-        colorscheme catppuccin-mocha
-        let g:lightline = {
-              \ 'colorscheme': 'catppuccin_mocha',
-              \ }
-        map <leader>ac :lua vim.lsp.buf.code_action()<CR>
-        set ts=2
-        set undofile
-        set undodir=$HOME/.vim/undodir
-        set number
-        set whichwrap+=<,h
-        set whichwrap+=>,l
-        set whichwrap+=[,]
-        
-        nnoremap <c-z> :u<CR>      
-        inoremap <c-z> <c-o>:u<CR>
-        nnoremap <c-y> :redo<CR>
-        inoremap <c-y> <c-o>:redo<CR>                        
-        inoremap <C-BS> <C-w>
-        nnoremap <C-a> ggVGi
-
-        inoremap <C-a> <Esc>ggVG
-        nnoremap <C-b> :NvimTreeToggle<CR>
-        nnoremap <C-p> :Files<CR>
-        nnoremap <C-q> :q!<CR>
-        inoremap <C-q> <Esc>:q!<CR>
-        nnoremap <C-s> :w!<CR>
-        inoremap <C-s> <Esc>:w!<CR>
-
-        let mapleader = " "
-
-        nnoremap <leader>t :tabnext<CR>
-        nnoremap <leader>T :tabprevious<CR>
-        nnoremap <C-S-Tab> :tabnext<CR>
-
-
-        vnoremap <BS> d
-        vnoremap <Del> d
-
-        vnoremap <C-c> "+y
-        nnoremap <C-v> "+p
-        vnoremap <C-v> "+p
-        vnoremap <C-x> "+x
-        inoremap <C-v> <C-r>+
-                
-        nnoremap <S-Left> v
-        nnoremap <S-Right> v
-        nnoremap <S-Up> v
-        nnoremap <S-Down> v
-
-        nnoremap <C-S-Left> vbiw
-        nnoremap <C-S-Right> veiw
-        nnoremap <C-S-Up> v{k
-        nnoremap <C-S-Down> v}j
-
-        inoremap <S-Left> <Esc>v
-        inoremap <S-Right> <Esc>v
-        inoremap <S-Up> <Esc>v
-        inoremap <S-Down> <Esc>v
-        
-        inoremap <C-S-Left> <Esc>vbiw
-        inoremap <C-S-Right> <Esc>veiw
-        inoremap <C-S-Up> <Esc>v{k
-        inoremap <C-S-Down> <Esc>v}j
-
-        function! s:start_delete(key)
-            let l:result = a:key
-            if !s:deleting
-                let l:result = "\<C-G>u".l:result
-            endif
-            let s:deleting = 1
-            return l:result
-        endfunction
-
-        function! s:check_undo_break(char)
-            if s:deleting
-                let s:deleting = 0
-                call feedkeys("\<BS>\<C-G>u".a:char, 'n')
-            endif
-        endfunction
-
-        augroup smartundo
-            autocmd!
-            autocmd InsertEnter * let s:deleting = 0
-            autocmd InsertCharPre * call s:check_undo_break(v:char)
-        augroup END
-
-        inoremap <expr> <BS> <SID>start_delete("\<BS>")
-        inoremap <expr> <C-W> <SID>start_delete("\<C-W>")
-        inoremap <expr> <C-U> <SID>start_delete("\<C-U>")
-      '';
-      plugins = [
-        pkgs.vimPlugins.nvim-lspconfig
-        pkgs.vimPlugins.lsp-format-nvim
-        pkgs.vimPlugins.nvim-cmp
-        pkgs.vimPlugins.luasnip
-        pkgs.vimPlugins.cmp_luasnip
-        pkgs.vimPlugins.cmp-nvim-lsp
-        pkgs.vimPlugins.friendly-snippets
-        pkgs.vimPlugins.catppuccin-vim
-        pkgs.vimPlugins.commentary
-        pkgs.vimPlugins.fugitive
-        pkgs.vimPlugins.gitgutter
-        pkgs.vimPlugins.lightline-vim
-        pkgs.vimPlugins.plenary-nvim
-        pkgs.vimPlugins.sensible
-        pkgs.vimPlugins.sleuth
-        pkgs.vimPlugins.surround
-        pkgs.vimPlugins.todo-comments-nvim
-        pkgs.vimPlugins.fzf-vim
-        pkgs.vimPlugins.nvim-treesitter.withAllGrammars
-        pkgs.vimPlugins.vim-coffee-script
-        pkgs.vimPlugins.nvim-tree-lua
-        pkgs.vimPlugins.telescope-nvim
-        # pkgs.vimPlugins.telescope-project-nvim
-        pkgs.vimPlugins.comment-nvim
-        pkgs.vimPlugins.nvim-treesitter
-        pkgs.vimPlugins.nvim-treesitter-context
-        pkgs.vimPlugins.indent-blankline-nvim
-        pkgs.vimPlugins.toggleterm-nvim
-        pkgs.vimPlugins.dashboard-nvim
-        # pkgs.vimPlugins.augment-vim 
-      ];
+#     # === Core UI Options ===
+    opts = {
+      number = true;
+      shiftwidth = 2;
+      tabstop = 2;
+      expandtab = true;
+      scrolloff = 3;
+      wrap = false;
+      mouse = "a";
+      clipboard = "unnamedplus";
+      splitbelow = true;
+      splitright = true;
+      signcolumn = "yes";
+      termguicolors = true;
+      guicursor = "n-v-c-i:block";
     };
+# 
+    globals = {
+      mapleader = " ";
+    };
+# 
+    keymaps = [
+      # Undo/Redo
+      { mode = "n"; key = "<C-z>"; action = ":u<CR>"; }
+      { mode = "i"; key = "<C-z>"; action = "<C-o>:u<CR>"; }
+      { mode = "n"; key = "<C-y>"; action = ":redo<CR>"; }
+      { mode = "i"; key = "<C-y>"; action = "<C-o>:redo<CR>"; }
+    
+      # Select all
+      { mode = "n"; key = "<C-a>"; action = "ggVGi"; }
+      { mode = "i"; key = "<C-a>"; action = "<Esc>ggVG"; }
+    
+      # NvimTree toggle
+      { mode = "n"; key = "<C-b>"; action = ":NvimTreeToggle<CR>"; }
+    
+      # Fuzzy find files
+      { mode = "n"; key = "<C-p>"; action = ":Telescope find_files<CR>"; options = { noremap = true; }; }
+    
+      # Force quit and save
+      { mode = "n"; key = "<C-q>"; action = ":q!<CR>"; }
+      { mode = "i"; key = "<C-q>"; action = "<Esc>:q!<CR>"; }
+      { mode = "n"; key = "<C-s>"; action = ":w!<CR>"; }
+      { mode = "i"; key = "<C-s>"; action = "<Esc>:w!<CR>"; }
+    
+      # Tabs
+      { mode = "n"; key = "<leader>t"; action = ":tabnext<CR>"; }
+      { mode = "n"; key = "<leader>T"; action = ":tabprevious<CR>"; }
+      { mode = "n"; key = "<C-S-Tab>"; action = ":tabnext<CR>"; }
+    
+      # Visual deletions
+      { mode = "v"; key = "<BS>"; action = "d"; }
+      { mode = "v"; key = "<Del>"; action = "d"; }
+    
+      # Clipboard interactions
+      { mode = "v"; key = "<C-c>"; action = ''"+y''; }
+      { mode = "n"; key = "<C-v>"; action = ''"+p''; }
+      { mode = "v"; key = "<C-v>"; action = ''"+p''; }
+      { mode = "v"; key = "<C-x>"; action = ''"+x''; }
+      { mode = "i"; key = "<C-v>"; action = "<C-r>+"; }
+    
+      # Selection via Shift + arrows
+      { mode = "n"; key = "<S-Left>"; action = "v"; }
+      { mode = "n"; key = "<S-Right>"; action = "v"; }
+      { mode = "n"; key = "<S-Up>"; action = "v"; }
+      { mode = "n"; key = "<S-Down>"; action = "v"; }
+    
+      { mode = "n"; key = "<C-S-Left>"; action = "vbiw"; }
+      { mode = "n"; key = "<C-S-Right>"; action = "veiw"; }
+      { mode = "n"; key = "<C-S-Up>"; action = "v{k"; }
+      { mode = "n"; key = "<C-S-Down>"; action = "v}j"; }
+    
+      { mode = "i"; key = "<S-Left>"; action = "<Esc>v"; }
+      { mode = "i"; key = "<S-Right>"; action = "<Esc>v"; }
+      { mode = "i"; key = "<S-Up>"; action = "<Esc>v"; }
+      { mode = "i"; key = "<S-Down>"; action = "<Esc>v"; }
+    
+      { mode = "i"; key = "<C-S-Left>"; action = "<Esc>vbiw"; }
+      { mode = "i"; key = "<C-S-Right>"; action = "<Esc>veiw"; }
+      { mode = "i"; key = "<C-S-Up>"; action = "<Esc>v{k"; }
+      { mode = "i"; key = "<C-S-Down>"; action = "<Esc>v}j"; }
+    
+      # Yank and paste with Ctrl+D
+      { mode = "n"; key = "<C-d>"; action = "yyp"; options = { noremap = true; }; }
+      { mode = "v"; key = "<C-d>"; action = "y`>p"; options = { noremap = true; }; }
+      { mode = "i"; key = "<C-d>"; action = "<Esc>yyP`[A"; options = { noremap = true; silent = true; }; }
+    
+      # Visual indent
+      { mode = "v"; key = "<S-Tab>"; action = "<gv"; options = { noremap = true; }; }
+      { mode = "v"; key = "<Tab>"; action = ">gv"; options = { noremap = true; }; }
+      { mode = "i"; key = "<S-Tab>"; action = "<Esc><gv`[A"; options = { noremap = true; }; }
+    
+      # Comment toggling (requires 'numToStr/Comment.nvim')
+      { mode = "n"; key = "<C-_>"; lua = true; action = "function() require('Comment.api').toggle.linewise.current() end"; }
+      { mode = "v"; key = "<C-_>"; lua = true; action = "function() require('Comment.api').toggle.linewise(vim.fn.visualmode()) end"; }
+    
+      # Match jump
+      { mode = "n"; key = "<C-m>"; action = "%"; options = { noremap = true; }; }
+      { mode = "v"; key = "<C-m>"; action = "%"; options = { noremap = true; }; }
+      { mode = "i"; key = "<C-m>"; action = "<Esc>%i"; options = { noremap = true; }; }
+    
+      # ToggleTerm (requires toggleterm.nvim)
+      { mode = "n"; key = "<C-`>"; action = "<cmd>ToggleTerm direction=vertical name=Terminal<CR>"; options = { noremap = true; silent = true; }; }
+    
+      # Fuzzy search in current buffer (requires telescope.nvim)
+      { mode = "n"; key = "<C-f>"; lua = true; action = "function() require('telescope.builtin').current_buffer_fuzzy_find() end"; options = { noremap = true; }; }
+    ];
+# 
+# 	colorschemes.catppuccin.enable = true;
+# 
+    plugins = {
+      lualine.enable = true;
+      treesitter = {
+        enable = true;
+        settings.indent.enable = true;
+        settings.ensure_installed = "all";
+      };
+      treesitter-context.enable = true;
+
+      telescope.enable = true;
+      # telescope.extensions.project.enable = true;
+      toggleterm.enable = true;
+      comment.enable = true;
+      nvim-autopairs.enable = true;
+      nvim-tree.enable = true;
+      bufferline = {
+      	enable = true;
+      	settings = {
+      	  highlights = {
+   	  	    fill = {
+   	  	      bg = "#ffffff";
+   	  	      fg = "#ff0000";
+   	  	    };
+   	  	    tab = {
+   	  	      bg = "#ffffff";
+   	  	      fg = "#ff0000";
+   	  	    };
+   	  	    tab_selected = {
+   	  	      bg = "#ffffff";
+  	  	      fg = "#ff0000";
+   	  	    };
+   	  	  };	
+      	};
+      };
+      dashboard = {
+      	enable = true;
+		settings = {
+		  config = {
+		    footer = [
+		      "Made with ❤️"
+		    ];
+		    header = [
+		        "                    __                                 "
+		        "                   /\\ \\                                "
+		        "  ___ ___      __  \\ \\ \\'\\      __      ___     ___   "
+		        "/' __` __`\\  /'__`\\ \\ \\ , <    /'__`\\  /' _ `\\  / __`\\ "
+		        "/\\ \\/\\ \\/\\ \\/\\ \\L\\.\\_\\ \\ \\`\\`\\ /\\ \\L\\.\\_/\\ \\/\\ \\/\\ \\L\\ \\"
+		        "\\ \\_\\ \\_\\ \\_\\ \\__/.\\_\\\\ \\_\\ \\_\\ \\__/.\\_\\ \\_\\ \\_\\ \\____/"
+		        " \\/_/\\/_/\\/_/\\/__/\\/_/ \\/_/\\/_/\\/__/\\/_/\\/_/\\/_/\\/___/ "
+		    ];
+		    mru = {
+		      limit = 10;
+		    };
+		    project = {
+		      enable = true;
+		    };
+		    shortcut = [
+		      {
+		        action = {
+		          __raw = "function(path) vim.cmd('Telescope find_files') end";
+		        };
+		        desc = "Files";
+		        group = "Label";
+		        icon = " ";
+		        icon_hl = "@variable";
+		        key = "f";
+		      }
+		      {
+		        action = "Telescope project";
+		        desc = "Projects";
+   		        icon = " ";
+		        group = "Label";
+		        key = "p";
+		      }
+		    ];
+		  };
+		  theme = "hyper";
+		};
+      };
+  #     snacks = {
+  #     	enable = true;
+		# settings = {
+		#   bigfile = {
+		#     enabled = true;
+		#   };
+		#   dashboard = {
+		#   	enabled = true;
+		#   };
+		#   notifier = {
+		#     enabled = true;
+		#     timeout = 3000;
+		#   };
+		#   quickfile = {
+		#     enabled = false;
+		#   };
+		#   statuscolumn = {
+		#     enabled = false;
+		#   };
+		#   words = {
+		#     debounce = 100;
+		#     enabled = true;
+		#   };
+		# };
+  #     };
+      avante.enable = true;
+      commentary.enable = true;
+      fugitive.enable = true;
+      gitgutter.enable = true;
+      lightline.enable = true;
+      lightline.settings = {
+      	colorscheme = "catppuccin-mocha";
+      };
+      # sensible.enable = true;
+      sleuth.enable = true;
+      surround.enable = true;
+      fzf-lua.enable = true;
+      # vim-coffee-script.enable = true;
+      
+
+      cmp = {
+        enable = true;
+        autoEnableSources = true;
+        settings.sources = [
+          { name = "nvim_lsp"; }
+          { name = "luasnip"; }
+          { name = "path"; }
+          { name = "buffer"; }
+        ];
+        settings.mappingPresets = [ "insert" ];
+      };
+
+      luasnip.enable = true;
+
+      lsp = {
+        enable = true;
+
+        servers = {
+          ts_ls.enable = true;
+          html.enable = true;
+          cssls.enable = true;
+          tailwindcss.enable = true;
+          rust_analyzer = {
+          	enable = true;
+          	installCargo = true;
+          	installRustc = true;
+          };
+          nil_ls.enable = true;
+        };
+      };
+
+      lsp-format.enable = true;
+
+      none-ls = {
+        enable = true;
+        sources = {
+          formatting = {
+            prettierd.enable = true;
+            stylua.enable = true;
+            # rustfmt.enable = true;
+          };
+        };
+      };
+
+      web-devicons.enable = true;
+    };
+
+    extraConfigLua = ''
+      vim.opt.whichwrap:append {
+		['<'] = true,
+		['>'] = true,
+		['['] = true,
+		[']'] = true,
+	    h = true,
+	    l = true,
+	  }
+	  vim.g.loaded_netrw = 1
+      vim.g.loaded_netrwPlugin = 1
+
+      vim.g.lightline = {
+        colorscheme = 'catppuccin-mocha'
+      }
+	  
+      -- Custom function: MRU Tab Switching
+      
+      local mru_tabs = {}
+      local current_tab = vim.api.nvim_get_current_tabpage()
+      
+      vim.api.nvim_create_autocmd("TabLeave", {
+          callback = function()
+              current_tab = vim.api.nvim_get_current_tabpage()
+          end
+      })
+      
+      vim.api.nvim_create_autocmd("TabEnter", {
+          callback = function()
+              local new_tab = vim.api.nvim_get_current_tabpage()
+              if new_tab ~= current_tab then
+                  -- Remove if already in list
+                  for i, tab in ipairs(mru_tabs) do
+                      if tab == new_tab then
+                          table.remove(mru_tabs, i)
+                          break
+                      end
+                  end
+                  table.insert(mru_tabs, 1, current_tab)
+                  current_tab = new_tab
+              end
+          end
+      })
+      
+      function SwitchToLastTab()
+          if #mru_tabs > 0 then
+              vim.api.nvim_set_current_tabpage(mru_tabs[1])
+          end
+      end
+      
+      vim.keymap.set('n', '<C-Tab>', SwitchToLastTab, { noremap = true, silent = true })
+
+      vim.keymap.set("i", "<S-Tab>", function()
+        vim.api.nvim_feedkeys("yyP", "<gv", true)
+        vim.api.nvim_feedkeys("i", "n", true)
+      end, { noremap = true, silent = true })
+
+      local function delete_word_before_cursor()
+         local col = vim.fn.col('.')
+         if col == 1 then return end
+         vim.cmd('normal! db')
+       end
+
+       local function delete_word_after_cursor()
+         vim.cmd('normal! dw')
+       end
+
+       vim.keymap.set('i', '<C-Del>', delete_word_after_cursor, { noremap = true })
+       vim.keymap.set('i', '<C-BS>', delete_word_before_cursor, { noremap = true })
+       
+       vim.keymap.set("n", "<C-`>", "<cmd>ToggleTerm direction=vertical name=Terminal<CR>", { noremap = true, silent = true })
+       
+       
+	  
+      -- Optional: require local plugins if available
+      pcall(require, "avante_lib")
+      pcall(function() require("avante").setup() end)
+    '';
+  };
+
 }

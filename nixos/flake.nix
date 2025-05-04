@@ -14,10 +14,16 @@
       # to have it up-to-date or simply don't specify the nixpkgs input  
       # inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixvim = {
+      # url = "github:nix-community/nixvim";
+      # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
+      url = "github:nix-community/nixvim/nixos-24.11";
+    
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # nvimdots.url = "github:ayamir/nvimdots";
   };
-	# nvimdots
-  outputs = inputs@{ nixpkgs, home-manager, catppuccin, ... }: {
+  outputs = inputs@{ nixpkgs, home-manager, nixvim, catppuccin, ... }: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -28,10 +34,12 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit nixvim; };
             home-manager.users.makano = {
               imports = [
                 ./home.nix
                 catppuccin.homeModules.catppuccin
+               	# nixvim.homeManagerModules.nixvim
                 # catppuccin.homeManagerModules.catppuccin
                 # nvimdots.homeManagerModules.nvimdots
               ];
