@@ -26,6 +26,7 @@
   };
 
   programs.chromium.enable = true;
+  # programs.sunshine.enable = true;
 
   fonts.fontDir.enable = true;
   fonts.packages = with pkgs; [
@@ -215,6 +216,7 @@
       winetricks
       wineWow64Packages.waylandFull
 	  wlrctl
+	  wayvnc
       zenity
 
       warp-terminal
