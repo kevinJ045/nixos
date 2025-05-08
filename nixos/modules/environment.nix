@@ -161,6 +161,8 @@
       pciutils
       pulseaudio
       playerctl
+      protonvpn-cli
+      protonvpn-gui
       ppsspp
       python3
       python312Packages.pip

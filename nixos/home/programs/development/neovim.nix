@@ -29,6 +29,7 @@
     opts = {
       number = true;
       shiftwidth = 2;
+      # showtabline = 0;
       tabstop = 2;
       expandtab = true;
       scrolloff = 3;
@@ -279,8 +280,6 @@
 		            ['<Tab>'] = cmp.mapping(function(fallback)
 		              if cmp.visible() then
 		                cmp.select_next_item()
-		              elseif luasnip.expand_or_jumpable() then
-		                luasnip.expand_or_jump()
 		              else
 		                fallback()
 		              end
@@ -288,8 +287,6 @@
 		            ['<S-Tab>'] = cmp.mapping(function(fallback)
 		              if cmp.visible() then
 		                cmp.select_prev_item()
-		              elseif luasnip.jumpable(-1) then
-		                luasnip.jump(-1)
 		              else
 		                fallback()
 		              end
@@ -335,6 +332,7 @@
     };
 
     extraConfigLua = ''
+      
       vim.opt.whichwrap:append {
 		['<'] = true,
 		['>'] = true,
