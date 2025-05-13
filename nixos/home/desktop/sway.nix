@@ -26,11 +26,11 @@
       modifier = "Mod4";
       terminal = "foot";
       menu = "pkill -x wmenu-run || ${pkgs.wmenu}/bin/wmenu-run -i -N 1e1e2e -n 89b4fa -M 1e1e2e -m 89b4fa -S 89b4fa -s cdd6f4";
-      fonts = {
-        names = [ "JetBrains Mono" "FontAwesome" ];
-        style = "Bold Semi-Condensed";
-        size = 11.0;
-      };
+      # fonts = {
+      #   names = [ "JetBrains Mono" "FontAwesome" ];
+      #   style = "Bold Semi-Condensed";
+      #   size = 11.0;
+      # };
       output = {
         "*" = {
           bg = "${builtins.fetchurl { url = "https://raw.githubusercontent.com/Sahil-958/walls/refs/heads/main/hyprdots/Catppuccin-Mocha/cat_leaves.png"; sha256 = "1894y61nx3p970qzxmqjvslaalbl2skj5sgzvk38xd4qmlmi9s4i"; }} fill";

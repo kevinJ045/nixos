@@ -21,6 +21,7 @@
     
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # stylix.url = "github:danth/stylix/release-24.11";
     # nvimdots.url = "github:ayamir/nvimdots";
   };
   outputs = inputs@{ nixpkgs, home-manager, nixvim, catppuccin, ... }: {
@@ -38,6 +39,7 @@
             home-manager.users.makano = {
               imports = [
                 ./home.nix
+                # stylix.homeManagerModules.stylix
                 catppuccin.homeModules.catppuccin
                	# nixvim.homeManagerModules.nixvim
                 # catppuccin.homeManagerModules.catppuccin

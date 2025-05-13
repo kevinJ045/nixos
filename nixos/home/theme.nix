@@ -12,6 +12,10 @@ let
     shade = "dark";
     size = "standard";
   };
+  bg_wallpaper = builtins.fetchurl {
+    url = "https://raw.githubusercontent.com/Sahil-958/walls/refs/heads/main/hyprdots/Catppuccin-Mocha/cat_leaves.png";
+    sha256 = "1894y61nx3p970qzxmqjvslaalbl2skj5sgzvk38xd4qmlmi9s4i";
+  };
 in
 {
   gtk = {
@@ -29,11 +33,11 @@ in
       package = pkgs.epapirus-icon-theme;
       name = "ePapirus-Dark";
     };
-    cursorTheme = {
-      package = lib.mkForce pkgs.google-cursor;
-      name = lib.mkForce "GoogleDot-Black";
-      size = 12;
-    };
+    # cursorTheme = {
+    #   package = lib.mkForce pkgs.google-cursor;
+    #   name = lib.mkForce "GoogleDot-Black";
+    #   size = 12;
+    # };
     theme = {
       package = catppuccin-gtk-theme;
       name = "Catppuccin-Dark";
@@ -55,15 +59,55 @@ in
     style.name = "kvantum";
   };
 
-  home.pointerCursor = {
-    package = lib.mkForce pkgs.google-cursor;
-    name = lib.mkForce "GoogleDot-Black";
-    size = 12;
-  };
+  # home.pointerCursor = {
+  #   package = lib.mkForce pkgs.catppuccin-cursors.mochaMauve;
+  #   name = lib.mkForce "GoogleDot-Black";
+  #   size = 12;
+  # };
 
   catppuccin = {
     enable = true;
     flavor = "mocha";
+  };
+
+  # stylix = {
+  #   enable = true;
+
+  #   targets.gnome.enable = false;
+  #   polarity = "dark";
+  #   image = bg_wallpaper;
+  #   base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+  #   fonts = {
+  #     serif = {
+  #       package = pkgs.dejavu_fonts;
+  #       name = "DejaVu Serif";
+  #     };
+
+  #     sansSerif = {
+  #       package = pkgs.dejavu_fonts;
+  #       name = "DejaVu Sans";
+  #     };
+
+  #     monospace = {
+  #       package = pkgs.fira-code;
+  #       name = "Fira Code NerdFont";
+  #     };
+
+  #     emoji = {
+  #       package = pkgs.noto-fonts-emoji;
+  #       name = "Noto Color Emoji";
+  #     };
+  #   };
+  # };
+  
+
+  xdg.configFile.hyprpaper = {
+    target = "hypr/hyprpaper.conf";
+    text = ''
+      preload = ${bg_wallpaper}
+      wallpaper = eDP-1,${bg_wallpaper}
+      splash = false
+    '';
   };
 
   dconf = {

@@ -29,6 +29,16 @@
       enable = true;
       scheduler = "scx_lavd";
     };
+    avahi = {
+    	enable = true;
+    	nssmdns = true;
+    	openFirewall = true;
+    	publish = {
+    		enable = true;
+    		addresses = true;
+    		workstation = true;
+    	};
+    };
     dbus.enable = true;
     gvfs.enable = true;
     flatpak.enable = true;
