@@ -12,7 +12,7 @@
   		"$term" = "warp-terminal";
   		"$editor" = "code --disable-gpu --ozone-platform-hint=auto";
   		"$file" = "nautilus";
-  		"$browser" = "xdg-open https://google.com";
+  		"$browser" = "zen";
   		"exec-once" = [
   			"$asrcPath/lowbattery.sh"
   			"waybar"
@@ -30,7 +30,7 @@
   		# monitor = "VIRTUAL-1,1920x1080@60,1920x0,1";
   		exec = [
   			# Cursor
-  			"hyprctl setcursor GoogleDot-Black 12"
+  			"hyprctl setcursor catppuccin-mocha-mauve-cursors 32"
 
   			# HyprFonts
   			"gsettings set org.gnome.desktop.interface font-name 'JetBrains Mono Bold'"
@@ -57,7 +57,7 @@
   			"QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
   			"QT_AUTO_SCREEN_SCALE_FACTOR,1"
   			"MOZ_ENABLE_WAYLAND,1"
-  			"XCURSOR_THEME,GoogleDot-Black"
+  			# "XCURSOR_THEME,catppuccin-mocha-mauve-cursors"
   		];
   		input = {
   		    kb_layout = "us";

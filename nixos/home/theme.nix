@@ -33,11 +33,11 @@ in
       package = pkgs.epapirus-icon-theme;
       name = "ePapirus-Dark";
     };
-    # cursorTheme = {
-    #   package = lib.mkForce pkgs.google-cursor;
-    #   name = lib.mkForce "GoogleDot-Black";
-    #   size = 12;
-    # };
+    cursorTheme = {
+      package = lib.mkForce pkgs.catppuccin-cursors.mochaMauve;
+      name = lib.mkForce "catppuccin-mocha-mauve-cursors";
+      size = 24;
+    };
     theme = {
       package = catppuccin-gtk-theme;
       name = "Catppuccin-Dark";
@@ -59,11 +59,11 @@ in
     style.name = "kvantum";
   };
 
-  # home.pointerCursor = {
-  #   package = lib.mkForce pkgs.catppuccin-cursors.mochaMauve;
-  #   name = lib.mkForce "GoogleDot-Black";
-  #   size = 12;
-  # };
+  home.pointerCursor = {
+    package = lib.mkForce pkgs.catppuccin-cursors.mochaMauve;
+    name = lib.mkForce "catppuccin-mocha-mauve-cursors";
+    size = 24;
+  };
 
   catppuccin = {
     enable = true;
