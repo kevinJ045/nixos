@@ -202,7 +202,7 @@
         passthrough = false;
         gtk-layer-shell = true;
 
-        modules-left = ["custom/padd" "custom/l_end" "cpu" "memory" "custom/gpuinfo" "custom/r_end" "custom/l_end" "idle_inhibitor" "clock" "custom/r_end" "custom/l_end" "hyprland/workspaces" "custom/r_end" "custom/padd"];
+        modules-left = ["custom/padd" "custom/l_end" "cpu" "memory" "custom/gpuinfo" "custom/r_end" "custom/l_end" "idle_inhibitor" "clock" "custom/r_end" "custom/l_end" "sway/workspaces" "custom/r_end" "custom/padd"];
        	modules-center = ["custom/padd" "custom/l_end" "wlr/taskbar" "custom/r_end" "custom/padd"];
        	modules-right = ["custom/padd" "custom/l_end" "backlight" "network" "bluetooth" "pulseaudio" "custom/r_end" "custom/l_end" "tray" "battery" "custom/r_end" "custom/l_end" "custom/swaync" "custom/system" "custom/power" "custom/r_end" "custom/padd"];
 
@@ -264,6 +264,29 @@
 		};
 		
 		"hyprland/workspaces" = {
+			disable-scroll = true;
+			all-outputs = true;
+			active-only = false;
+			on-click = "activate";
+			persistent-workspaces = {};
+			# format = "{icon}";
+			format = "{icon}";
+			format-icons = {
+				"1" = "";
+				"2" = "";
+				"3" = "";
+				"4" = "";
+				"5" = "";
+				"6" = "";
+				"7" = "";
+				"8" = "";
+				"9" = "󰌳";
+				"10" = "";
+				default = "";
+			};
+		};
+
+		"sway/workspaces" = {
 			disable-scroll = true;
 			all-outputs = true;
 			active-only = false;

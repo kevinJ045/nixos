@@ -58,13 +58,13 @@
       XDG_MUSIC_DIR = "$HOME/Music";
       XDG_PICTURES_DIR = "$HOME/Pictures";
       XDG_VIDEOS_DIR = "$HOME/Videos";
-      # XDG_CURRENT_DESKTOP = "Hyprland";
+      XDG_CURRENT_DESKTOP = "sway";
       XDG_SESSION_TYPE = "wayland";
-      # XDG_SESSION_DESKTOP = "Hyprland";
+      XDG_SESSION_DESKTOP = "sway";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       QT_AUTO_SCREEN_SCALE_FACTOR = "1";
       MOZ_ENABLE_WAYLAND = "1";
-      XCURSOR_THEME = "GoogleDot-Black";
+      # XCURSOR_THEME = "GoogleDot-Black";
     };
     systemPackages = with pkgs; [
       stdenv

@@ -4,9 +4,20 @@
     wayland.windowManager.sway = {
     enable = true;
     systemd.enable = true;
+    package = pkgs.swayfx;
+    checkConfig = false;
     extraConfig = ''
 	bindgesture swipe:right workspace prev
 	bindgesture swipe:left workspace next
+	bindgesture swipe:up focus left
+	bindgesture swipe:down focus right
+	corner_radius 10
+
+	# Catppuccin Mocha - Client Styles
+	client.focused          #1e1e2e #89b4fa #cdd6f4 #b4befe #89b4fa
+	client.focused_inactive #1e1e2e #313244 #a6adc8 #6c7086 #313244
+	client.unfocused        #1e1e2e #313244 #a6adc8 #313244 #313244
+	client.urgent           #1e1e2e #f38ba8 #11111b #f38ba8 #f38ba8
 	
 	for_window [app_id="zenity"] floating enable
 	'';
@@ -19,12 +30,14 @@
       	{ command = "/home/makano/.config/scripts/lowbattery.sh"; }
       	{ command = "blueman-applet"; }
       	{ command = "nm-applet --indicator"; }
-      	{ command = "nm-applet --indicator"; }
       	{ command = "wl-paste --type text --watch cliphist store"; }
       	{ command = "wl-paste --type image --watch cliphist store"; }
+      	{ command = "swaync"; }
+      	{ command = "kdeconnect-indicator"; }
+      	{ command = "hypr-autostart"; }
       ];
       modifier = "Mod4";
-      terminal = "foot";
+      terminal = "warp-terminal";
       menu = "pkill -x wmenu-run || ${pkgs.wmenu}/bin/wmenu-run -i -N 1e1e2e -n 89b4fa -M 1e1e2e -m 89b4fa -S 89b4fa -s cdd6f4";
       # fonts = {
       #   names = [ "JetBrains Mono" "FontAwesome" ];
@@ -65,9 +78,9 @@
       focus.followMouse = true;
       workspaceAutoBackAndForth = true;
       keybindings = let modifier = config.wayland.windowManager.sway.config.modifier;  in lib.mkOptionDefault {
-        "${modifier}+b" = "exec chromium";
+        "${modifier}+b" = "exec zen";
         "${modifier}+c" = "exec code";
-        "${modifier}+t" = "exec foot";
+        "${modifier}+t" = "exec warp-terminal";
         
         "${modifier}+l" = "exec swaylock";
         
@@ -78,12 +91,17 @@
         
         "${modifier}+Shift+b" = "exec pkill -SIGUSR1 waybar";
         
+        "${modifier}+w" = "floating toggle";
+        "${modifier}+s" = "layout tabbed";
+        "${modifier}+Shift+space" = "layout stacking";
+        
         "${modifier}+Delete" = ''
           exec sh -c "echo -e 'No\nYes' | ${pkgs.wmenu}/bin/wmenu -N 1e1e2e -n 89b4fa -M 1e1e2e -m 89b4fa -S 89b4fa -s cdd6f4 -l 2 -p 'Exit Sway?' | grep -q Yes && swaymsg exit"
         '';
         
         "${modifier}+p" = "exec swaylock";
         "${modifier}+q" = "kill";
+        "${modifier}+v" = "exec /home/makano/.config/scripts/cliphist.sh c";
         
         "${modifier}+a" = "exec pkill -x wofi || wofi";
 

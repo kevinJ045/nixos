@@ -81,7 +81,8 @@
       enable = true;
       settings = rec {
         initial_session = {
-          command = "sh -c 'LD_LIBRARY_PATH=\"\" dbus-run-session Hyprland'";
+          # command = "sh -c 'LD_LIBRARY_PATH=\"\" dbus-run-session Hyprland'";
+          command = "dbus-run-session sway";
           user = "makano";
         };
         default_session = initial_session;
