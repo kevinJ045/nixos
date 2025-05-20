@@ -12,6 +12,7 @@
     ./modules/users.nix
     ./modules/environment.nix
     ./modules/security.nix
+    ./modules/theme.nix
   ];
 
   nix = {
