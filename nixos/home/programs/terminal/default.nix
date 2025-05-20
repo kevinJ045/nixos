@@ -6,5 +6,6 @@
     ./alacritty.nix
     ./foot.nix
     ./micro.nix
+    ./ghostty.nix
   ];
 }

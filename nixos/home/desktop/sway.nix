@@ -80,7 +80,7 @@
       keybindings = let modifier = config.wayland.windowManager.sway.config.modifier;  in lib.mkOptionDefault {
         "${modifier}+b" = "exec zen";
         "${modifier}+c" = "exec code";
-        "${modifier}+t" = "exec warp-terminal";
+        "${modifier}+t" = "exec ghostty";
         
         "${modifier}+l" = "exec swaylock";
         

@@ -9,6 +9,7 @@
       set -g @plugin 'tmux-plugins/tpm'
       set -g @plugin 'tmux-plugins/tmux-sensible'
       set -g @plugin 'tmux-plugins/tmux-resurrect'
+      set -g @plugin 'tmux-plugins/tmux-popup'
       unbind C-b
       set -g prefix C-a
       bind C-a send-prefix
@@ -21,6 +22,7 @@
       bind j select-pane -D
       bind k select-pane -U
       bind l select-pane -R
+      bind-key p run-shell 'tmux-popup -h 80% -w 80% -E zsh'
       set -g mouse
       run '~/.tmux/plugins/tpm/tpm'
     '';
