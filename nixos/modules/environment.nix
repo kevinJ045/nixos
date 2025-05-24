@@ -37,10 +37,11 @@
     fira-code-symbols
     font-awesome
     jetbrains-mono
-    # nerd-fonts.fira-code
-    (nerdfonts.override {
-    	fonts = [ "FiraCode" "DroidSansMono" ];
-    })
+    nerd-fonts.fira-code
+    nerd-fonts.droid-sans-mono
+    # (nerdfonts.override {
+    # 	fonts = [ "FiraCode" "DroidSansMono" ];
+    # })
   ];
 
 
@@ -121,7 +122,7 @@
       killall
       krita
       kando
-      kdenlive
+      kdePackages.kdenlive
       kdePackages.kdeconnect-kde
       kdePackages.qt6ct
       libsForQt5.qt5ct
@@ -226,7 +227,7 @@
       # unstable.deskflow
 
       (let base = pkgs.appimageTools.defaultFhsEnvArgs; in
-        pkgs.buildFHSUserEnv (base // {
+        pkgs.buildFHSEnv (base // {
         name = "fhs";
         targetPkgs = pkgs: (
           (base.targetPkgs pkgs) ++ [

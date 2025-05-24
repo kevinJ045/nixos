@@ -16,10 +16,10 @@
       theme = "robbyrussell";
     };
     plugins = [
-      {
-        name = "zsh-autosuggestions";
-        src = pkgs.zsh-autosuggestions.src;
-      }
+      # {
+      #   name = "zsh-autosuggestions";
+      #   src = pkgs.zsh-autosuggestions.src;
+      # }
       {
         name = "powerlevel10k";
         src = pkgs.zsh-powerlevel10k.src;
