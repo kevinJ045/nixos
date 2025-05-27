@@ -16,10 +16,10 @@
       theme = "robbyrussell";
     };
     plugins = [
-      # {
-      #   name = "zsh-autosuggestions";
-      #   src = pkgs.zsh-autosuggestions.src;
-      # }
+      {
+        name = "zsh-autosuggestions";
+        src = pkgs.zsh-autosuggestions.src;
+      }
       {
         name = "powerlevel10k";
         src = pkgs.zsh-powerlevel10k.src;
@@ -32,7 +32,7 @@
     localVariables = {
       LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
     };
-    initExtra = ''
+    initContent = ''
       export PATH="$PATH:$HOME/exploit/bin:$HOME/portables/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/.local/share/scripts/bin"
       export MICRO_TRUECOLOR=1
 

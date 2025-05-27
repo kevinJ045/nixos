@@ -192,6 +192,7 @@
       swww
       sushi
       socat
+      stretchly
       # swaynotificationcenter
       # sunshine
       telegram-desktop

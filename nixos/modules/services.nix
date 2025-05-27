@@ -9,7 +9,7 @@
       wlr.enable = true;
       extraPortals = with pkgs; [
         xdg-desktop-portal-gtk
-        xdg-desktop-portal-hyprland
+        # xdg-desktop-portal-hyprland
       ];
     };
   };
@@ -20,6 +20,9 @@
     udev.extraRules = ''
       KERNEL=="ntsync", MODE="0660", TAG+="uaccess"
     '';
+    pulseaudio = {
+      enable = false;
+    };
     fwupd.enable = true;
     ollama = {
       enable = true;
@@ -31,7 +34,7 @@
     };
     avahi = {
     	enable = true;
-    	nssmdns = true;
+    	nssmdns4 = true;
     	openFirewall = true;
     	publish = {
     		enable = true;
@@ -40,6 +43,7 @@
     	};
     };
     dbus.enable = true;
+    blueman.enable = true;
     gvfs.enable = true;
     flatpak.enable = true;
     udisks2.enable = true;

@@ -3,7 +3,7 @@
 {
   programs.vscode = {
     enable = true;
-    # profiles.makano = {
+    profiles.default = {
       keybindings = [
         {
           key = "ctrl+d";
@@ -31,6 +31,6 @@
         "window.menuBarVisibility" = "hidden";
         "window.titleBarStyle" = "custom";
       };
-    # };
+    };
   };
 }

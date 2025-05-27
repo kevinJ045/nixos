@@ -34,6 +34,7 @@
       	{ command = "wl-paste --type image --watch cliphist store"; }
       	{ command = "swaync"; }
       	{ command = "kdeconnect-indicator"; }
+      	{ command = "stretchly"; }
       	{ command = "hypr-autostart"; }
       ];
       modifier = "Mod4";

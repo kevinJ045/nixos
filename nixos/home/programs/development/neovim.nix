@@ -249,7 +249,7 @@
       };
       # sensible.enable = true;
       sleuth.enable = true;
-      surround.enable = true;
+      vim-surround.enable = true;
       fzf-lua.enable = true;
       # vim-coffee-script.enable = true;
       
@@ -322,6 +322,7 @@
         sources = {
           formatting = {
             prettierd.enable = true;
+            prettierd.disableTsServerFormatter = true;
             stylua.enable = true;
             # rustfmt.enable = true;
           };
