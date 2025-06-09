@@ -11,8 +11,8 @@
       set -g @plugin 'tmux-plugins/tmux-resurrect'
       set -g @plugin 'tmux-plugins/tmux-popup'
       unbind C-b
-      set -g prefix C-a
-      bind C-a send-prefix
+      set -g prefix M-a
+      bind M-a send-prefix
       bind-key C-a last-window
       bind-key a send-prefix
       bind-key b set status
@@ -22,7 +22,7 @@
       bind j select-pane -D
       bind k select-pane -U
       bind l select-pane -R
-      bind-key p run-shell 'tmux-popup -h 80% -w 80% -E zsh'
+      bind-key p display-popup -h 80% -w 80%
       set -g mouse
       run '~/.tmux/plugins/tpm/tpm'
     '';

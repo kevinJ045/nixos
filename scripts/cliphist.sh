@@ -15,6 +15,14 @@ elif pgrep -x sway >/dev/null; then
     ')"
     X=$(( (SCREEN_WIDTH - WIDTH) / 2 ))
     Y=$(( (SCREEN_HEIGHT - HEIGHT) / 2 ))
+elif pgrep -x niri >/dev/null; then
+    # Sway: center on focused output
+    eval "$(niri msg -t get_outputs -r | jq -r '
+      .[] | select(.focused) |
+      "SCREEN_WIDTH=\(.current_mode.width) SCREEN_HEIGHT=\(.current_mode.height)"
+    ')"
+    X=$(( (SCREEN_WIDTH - WIDTH) / 2 ))
+    Y=$(( (SCREEN_HEIGHT - HEIGHT) / 2 ))
 else
     echo "Unsupported compositor"
     exit 1

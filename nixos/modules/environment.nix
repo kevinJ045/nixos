@@ -26,6 +26,7 @@
   };
 
   programs.chromium.enable = true;
+  programs.niri.enable = true;
   # programs.sunshine.enable = true;
 
   fonts.fontDir.enable = true;
@@ -146,6 +147,7 @@
       ntfs3g
       nautilus
       # neovide
+      # niri
       nixd
       networkmanagerapplet
       inputs.nix-software-center.packages.${system}.nix-software-center
@@ -154,7 +156,8 @@
       # ngrok
       nodePackages_latest.nodejs
       # nodejs_22
-      openjdk17-bootstrap
+      # openjdk17-bootstrap
+      jdk
       obs-studio
       onlyoffice-desktopeditors
       pavucontrol
@@ -204,6 +207,8 @@
       wl-clipboard
       xorg.xinit
       xorg.xorgserver
+      xwayland-satellite
+      xdg-desktop-portal-gnome
       xdg-user-dirs
       xdg-utils
       zsh-autosuggestions

@@ -1,18 +1,17 @@
 { config, lib, pkgs, ... }:
 
 {
-  xdg = {
-    autostart.enable = true;
-    portal = {
-      config.common.default = "gtk";
-      enable = true;
-      wlr.enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
-        # xdg-desktop-portal-hyprland
-      ];
-    };
-  };
+  # xdg = {
+  #   autostart.enable = true;
+  #   portal = {
+  #     config.common.default = "gnome";
+  #     enable = true;
+  #     wlr.enable = true;
+  #     extraPortals = with pkgs; [
+  #       xdg-desktop-portal-gnome
+  #     ];
+  #   };
+  # };
   programs.nix-ld.enable = true;
   programs.dconf.enable = true;
   zramSwap.enable = true;
@@ -81,16 +80,10 @@
         PermitRootLogin = "prohibit-password";
       };
     };
-    greetd = {
-      enable = true;
-      settings = rec {
-        initial_session = {
-          # command = "sh -c 'LD_LIBRARY_PATH=\"\" dbus-run-session Hyprland'";
-          command = "dbus-run-session sway";
-          user = "makano";
-        };
-        default_session = initial_session;
-      };
+    xserver.displayManager = {
+      gdm.enable = true;
+      autoLogin.enable = true;
+      autoLogin.user = "makano";
     };
   };
 }

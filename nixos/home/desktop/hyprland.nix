@@ -5,11 +5,14 @@
 
   wayland.windowManager.hyprland = {
   	enable = true;
+  	plugins = [
+  		pkgs.hyprlandPlugins.hyprscrolling
+  	];
   	settings = {
   		"$asrcPath" = "~/.config/scripts";
   		"$mainMod" = "SUPER";
-  		# "$term" = "foot";
-  		"$term" = "warp-terminal";
+  		"$term" = "foot";
+  		"$terminal" = "warp-terminal";
   		"$editor" = "code --disable-gpu --ozone-platform-hint=auto";
   		"$file" = "nautilus";
   		"$browser" = "zen";
@@ -18,11 +21,11 @@
   			"waybar"
   			"blueman-applet"
   			"nm-applet --indicator"
-  			"mako"
+  			# "mako"
   			"wl-paste --type text --watch cliphist store"
   			"wl-paste --type image --watch cliphist store"
   			"hyprpaper"
-  			"kando"
+  			# "kando"
   			"swaync"
   			"kdeconnect-indicator"
   			"hypr-autostart"
@@ -30,7 +33,7 @@
   		# monitor = "VIRTUAL-1,1920x1080@60,1920x0,1";
   		exec = [
   			# Cursor
-  			"hyprctl setcursor catppuccin-mocha-mauve-cursors 32"
+  			"hyprctl setcursor catppuccin-mocha-mauve-cursors 22"
 
   			# HyprFonts
   			"gsettings set org.gnome.desktop.interface font-name 'JetBrains Mono Bold'"
@@ -113,11 +116,12 @@
   			"$mainMod, F, fullscreen, "
   			"$mainMod, L, exec, swaylock "
   			"$mainMod, backspace, exec, $asrcPath/logoutlaunch.sh 1 "
-  			"$mainMod, space, exec, kando -m main "
+  			# "$mainMod, space, exec, kando -m main "
   			
   			''$mainMod SHIFT, P, exec, foot -e sh -c "hyprctl activewindow && read"''
   			
   			"$mainMod, T, exec, $term  "
+  			"$mainMod, ENTER, exec, $terminal  "
   			"$mainMod, Z, exec, $file "
   			"$mainMod, C, exec, $editor "
   			"$mainMod, B, exec, $browser "

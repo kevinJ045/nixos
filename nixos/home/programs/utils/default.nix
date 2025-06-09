@@ -3,6 +3,7 @@
 {
   imports = [
     ./wofi.nix
+    ./fuzzel.nix
     ./kando.nix
   ];
 }

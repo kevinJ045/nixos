@@ -44,8 +44,8 @@
     	    border-radius: 9px;
     	    margin-top: 3px;
     	    margin-bottom: 3px;
-    	    padding-left: 3px;
-    	    padding-right: 3px;
+    	    padding-left: 1px;
+    	    padding-right: 1px;
     	    color: @main-fg;
     	    animation: gradient_f 20s ease-in infinite;
     	    transition: all 0.5s cubic-bezier(.55,-0.68,.48,1.682);
@@ -202,7 +202,7 @@
         passthrough = false;
         gtk-layer-shell = true;
 
-        modules-left = ["custom/padd" "custom/l_end" "cpu" "memory" "custom/gpuinfo" "custom/r_end" "custom/l_end" "idle_inhibitor" "clock" "custom/r_end" "custom/l_end" "sway/workspaces" "custom/r_end" "custom/padd"];
+        modules-left = ["custom/padd" "custom/l_end" "cpu" "memory" "custom/gpuinfo" "custom/r_end" "custom/l_end" "idle_inhibitor" "clock" "custom/r_end" "custom/l_end" "niri/workspaces" "custom/r_end" "custom/padd"];
        	modules-center = ["custom/padd" "custom/l_end" "wlr/taskbar" "custom/r_end" "custom/padd"];
        	modules-right = ["custom/padd" "custom/l_end" "backlight" "network" "bluetooth" "pulseaudio" "custom/r_end" "custom/l_end" "tray" "battery" "custom/r_end" "custom/l_end" "custom/swaync" "custom/system" "custom/power" "custom/r_end" "custom/padd"];
 
@@ -260,6 +260,44 @@
 				on-click-backward = "tz_down";
 				on-scroll-up = "shift_up";
 				on-scroll-down = "shift_down";
+			};
+		};
+		
+		"wlr/workspaces" = {
+			disable-scroll = true;
+			all-outputs = true;
+			active-only = false;
+			on-click = "activate";
+			persistent-workspaces = {};
+			# format = "{icon}";
+			format = "{icon}";
+			format-icons = {
+				"1" = "";
+				"2" = "";
+				"3" = "";
+				"4" = "";
+				"5" = "";
+				"6" = "";
+				"7" = "";
+				"8" = "";
+				"9" = "󰌳";
+				"10" = "";
+				default = "";
+			};
+		};
+		
+		"niri/workspaces" = {
+			disable-scroll = true;
+			all-outputs = true;
+			active-only = false;
+			on-click = "activate";
+			persistent-workspaces = {};
+			# format = "{icon}";
+			format = "{icon}";
+			format-icons = {
+				"1" = "";
+				"2" = "";
+				default = " ";
 			};
 		};
 		

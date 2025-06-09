@@ -12,7 +12,7 @@
   	  font = {
         fork = true;
 	    normal = ["FiraCode Nerd Font"];
-	    size = 11.0;
+	    size = 14.0;
 	  };
   	};
   };
@@ -168,6 +168,9 @@
    	  	    };
    	  	  };	
       	};
+      };
+      indent-blankline ={
+      	enable = true;
       };
       dashboard = {
       	enable = true;
@@ -331,6 +334,10 @@
 
       web-devicons.enable = true;
     };
+
+    extraPlugins = [
+    	pkgs.vimPlugins.vim-coffee-script
+    ];
 
     extraConfigLua = ''
       

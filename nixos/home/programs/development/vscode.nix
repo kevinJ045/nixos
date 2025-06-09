@@ -20,6 +20,26 @@
           command = "editor.action.jumpToBracket";
           when = "editorTextFocus";
         }
+        {
+          key = "ctrl+w";
+          command = "workbench.action.focusPanel";
+          when = "editorFocus";
+        }
+        {
+          key = "ctrl+n";
+          command = "fileutils.newFile";
+          when = "editorFocus";
+        }
+        {
+          key = "ctrl+w";
+          command = "workbench.action.focusActiveEditorGroup";
+          when = "terminalFocus";
+        }
+        {
+          key = "ctrl+shift+alt+w";
+          command = "workbench.action.closeActiveEditor";
+          when = "editorFocus";
+        }
       ];
       userSettings = {
         "editor.tabSize" = 2;
@@ -30,6 +50,7 @@
         "explorer.confirmDragAndDrop" = false;
         "window.menuBarVisibility" = "hidden";
         "window.titleBarStyle" = "custom";
+        "workbench.panel.defaultLocation" = "right";
       };
     };
   };

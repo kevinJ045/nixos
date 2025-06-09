@@ -8,6 +8,7 @@
     ./swaylock.nix
     ./sway.nix
     ./gnome.nix
+    ./niri.nix
   ];
   
   xdg = {
