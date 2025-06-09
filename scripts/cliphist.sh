@@ -16,11 +16,15 @@ elif pgrep -x sway >/dev/null; then
     X=$(( (SCREEN_WIDTH - WIDTH) / 2 ))
     Y=$(( (SCREEN_HEIGHT - HEIGHT) / 2 ))
 elif pgrep -x niri >/dev/null; then
-    # Sway: center on focused output
-    eval "$(niri msg -t get_outputs -r | jq -r '
-      .[] | select(.focused) |
-      "SCREEN_WIDTH=\(.current_mode.width) SCREEN_HEIGHT=\(.current_mode.height)"
+    eval "$(niri msg outputs | awk '
+      /Current mode:/ {
+        split($3, res, "x");
+        print "SCREEN_WIDTH=" res[1] " SCREEN_HEIGHT=" res[2]
+        exit
+      }
     ')"
+    
+    # Assume WIDTH and HEIGHT are already defined
     X=$(( (SCREEN_WIDTH - WIDTH) / 2 ))
     Y=$(( (SCREEN_HEIGHT - HEIGHT) / 2 ))
 else

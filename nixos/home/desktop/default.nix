@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./hyprland.nix
+    # ./hyprland.nix
     ./i3.nix
     ./waybar.nix
     ./swaylock.nix
