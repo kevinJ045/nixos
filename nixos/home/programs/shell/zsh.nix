@@ -33,7 +33,7 @@
       LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
     };
     initContent = ''
-      export PATH="$PATH:$HOME/exploit/bin:$HOME/portables/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/.local/share/scripts/bin"
+      export PATH="$PATH:$HOME/.rew/bin:$HOME/exploit/bin:$HOME/portables/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/.local/share/scripts/bin"
       export MICRO_TRUECOLOR=1
 
       alias game64="WINEPREFIX=/home/makano/Games/wine64 wine64"
