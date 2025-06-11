@@ -11,8 +11,8 @@
   	settings = {
   	  font = {
         fork = true;
-	    normal = ["FiraCode Nerd Font"];
-	    size = 14.0;
+	    # normal = ["FiraCode Nerd Font"];
+	    # size = 14.0;
 	  };
   	};
   };

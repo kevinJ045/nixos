@@ -51,6 +51,7 @@
         "window.menuBarVisibility" = "hidden";
         "window.titleBarStyle" = "custom";
         "workbench.panel.defaultLocation" = "right";
+        "workbench.colorTheme" = "Catppuccin Mocha";
       };
     };
   };

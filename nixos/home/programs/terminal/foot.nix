@@ -6,17 +6,17 @@
     settings = {
       main = {
         term = "xterm-256color";
-        font = "Fira Code Nerdfont:size=10";
-        dpi-aware = "yes";
+        # font = "Fira Code Nerdfont:size=10";
+        # dpi-aware = "yes";
         pad = "25x1";
         shell = "tmux";
       };
       mouse = {
         hide-when-typing = "yes";
       };
-      colors = {
-      	alpha = 0.8;
-      };
+      # colors = {
+      # 	alpha = 0.8;
+      # };
     };
   };
 }

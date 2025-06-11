@@ -14,6 +14,7 @@
       # to have it up-to-date or simply don't specify the nixpkgs input  
       # inputs.nixpkgs.follows = "nixpkgs";
     };
+    # jovian.url = "github:jovian-experiments/jovian-nixos/development";
     nixvim = {
       # url = "github:nix-community/nixvim";
       # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
@@ -21,16 +22,17 @@
     
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # stylix.url = "github:danth/stylix/release-24.11";
+    stylix.url = "github:danth/stylix/release-25.05";
     # nvimdots.url = "github:ayamir/nvimdots";
   };
-  outputs = inputs@{ nixpkgs, home-manager, nixvim, catppuccin, ... }: {
+  outputs = inputs@{ nixpkgs, home-manager, stylix, nixvim, catppuccin, ... }: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
           ./configuration.nix
+          # jovian.nixosModules.default
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -39,7 +41,7 @@
             home-manager.users.makano = {
               imports = [
                 ./home.nix
-                # stylix.homeManagerModules.stylix
+                stylix.homeManagerModules.stylix
                 catppuccin.homeModules.catppuccin
                	# nixvim.homeManagerModules.nixvim
                 # catppuccin.homeManagerModules.catppuccin

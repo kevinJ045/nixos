@@ -5,7 +5,7 @@
     enable = true;
     settings = {
       autosu = true;
-      colorscheme = "catppuccin-mocha";
+      # colorscheme = "catppuccin-mocha";
       mkparents = true;
     };
   };

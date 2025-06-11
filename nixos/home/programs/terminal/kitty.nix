@@ -3,10 +3,10 @@
 {
   programs.kitty = {
     enable = true;
-    font = {
-      name = "Fira Code Nerdfont";
-      size = 12.0;
-    };
+    # font = {
+    #   name = "Fira Code Nerdfont";
+    #   size = 12.0;
+    # };
     shellIntegration.enableZshIntegration = true;
     shellIntegration.mode = "no-cursor";
     settings = {

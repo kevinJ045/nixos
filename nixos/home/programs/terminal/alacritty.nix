@@ -9,17 +9,17 @@
           x = 20;
           y = 20;
         };
-        opacity = 0.9;
+        # opacity = 0.9;
         decorations = "full";
       };
 
-      font = {
-        normal = {
-          family = "JetBrains Mono";
-          style = "Regular";
-        };
-        size = 12.0;
-      };
+      # font = {
+      #   normal = {
+      #     family = "JetBrains Mono";
+      #     style = "Regular";
+      #   };
+      #   size = 12.0;
+      # };
     };
   };
 }

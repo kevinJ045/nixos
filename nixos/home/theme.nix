@@ -38,10 +38,10 @@ in
       name = lib.mkForce "catppuccin-mocha-mauve-cursors";
       size = 24;
     };
-    theme = {
-      package = catppuccin-gtk-theme;
-      name = "Catppuccin-Dark";
-    };
+    # theme = {
+    #   package = catppuccin-gtk-theme;
+    #   name = lib.mkForce "Catppuccin-Dark";
+    # };
   };
 
   # programs.gnome-shell.theme = {
@@ -53,11 +53,11 @@ in
     source = "${catppuccin-gtk-theme}/share/themes/Catppuccin-Dark";
   };
 
-  qt = {
-    enable = true;
-    platformTheme.name = "kvantum";
-    style.name = "kvantum";
-  };
+  # qt = {
+  #   enable = true;
+  #   platformTheme.name = "kvantum";
+  #   style.name = "kvantum";
+  # };
 
   home.pointerCursor = {
     package = lib.mkForce pkgs.catppuccin-cursors.mochaMauve;
@@ -65,50 +65,51 @@ in
     size = 24;
   };
 
-  catppuccin = {
-    enable = true;
-    flavor = "mocha";
-  };
-
-  # stylix = {
+  # catppuccin = {
   #   enable = true;
-
-  #   targets.gnome.enable = false;
-  #   polarity = "dark";
-  #   image = bg_wallpaper;
-  #   base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-  #   fonts = {
-  #     serif = {
-  #       package = pkgs.dejavu_fonts;
-  #       name = "DejaVu Serif";
-  #     };
-
-  #     sansSerif = {
-  #       package = pkgs.dejavu_fonts;
-  #       name = "DejaVu Sans";
-  #     };
-
-  #     monospace = {
-  #       package = pkgs.fira-code;
-  #       name = "Fira Code NerdFont";
-  #     };
-
-  #     emoji = {
-  #       package = pkgs.noto-fonts-emoji;
-  #       name = "Noto Color Emoji";
-  #     };
-  #   };
+  #   flavor = "mocha";
   # };
+
+  stylix = {
+    enable = true;
+
+    # targets.gnome.enable = false;
+    targets.vscode.enable = false;
+    polarity = "dark";
+    image = bg_wallpaper;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    fonts = {
+      serif = {
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Serif";
+      };
+
+      sansSerif = {
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Sans";
+      };
+
+      monospace = {
+        package = pkgs.fira-code;
+        name = "Fira Code NerdFont";
+      };
+
+      emoji = {
+        package = pkgs.noto-fonts-emoji;
+        name = "Noto Color Emoji";
+      };
+    };
+  };
   
 
-  xdg.configFile.hyprpaper = {
-    target = "hypr/hyprpaper.conf";
-    text = ''
-      preload = ${bg_wallpaper}
-      wallpaper = eDP-1,${bg_wallpaper}
-      splash = false
-    '';
-  };
+  # xdg.configFile.hyprpaper = {
+  #   target = "hypr/hyprpaper.conf";
+  #   text = ''
+  #     preload = ${bg_wallpaper}
+  #     wallpaper = eDP-1,${bg_wallpaper}
+  #     splash = false
+  #   '';
+  # };
 
   dconf = {
     enable = true;
