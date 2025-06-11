@@ -41,7 +41,7 @@
             home-manager.users.makano = {
               imports = [
                 ./home.nix
-                stylix.homeManagerModules.stylix
+                stylix.homeModules.stylix
                 catppuccin.homeModules.catppuccin
                	# nixvim.homeManagerModules.nixvim
                 # catppuccin.homeManagerModules.catppuccin

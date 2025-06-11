@@ -80,8 +80,8 @@
         PermitRootLogin = "prohibit-password";
       };
     };
-    xserver.displayManager = {
-      gdm.enable = true;
+    xserver.displayManager.gdm.enable = true;
+    displayManager = {
       autoLogin.enable = true;
       autoLogin.user = "makano";
     };
