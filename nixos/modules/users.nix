@@ -11,7 +11,7 @@
       godot_4
       eza
     ];
-    shell = pkgs.zsh;
+    shell = pkgs.nushell;
   };
 
   programs.zsh.enable = true;

@@ -69,6 +69,7 @@
       # XCURSOR_THEME = "GoogleDot-Black";
     };
     systemPackages = with pkgs; [
+      nushell
       stdenv
       amberol
       alacritty

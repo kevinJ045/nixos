@@ -6,6 +6,7 @@
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
+    enableNushellIntegration = true;
     settings = {
       format = lib.concatStrings [
    	    "[](#a3aed2)"
