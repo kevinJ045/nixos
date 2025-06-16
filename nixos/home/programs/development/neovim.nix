@@ -10,9 +10,9 @@
   	enable = true;
   	settings = {
   	  font = {
-        fork = true;
-	    # normal = ["FiraCode Nerd Font"];
-	    # size = 14.0;
+        fork = lib.mkForce true;
+	    normal = lib.mkForce ["FiraCode Nerd Font"];
+	    size = lib.mkForce 14.0;
 	  };
   	};
   };

@@ -38,10 +38,10 @@ in
       name = lib.mkForce "catppuccin-mocha-mauve-cursors";
       size = 24;
     };
-    # theme = {
-    #   package = catppuccin-gtk-theme;
-    #   name = lib.mkForce "Catppuccin-Dark";
-    # };
+    theme = {
+      package = lib.mkForce catppuccin-gtk-theme;
+      name = lib.mkForce "Catppuccin-Dark";
+    };
   };
 
   # programs.gnome-shell.theme = {
@@ -73,8 +73,12 @@ in
   stylix = {
     enable = true;
 
-    # targets.gnome.enable = false;
+    targets.gnome.enable = false;
     targets.vscode.enable = false;
+    targets.hyprpaper.enable = false;
+    targets.waybar.enable = false;
+    targets.gtk.enable = false;
+    # targets.foot.enable = false;
     polarity = "dark";
     image = bg_wallpaper;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
@@ -102,14 +106,14 @@ in
   };
   
 
-  # xdg.configFile.hyprpaper = {
-  #   target = "hypr/hyprpaper.conf";
-  #   text = ''
-  #     preload = ${bg_wallpaper}
-  #     wallpaper = eDP-1,${bg_wallpaper}
-  #     splash = false
-  #   '';
-  # };
+  xdg.configFile.hyprpaper = {
+    target = "hypr/hyprpaper.conf";
+    text = ''
+      preload = ${bg_wallpaper}
+      wallpaper = eDP-1,${bg_wallpaper}
+      splash = false
+    '';
+  };
 
   dconf = {
     enable = true;
