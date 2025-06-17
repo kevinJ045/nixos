@@ -13,8 +13,8 @@ let
     size = "standard";
   };
   bg_wallpaper = builtins.fetchurl {
-    url = "https://raw.githubusercontent.com/Sahil-958/walls/refs/heads/main/hyprdots/Catppuccin-Mocha/cat_leaves.png";
-    sha256 = "1894y61nx3p970qzxmqjvslaalbl2skj5sgzvk38xd4qmlmi9s4i";
+    url = "https://raw.githubusercontent.com/kevinj045/nixos/refs/heads/main/nixos/assets/wallpaper.png";
+    sha256 = "1fya6dpplyjcbwhcn85bhp7irah2sd84ciani7f2c9gi3gnyz6g1";
   };
 in
 {
@@ -70,6 +70,10 @@ in
   #   flavor = "mocha";
   # };
 
+  catppuccin.flavor = "mocha";
+  catppuccin.swaync.enable = true;
+  catppuccin.nvim.enable = true;
+
   stylix = {
     enable = true;
 
@@ -78,6 +82,9 @@ in
     targets.hyprpaper.enable = false;
     targets.waybar.enable = false;
     targets.gtk.enable = false;
+    targets.neovide.enable = false;
+    targets.neovim.enable = false;
+    targets.swaync.enable = false;
     # targets.foot.enable = false;
     polarity = "dark";
     image = bg_wallpaper;

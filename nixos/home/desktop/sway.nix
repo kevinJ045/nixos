@@ -47,7 +47,10 @@
       # };
       output = {
         "*" = {
-          bg = "${builtins.fetchurl { url = "https://raw.githubusercontent.com/Sahil-958/walls/refs/heads/main/hyprdots/Catppuccin-Mocha/cat_leaves.png"; sha256 = "1894y61nx3p970qzxmqjvslaalbl2skj5sgzvk38xd4qmlmi9s4i"; }} fill";
+          bg = "${builtins.fetchurl {
+              url = "https://raw.githubusercontent.com/kevinj045/nixos/refs/heads/main/nixos/assets/wallpaper.png";
+              sha256 = "1fya6dpplyjcbwhcn85bhp7irah2sd84ciani7f2c9gi3gnyz6g1";
+            }} fill";
           # bg = "/home/makano/.config/background fill"; # "${builtins.fetchurl { url = "https://images.hdqwalls.com/download/1/beach-seaside-digital-painting-4k-05.jpg"; sha256 = "2877925e7dab66e7723ef79c3bf436ef9f0f2c8968923bb0fff990229144a3fe"; }} fill";
         };
       };

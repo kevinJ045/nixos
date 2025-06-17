@@ -201,6 +201,7 @@
       # sunshine
       telegram-desktop
       turtle
+      umu-launcher
       vlc
       weechat
       wine

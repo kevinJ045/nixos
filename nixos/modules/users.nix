@@ -12,6 +12,7 @@
       eza
     ];
     shell = pkgs.nushell;
+    # shell = pkgs.zsh;
   };
 
   programs.zsh.enable = true;
