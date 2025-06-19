@@ -401,6 +401,9 @@
       telescope = {
         enable = true;
       };
+      conform = {
+        enable = true;
+      };
       lualine = {
         enable = true;
       };
@@ -413,6 +416,9 @@
       blink-cmp = {
         enable = true;
       };
+      neogit = {
+        enable = true;
+      };
       web-devicons = {
         enable = true;
       };
@@ -423,6 +429,9 @@
         enable = true;
       };
       todo-comments = {
+        enable = true;
+      };
+      oil = {
         enable = true;
       };
       treesitter = {
