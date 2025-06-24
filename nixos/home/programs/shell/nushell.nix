@@ -1,6 +1,11 @@
 { config, pkgs, lib, ... }:
 
 {
+  programs.zoxide = {
+    enable = true;
+    enableNushellIntegration = true;
+    enableZshIntegration = true;
+  };
   programs.carapace = {
     enable = true;
     enableNushellIntegration = true;
@@ -11,15 +16,7 @@
       let carapace_completer = {|spans|
         carapace $spans.0 nushell ...$spans | from json
       }
-      def gam64 [...args] {
-        let-env WINEPREFIX = "/path/to/wine64"
-        wine64 ...$args
-      }
       
-      def gam32 [...args] {
-        let-env WINEPREFIX = "/path/to/wine32"
-        wine ...$args
-      }
       $env.config = {
        show_banner: false,
        completions: {
