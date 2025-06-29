@@ -13,6 +13,13 @@
 {
   nixpkgs.config.allowUnfree = true;
 
+  # jovian = {
+  #   steam = {
+  #     enable = true;
+  #     user = "makano045";
+  #   };
+  # };
+
   programs.steam = {
   	enable = true;
   	extraCompatPackages = [ pkgs.proton-ge-bin ];
@@ -27,6 +34,9 @@
 
   programs.chromium.enable = true;
   programs.niri.enable = true;
+  # programs.swayfx.enable = true;
+  programs.sway.enable = true;
+  programs.sway.package = pkgs.swayfx;
   # programs.sunshine.enable = true;
 
   fonts.fontDir.enable = true;

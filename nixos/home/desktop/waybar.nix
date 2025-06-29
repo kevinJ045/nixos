@@ -202,7 +202,7 @@
         passthrough = false;
         gtk-layer-shell = true;
 
-        modules-left = ["custom/padd" "custom/l_end" "cpu" "memory" "custom/gpuinfo" "custom/r_end" "custom/l_end" "idle_inhibitor" "clock" "custom/r_end" "custom/l_end" "niri/workspaces" "custom/r_end" "custom/padd"];
+        modules-left = ["custom/padd" "custom/l_end" "cpu" "memory" "custom/gpuinfo" "custom/r_end" "custom/l_end" "idle_inhibitor" "clock" "custom/r_end" "custom/l_end" "niri/workspaces" "sway/workspaces" "custom/r_end" "custom/padd"];
        	modules-center = ["custom/padd" "custom/l_end" "wlr/taskbar" "custom/r_end" "custom/padd"];
        	modules-right = ["custom/padd" "custom/l_end" "backlight" "network" "bluetooth" "pulseaudio" "custom/r_end" "custom/l_end" "tray" "battery" "custom/r_end" "custom/l_end" "custom/swaync" "custom/system" "custom/power" "custom/r_end" "custom/padd"];
 

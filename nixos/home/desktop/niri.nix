@@ -104,6 +104,11 @@ window-rule {
 }
 
 window-rule {
+    match app-id=r#"Waydroid"#
+    default-column-width { proportion 0.3; }
+}
+
+window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     open-floating true
 }
@@ -159,8 +164,8 @@ hotkey-overlay {
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    Mod+T hotkey-overlay-title="Open a Terminal: foot" { spawn "foot"; }
-    Mod+A hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    Mod+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
+    Mod+A hotkey-overlay-title="Run an Application: wofi" { spawn "wofi"; }
     Mod+D hotkey-overlay-title="Run an Application: wmenu" { spawn "${pkgs.wmenu}/bin/wmenu-run" "-i" "-N" "1e1e2e" "-n" "89b4fa" "-M" "1e1e2e" "-m" "89b4fa" "-S" "89b4fa" "-s" "cdd6f4"; }
     Mod+B hotkey-overlay-title="Open Browser" { spawn "zen"; }
     Mod+V { spawn "sh" "/home/makano/.config/scripts/cliphist.sh" "c"; }

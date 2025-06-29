@@ -81,6 +81,7 @@
       };
     };
     xserver.displayManager.gdm.enable = true;
+    # xserver.displayManager.gdm.background = ../assets/wallpaper.png;
     displayManager = {
       autoLogin.enable = true;
       autoLogin.user = "makano";

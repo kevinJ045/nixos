@@ -4,6 +4,16 @@
   programs.vscode = {
     enable = true;
     profiles.default = {
+      # extensions = with pkgs; [
+      # 	vscode-extensions.catppuccin.catppuccin-vsc
+      # 	vscode-extensions.catppuccin.catppuccin-vsc-icons
+      # 	vscode-extensions.vadimcn.vscode-lldb
+      # 	vscode-extensions.esbenp.prettier-vscode
+      # 	vscode-extensions.prisma.prisma
+      # 	vscode-extensions.rust-lang.rust-analyzer
+      # 	vscode-extensions.bbenoist.nix
+      # 	vscode-extensions.brettm12345.nixfmt-vscode
+      # ];
       keybindings = [
         {
           key = "ctrl+d";
@@ -43,15 +53,42 @@
       ];
       userSettings = {
         "editor.tabSize" = 2;
+        "editor.detectIndentation" = false;
+        "breadcrumbs.enabled" = false;
+        "explorer.confirmDragAndDrop" = false;
+        "explorer.confirmDelete" = false;
+        "extensions.ignoreRecommendations" = true;
         "editor.fontFamily" = "Fira Code";
         "editor.fontLigatures" = true;
-        "explorer.confirmDelete" = false;
         "explorer.confirmPasteNative" = false;
-        "explorer.confirmDragAndDrop" = false;
         "window.menuBarVisibility" = "hidden";
         "window.titleBarStyle" = "custom";
         "workbench.panel.defaultLocation" = "right";
         "workbench.colorTheme" = "Catppuccin Mocha";
+        "workbench.iconTheme" = "Catppuccin Mocha";
+        # "window.zoomLevel" = 2;
+        "workbench.editor.showTabs" = false;
+        "workbench.statusBar.visible" = false;
+        "workbench.activityBar.visible" = false;
+        "editor.minimap.enabled" = false;
+        "editor.lightbulb.enabled" = false;
+        "editor.overviewRulerBorder" = false;
+        "editor.showFoldingControls" = "never";
+        "editor.scrollbar.horizontal" = "hidden";
+        "editor.scrollbar.vertical" = "hidden";
+        "window.controlsStyle" = "hidden";
+        "window.customTitleBarVisibility" = "never";
+
+        "apc.electron" = {
+           "titleBarStyle" = "hiddenInset";
+        };
+
+        "workbench.colorCustomizations" = {
+	       	"activityBar.background" = "#1e1e2e";
+	       	"sideBar.background" = "#1e1e2e";
+	   	    "titleBar.background" = "#1e1e2e";
+	   	    "titleBar.activeBackground" = "#1e1e2e";
+        };
       };
     };
   };
