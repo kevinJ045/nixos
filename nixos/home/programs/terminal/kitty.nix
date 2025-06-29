@@ -22,6 +22,8 @@
       padding_top = 2;
       padding_left = 20;
       padding_right = 20;
+      # color7 = "#a6adc8";
+      # color8 = "#bac2de";
       startup_session = "${pkgs.writeText "tmux-session.conf" ''launch tmux''}";
     };
   };

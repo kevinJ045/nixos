@@ -24,6 +24,8 @@
       bind l select-pane -R
       bind-key p display-popup -h 80% -w 80%
       set -g mouse
+      set -sg escape-time 0
+      set -g status off
       run '~/.tmux/plugins/tpm/tpm'
     '';
   };

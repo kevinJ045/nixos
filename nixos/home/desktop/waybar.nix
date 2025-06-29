@@ -355,7 +355,7 @@
 			tooltip-format = "{title}";
 			on-click = "activate";
 			on-click-middle = "close";
-			ignore-list = ["Alacritty" "foot" "dev.warp.Warp" "kitty" "Foot"];
+			ignore-list = ["Alacritty" "foot" "Ghostty" "dev.warp.Warp" "kitty" "Foot" "ghostty" "com.mitchellh.ghostty"];
 		};
 		
 		backlight = {

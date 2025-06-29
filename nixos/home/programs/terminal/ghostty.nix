@@ -1,3 +1,4 @@
+
 { config, pkgs, lib, ... }:
 
 {
@@ -8,10 +9,11 @@
       theme = "catppuccin-mocha";
       font-size = 12;
       font-family = "FiraCode Nerd Font";
-      window-padding-x = 16;
+      window-padding-x = 8;
       cursor-style = "block";
       cursor-style-blink = false;
       command = "tmux";
+      background-opacity = 0.8;
       app-notifications = "no-clipboard-copy";
     };
   };
