@@ -240,7 +240,7 @@
 	  wayvnc
       zenity
 
-      warp-terminal
+      # warp-terminal
 
       # unstable.deskflow
 
