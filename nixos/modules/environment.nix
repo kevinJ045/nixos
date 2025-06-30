@@ -161,7 +161,7 @@
       # niri
       nixd
       networkmanagerapplet
-      inputs.nix-software-center.packages.${system}.nix-software-center
+      # inputs.nix-software-center.packages.${system}.nix-software-center
       inputs.zen-browser.packages."${system}".default
       # nix-autobahn
       # ngrok

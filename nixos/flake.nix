@@ -6,13 +6,13 @@
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    catppuccin.url = "github:catppuccin/nix";
-    nix-software-center.url = "github:snowfallorg/nix-software-center";
+    catppuccin.url = "github:catppuccin/nix/25.05";
+    # nix-software-center.url = "github:snowfallorg/nix-software-center";
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       # IMPORTANT: we're using "libgbm" and is only available in unstable so ensure
       # to have it up-to-date or simply don't specify the nixpkgs input  
-      # inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     # jovian.url = "github:jovian-experiments/jovian-nixos/development";
     nixvim = {
@@ -23,6 +23,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix.url = "github:danth/stylix/release-25.05";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
+    catppuccin.inputs.nixpkgs.follows = "nixpkgs";
     # nvimdots.url = "github:ayamir/nvimdots";
   };
   outputs = inputs@{ nixpkgs, home-manager, stylix, nixvim, catppuccin, ... }: {
