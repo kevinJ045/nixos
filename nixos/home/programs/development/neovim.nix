@@ -36,6 +36,7 @@
       C-q = ":quit!"
       C-tab = "@ga"
       C-p = ":e ."
+      0 = ":clipboard-yank"
 
       [editor.lsp]
       display-inlay-hints = true

@@ -13,12 +13,12 @@
 {
   nixpkgs.config.allowUnfree = true;
 
-  # jovian = {
-  #   steam = {
-  #     enable = true;
-  #     user = "makano045";
-  #   };
-  # };
+  jovian = {
+    steam = {
+      enable = true;
+      user = "makano045";
+    };
+  };
 
   programs.steam = {
   	enable = true;

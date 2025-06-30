@@ -2,9 +2,9 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     catppuccin.url = "github:catppuccin/nix";
     nix-software-center.url = "github:snowfallorg/nix-software-center";
@@ -14,25 +14,25 @@
       # to have it up-to-date or simply don't specify the nixpkgs input  
       # inputs.nixpkgs.follows = "nixpkgs";
     };
-    # jovian.url = "github:jovian-experiments/jovian-nixos/development";
+    jovian.url = "github:jovian-experiments/jovian-nixos/development";
     nixvim = {
       # url = "github:nix-community/nixvim";
       # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
-      url = "github:nix-community/nixvim/nixos-25.05";
+      url = "github:nix-community/nixvim";
     
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    stylix.url = "github:danth/stylix/release-25.05";
+    stylix.url = "github:danth/stylix";
     # nvimdots.url = "github:ayamir/nvimdots";
   };
-  outputs = inputs@{ nixpkgs, home-manager, stylix, nixvim, catppuccin, ... }: {
+  outputs = inputs@{ nixpkgs, home-manager, jovian, stylix, nixvim, catppuccin, ... }: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
           ./configuration.nix
-          # jovian.nixosModules.default
+          jovian.nixosModules.default
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
