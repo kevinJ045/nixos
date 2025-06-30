@@ -80,7 +80,7 @@
         PermitRootLogin = "prohibit-password";
       };
     };
-    xserver.displayManager.gdm.enable = true;
+    displayManager.gdm.enable = true;
     # xserver.displayManager.gdm.background = ../assets/wallpaper.png;
     displayManager = {
       autoLogin.enable = true;
