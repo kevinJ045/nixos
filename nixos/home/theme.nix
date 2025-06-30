@@ -30,8 +30,8 @@ in
       "file:///home/makano/workspace"
     ];
     iconTheme = {
-      package = pkgs.epapirus-icon-theme;
-      name = "ePapirus-Dark";
+      package = pkgs.vimix-icon-theme;
+      name = "Vimix";
     };
     cursorTheme = {
       package = lib.mkForce pkgs.catppuccin-cursors.mochaMauve;
