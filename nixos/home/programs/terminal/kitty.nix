@@ -2,7 +2,7 @@
 
 {
   programs.kitty = {
-    enable = true;
+    enable = false;
     enableGitIntegration = true;
     # font = {
     #   name = "Fira Code Nerdfont";
