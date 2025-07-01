@@ -7,6 +7,7 @@
     ./home/services
     ./home/desktop
     ./home/theme.nix
+    ./home/cilestia.nix
   ];
 
   home = {

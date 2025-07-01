@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -15,6 +16,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # jovian.url = "github:jovian-experiments/jovian-nixos/development";
+    caelestia-shell-src = {
+      url = "github:caelestia-dots/shell";
+      flake = false; # This is the crucial part
+    };
     nixvim = {
       # url = "github:nix-community/nixvim";
       # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
@@ -39,7 +44,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit nixvim; };
+            home-manager.extraSpecialArgs = { inherit inputs nixvim; };
             home-manager.users.makano = {
               imports = [
                 ./home.nix
