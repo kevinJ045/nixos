@@ -15,13 +15,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # jovian.url = "github:jovian-experiments/jovian-nixos/development";
-    nixvim = {
-      # url = "github:nix-community/nixvim";
-      # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
-      url = "github:nix-community/nixvim/nixos-25.05";
-    
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     stylix.url = "github:danth/stylix/release-25.05";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     catppuccin.inputs.nixpkgs.follows = "nixpkgs";
