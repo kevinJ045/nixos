@@ -104,6 +104,11 @@ window-rule {
 }
 
 window-rule {
+    match app-id=r#"librewolf"#
+    default-column-width {}
+}
+
+window-rule {
     match app-id=r#"Waydroid"#
     default-column-width { proportion 0.3; }
 }
@@ -167,7 +172,7 @@ binds {
     Mod+T hotkey-overlay-title="Open a Terminal: foot" { spawn "foot"; }
     Mod+A hotkey-overlay-title="Run an Application: wofi" { spawn "wofi"; }
     Mod+D hotkey-overlay-title="Run an Application: wmenu" { spawn "${pkgs.wmenu}/bin/wmenu-run" "-i" "-N" "1e1e2e" "-n" "89b4fa" "-M" "1e1e2e" "-m" "89b4fa" "-S" "89b4fa" "-s" "cdd6f4"; }
-    Mod+B hotkey-overlay-title="Open Browser" { spawn "zen"; }
+    Mod+B hotkey-overlay-title="Open Browser" { spawn "librewolf"; }
     Mod+V { spawn "sh" "/home/makano/.config/scripts/cliphist.sh" "c"; }
     Mod+Shift+T hotkey-overlay-title="Open Warp" { spawn "warp-terminal"; }
     Mod+Alt+T hotkey-overlay-title="Open ghostty" { spawn "ghostty"; }

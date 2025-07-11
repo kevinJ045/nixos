@@ -82,7 +82,7 @@
       focus.followMouse = true;
       workspaceAutoBackAndForth = true;
       keybindings = let modifier = config.wayland.windowManager.sway.config.modifier;  in lib.mkOptionDefault {
-        "${modifier}+b" = "exec zen";
+        "${modifier}+b" = "exec librewolf";
         "${modifier}+c" = "exec code";
         "${modifier}+t" = "exec foot";
         

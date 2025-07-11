@@ -138,6 +138,7 @@
       kdePackages.kdeconnect-kde
       kdePackages.qt6ct
       libsForQt5.qt5ct
+      librewolf
       # kooha
       hyprpaper
       libnotify
@@ -162,7 +163,7 @@
       nixd
       networkmanagerapplet
       # inputs.nix-software-center.packages.${system}.nix-software-center
-      inputs.zen-browser.packages."${system}".default
+      # inputs.zen-browser.packages."${system}".default
       # nix-autobahn
       # ngrok
       nodePackages_latest.nodejs
@@ -195,6 +196,7 @@
       # gst-libav
       # pipewire
       ranger
+      ryubing
       remmina
       rcm
       rofi
