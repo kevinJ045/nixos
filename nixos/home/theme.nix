@@ -16,6 +16,30 @@ let
     url = "https://raw.githubusercontent.com/kevinj045/nixos/refs/heads/main/nixos/assets/wallpaper.png";
     sha256 = "1fya6dpplyjcbwhcn85bhp7irah2sd84ciani7f2c9gi3gnyz6g1";
   };
+  cool-dark-icons = pkgs.stdenv.mkDerivation {
+    pname = "cool-dark-icons";
+    version = "unstable";
+    
+    propagatedBuildInputs = with pkgs; [
+      # kdePackages.breeze-icons
+      adwaita-icon-theme
+      hicolor-icon-theme
+    ];
+  
+    src = pkgs.fetchFromGitHub {
+      owner = "L4ki";
+      repo = "Cool-Plasma-Themes";
+      rev = "9a1d0f2cd2b62bbcf8a7f15cb1e7ea4cab75bebc"; # Latest commit as of July 2025
+      sha256 = "sha256-ekzpoEHOt7fwUBmIl+goaQTD9VswsULxU6G1TBcdItk="; # placeholder, will tell you how to get correct one
+    };
+
+    dontDropIconThemeCache = true;
+  
+    installPhase = ''
+      mkdir -p $out/share/icons
+      cp -r "Cool Icons Themes/Cool-Dark-Icons" $out/share/icons/
+    '';
+  };
 in
 {
   gtk = {
@@ -30,8 +54,8 @@ in
       "file:///home/makano/workspace"
     ];
     iconTheme = {
-      package = pkgs.epapirus-icon-theme;
-      name = "ePapirus-Dark";
+      package = pkgs.catppuccin-papirus-folders;
+      name = "Papirus-Dark";
     };
     cursorTheme = {
       package = lib.mkForce pkgs.catppuccin-cursors.mochaMauve;

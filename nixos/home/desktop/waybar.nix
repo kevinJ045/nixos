@@ -350,7 +350,7 @@
 		"wlr/taskbar" = {
 			format = "{icon}";
 			icon-size = 18;
-			icon-theme = "ePapirus-Dark";
+			icon-theme = "Papirus-Dark";
 			spacing = 0;
 			tooltip-format = "{title}";
 			on-click = "activate";
