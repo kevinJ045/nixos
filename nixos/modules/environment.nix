@@ -247,7 +247,7 @@
 
       warp-terminal
 
-      # unstable.niriswitcher
+      inputs.nixpkgs-unstable.legacyPackages.x86_64-linux.niriswitcher 
       # python313Packages.pygobject3
       # libadwaita
       # gtk4-layer-shell
