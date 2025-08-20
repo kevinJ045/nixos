@@ -142,6 +142,7 @@ in
     text = ''
       preload = ${bg_wallpaper}
       wallpaper = eDP-1,${bg_wallpaper}
+      wallpaper = HDMI-A-1,${bg_wallpaper}
       splash = false
     '';
   };

@@ -76,6 +76,18 @@ main
     (writeShellScriptBin "spaste" ''
        ${curl}/bin/curl -X POST --data-binary @- https://p.seanbehan.ca
     '')
+    (writeShellScriptBin "niswiw" ''
+       niri msg windows \
+        | awk -v RS="" '/Window ID/ {
+        match($0, /Window ID ([0-9]+)/, id)
+        match($0, /Title: "([^"]*)"/, title)
+        match($0, /App ID: "([^"]*)"/, app)
+        printf "%s | %s | %s\n", id[1], (app[1]!="" ? app[1] : "unknown"), title[1]
+        }' \
+      | wofi --dmenu --prompt "Windows:" \
+      | awk -F'|' '{gsub(/^[ \t]+|[ \t]+$/, "", $1); print $1}' \
+      | xargs -r -I {} niri msg action focus-window --id {}
+    '')
     (writeShellScriptBin "codew" ''
       ${vscode}/bin/code --ozone-platform-hint=auto $*
     '')

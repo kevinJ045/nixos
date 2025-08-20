@@ -4,7 +4,7 @@
 # let 
 #   unstable = import (fetchTarball {
 #       url = "https://github.com/NixOS/nixpkgs/archive/refs/heads/nixos-unstable.tar.gz";
-#       sha256 = "1jbmp47jvvcs6qxa5ap8j9cp7bzbsbwpwrwaj6a2higkp4s7fy6b";
+#       sha256 = "1s3lxb33cwazlx72pygcbcc76bbgbhdil6q9bhqbzbjxj001zk0w";
 #     }) {
 #       system = "x86_64-linux";
 #       config.allowUnfree = true;
@@ -163,7 +163,7 @@
       nixd
       networkmanagerapplet
       # inputs.nix-software-center.packages.${system}.nix-software-center
-      # inputs.zen-browser.packages."${system}".default
+      # inputs.nixpkgs-unstable.packages."${system}".default
       # nix-autobahn
       # ngrok
       nodePackages_latest.nodejs
@@ -200,6 +200,9 @@
       remmina
       rcm
       rofi
+      cargo
+      rustc
+      rustfmt
       rust-analyzer
       scrcpy
       slurp
@@ -238,13 +241,16 @@
       wineWowPackages.full
       winetricks
       wineWow64Packages.waylandFull
-	  wlrctl
-	  wayvnc
+  	  wlrctl
+  	  wayvnc
       zenity
 
       warp-terminal
 
-      # unstable.deskflow
+      # unstable.niriswitcher
+      # python313Packages.pygobject3
+      # libadwaita
+      # gtk4-layer-shell
 
       (let base = pkgs.appimageTools.defaultFhsEnvArgs; in
         pkgs.buildFHSEnv (base // {

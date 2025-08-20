@@ -7,6 +7,7 @@
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     catppuccin.url = "github:catppuccin/nix";
+    # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # nix-software-center.url = "github:snowfallorg/nix-software-center";
     # zen-browser = {
       # url = "github:0xc000022070/zen-browser-flake";

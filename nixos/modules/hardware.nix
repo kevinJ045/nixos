@@ -11,6 +11,7 @@
       enable = true;
       powerOnBoot = true;
     };
+    enableAllFirmware = true;
   };
 
   security.rtkit.enable = true;

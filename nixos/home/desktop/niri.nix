@@ -44,6 +44,20 @@ input {
         // middle-emulation
     }
 
+    focus-follows-mouse max-scroll-amount="0%"
+}
+
+output "HDMI-A-1" {
+    position x=0 y=0
+}
+
+output "eDP-1" {
+    // off
+    position x=1600 y=0
+}
+
+clipboard {
+    disable-primary
 }
 
 layout {
@@ -85,6 +99,7 @@ spawn-at-startup "nm-applet" "--indicator"
 spawn-at-startup "hyprpaper"
 spawn-at-startup "kdeconnect-indicator"
 spawn-at-startup "hypr-autostart"
+//spawn-at-startup "niriswitcher"
 
 prefer-no-csd
 
@@ -281,7 +296,8 @@ binds {
     Mod+Ctrl+8 { move-column-to-workspace 8; }
     Mod+Ctrl+9 { move-column-to-workspace 9; }
 
-    Mod+Tab { focus-window-previous; }
+    //Mod+Tab { focus-window-previous; }
+    Mod+Tab repeat=false { spawn "niswiw"; }
 
     Mod+BracketLeft  { consume-or-expel-window-left; }
     Mod+BracketRight { consume-or-expel-window-right; }
