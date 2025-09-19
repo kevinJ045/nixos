@@ -65,7 +65,7 @@ programs.caelestia = {
     services.smartScheme = true;
     services.useFahrenheit = false;
     services.useTwelveHourClock = true;
-    paths.wallpaperDir = "~/Pictures";
+    paths.wallpaperDir = "~/Pictures/bg";
     launcher = {
         actionPrefix = ">";
     };
