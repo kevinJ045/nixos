@@ -73,6 +73,7 @@
         "editor.minimap.enabled" = false;
         "editor.lightbulb.enabled" = false;
         "editor.overviewRulerBorder" = false;
+        "terminal.integrated.showLinkHover" = false;
         "editor.showFoldingControls" = "never";
         "editor.scrollbar.horizontal" = "hidden";
         "editor.scrollbar.vertical" = "hidden";

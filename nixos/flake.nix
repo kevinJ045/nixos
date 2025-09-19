@@ -23,12 +23,16 @@
     
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    caelestia-shell = {
+      url = "github:jutraim/niri-caelestia-shell";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     stylix.url = "github:danth/stylix/release-25.05";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     catppuccin.inputs.nixpkgs.follows = "nixpkgs";
     # nvimdots.url = "github:ayamir/nvimdots";
   };
-  outputs = inputs@{ nixpkgs, nixpkgs-unstable, home-manager, stylix, nixvim, catppuccin, ... }: {
+  outputs = inputs@{ nixpkgs, caelestia-shell, nixpkgs-unstable, home-manager, stylix, nixvim, catppuccin, ... }: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -46,7 +50,7 @@
                 ./home.nix
                 stylix.homeModules.stylix
                 catppuccin.homeModules.catppuccin
-               	# nixvim.homeManagerModules.nixvim
+               	caelestia-shell.homeManagerModules.default
                 # catppuccin.homeManagerModules.catppuccin
                 # nvimdots.homeManagerModules.nvimdots
               ];

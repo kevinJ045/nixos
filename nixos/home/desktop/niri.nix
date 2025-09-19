@@ -3,6 +3,88 @@
 {
 
 
+programs.caelestia = {
+  enable = true;
+  systemd = {
+    enable = true; # if you prefer starting from your compositor
+    target = "graphical-session.target";
+    environment = [];
+  };
+  settings = {
+    bar = {
+        entries = [
+            {
+                "id" = "logo";
+                "enabled" = true;
+            }
+            {
+                "id" = "workspaces";
+                "enabled" = true;
+            }
+            {
+                "id" = "spacer";
+                "enabled" = true;
+            }
+            {
+                "id" = "activeWindow";
+                "enabled" = true;
+            }
+            {
+                "id" = "spacer";
+                "enabled" = true;
+            }
+            {
+                "id" = "tray";
+                "enabled" = true;
+            }
+            {
+                "id" = "clock";
+                "enabled" = true;
+            }
+            {
+                "id" = "statusIcons";
+                "enabled" = true;
+            }
+            {
+                "id" = "power";
+                "enabled" = true;
+            }
+        ];
+        status = {
+          showBattery = true;
+        };
+        workspaces = {
+            activeLabel = "";
+            label = "";
+            occupiedLabel = "";
+            # showWindows = false;
+        };
+    };
+    notifs.enable = true;
+    genera.apps.terminal = ["foot"];
+    services.smartScheme = true;
+    services.useFahrenheit = false;
+    services.useTwelveHourClock = true;
+    paths.wallpaperDir = "~/Pictures";
+    launcher = {
+        actionPrefix = ">";
+    };
+  };
+  cli = {
+    enable = true; # Also add caelestia-cli to path
+    settings = {
+      theme.enableTerm = false;
+      theme.enableQt = false;
+      theme.enableGtk = false;
+      theme.enableHypr = false;
+      theme.enableDiscord = false;
+      theme.enableSpicetify = false;
+      theme.enableFuzzel = false;
+      theme.enableBtop = false;
+    };
+  };
+};
+
 	home.file.".config/niriswitcher/style.css".text = ''
     :root {
       --bg-color: rgb(30, 30, 46);
@@ -153,14 +235,14 @@ environment {
     DISPLAY ":0"
 }
 
-spawn-at-startup "waybar"
+// spawn-at-startup "waybar"
 
 spawn-at-startup "xwayland-satellite"
-spawn-at-startup "swaync"
-spawn-at-startup "~/.config/scripts/lowbattery.sh"
-spawn-at-startup "blueman-applet"
-spawn-at-startup "nm-applet" "--indicator"
-spawn-at-startup "hyprpaper"
+// spawn-at-startup "swaync"
+// spawn-at-startup "~/.config/scripts/lowbattery.sh"
+// spawn-at-startup "blueman-applet"
+// spawn-at-startup "nm-applet" "--indicator"
+// spawn-at-startup "hyprpaper"
 spawn-at-startup "kdeconnect-indicator"
 spawn-at-startup "hypr-autostart"
 spawn-at-startup "niriswitcher"
@@ -231,7 +313,7 @@ window-rule {
 }
 
 layer-rule {
-    match namespace="hyprpaper"
+    match namespace="caelestia"
     place-within-backdrop true
 }
 
@@ -249,7 +331,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     Mod+T hotkey-overlay-title="Open a Terminal: foot" { spawn "foot"; }
-    Mod+A hotkey-overlay-title="Run an Application: wofi" { spawn "wofi"; }
+    Mod+A hotkey-overlay-title="Run an Application: wofi" { spawn "caelestia" "shell" "drawers" "toggle" "launcher"; }
     Mod+D hotkey-overlay-title="Run an Application: wmenu" { spawn "${pkgs.wmenu}/bin/wmenu-run" "-i" "-N" "1e1e2e" "-n" "89b4fa" "-M" "1e1e2e" "-m" "89b4fa" "-S" "89b4fa" "-s" "cdd6f4"; }
     Mod+B hotkey-overlay-title="Open Browser" { spawn "app.zen_browser.zen"; }
     Mod+V { spawn "sh" "/home/makano/.config/scripts/cliphist.sh" "c"; }
