@@ -86,5 +86,6 @@
       autoLogin.enable = true;
       autoLogin.user = "makano";
     };
+    upower.enable = true;
   };
 }

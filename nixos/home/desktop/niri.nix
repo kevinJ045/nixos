@@ -6,7 +6,7 @@
 programs.caelestia = {
   enable = true;
   systemd = {
-    enable = true; # if you prefer starting from your compositor
+    enable = false; # if you prefer starting from your compositor
     target = "graphical-session.target";
     environment = [];
   };
@@ -240,9 +240,12 @@ environment {
 spawn-at-startup "xwayland-satellite"
 // spawn-at-startup "swaync"
 // spawn-at-startup "~/.config/scripts/lowbattery.sh"
-// spawn-at-startup "blueman-applet"
-// spawn-at-startup "nm-applet" "--indicator"
+// spawn-at-startup "blue-applet"
+// spawn-at-startup "applet" "--indicator"
 // spawn-at-startup "hyprpaper"
+spawn-at-startup "caelestia-shell"
+spawn-at-startup "pkill" "blueman-applet"
+spawn-at-startup "pkill" "nm-applet"
 spawn-at-startup "kdeconnect-indicator"
 spawn-at-startup "hypr-autostart"
 spawn-at-startup "niriswitcher"

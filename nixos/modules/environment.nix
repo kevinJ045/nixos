@@ -217,6 +217,8 @@
       telegram-desktop
       turtle
       umu-launcher
+      upower
+      upower-notify
       vlc
       weechat
       wine
