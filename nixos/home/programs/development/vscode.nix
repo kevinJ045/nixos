@@ -46,6 +46,11 @@
           when = "terminalFocus";
         }
         {
+          key = "ctrl+`";
+          command = "workbench.action.focusActiveEditorGroup";
+          when = "terminalFocus";
+        }
+        {
           key = "ctrl+shift+alt+w";
           command = "workbench.action.closeActiveEditor";
           when = "editorFocus";
@@ -68,7 +73,7 @@
         "workbench.iconTheme" = "Catppuccin Mocha";
         # "window.zoomLevel" = 2;
         "workbench.editor.showTabs" = false;
-        "workbench.statusBar.visible" = false;
+        "workbench.statusBar.visible" = true;
         "workbench.activityBar.visible" = false;
         "editor.minimap.enabled" = false;
         "editor.lightbulb.enabled" = false;

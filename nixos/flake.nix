@@ -6,7 +6,7 @@
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
     home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    catppuccin.url = "github:catppuccin/nix";
+    catppuccin.url = "github:catppuccin/nix/release-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # nix-software-center.url = "github:snowfallorg/nix-software-center";
     # zen-browser = {
@@ -32,7 +32,7 @@
     catppuccin.inputs.nixpkgs.follows = "nixpkgs";
     # nvimdots.url = "github:ayamir/nvimdots";
   };
-  outputs = inputs@{ nixpkgs, caelestia-shell, nixpkgs-unstable, home-manager, stylix, nixvim, catppuccin, ... }: {
+  outputs = inputs@{ nixpkgs, caelestia-shell, nixpkgs-unstable, home-manager, nixvim, stylix, catppuccin, ... }: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
