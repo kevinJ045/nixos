@@ -236,7 +236,7 @@ window-rule {
 }
 
 layer-rule {
-    match namespace="caelestia"
+    match namespace="quickshell"
     place-within-backdrop true
 }
 
