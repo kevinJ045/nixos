@@ -23,8 +23,16 @@
     
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    caelestia-shell = {
-      url = "github:jutraim/niri-caelestia-shell";
+    quickshell = {
+      # add ?ref=<tag> to track a tag
+      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+
+      # THIS IS IMPORTANT
+      # Mismatched system dependencies will lead to crashes and other issues.
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    dankMaterialShell = {
+      url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     stylix.url = "github:danth/stylix/release-25.05";
@@ -32,7 +40,7 @@
     catppuccin.inputs.nixpkgs.follows = "nixpkgs";
     # nvimdots.url = "github:ayamir/nvimdots";
   };
-  outputs = inputs@{ nixpkgs, caelestia-shell, nixpkgs-unstable, home-manager, nixvim, stylix, catppuccin, ... }: {
+  outputs = inputs@{ nixpkgs, quickshell, dankMaterialShell, nixpkgs-unstable, home-manager, nixvim, stylix, catppuccin, ... }: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -44,13 +52,14 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit nixvim; };
+            home-manager.extraSpecialArgs = { inherit nixvim; quickshell = quickshell.packages.x86_64-linux.quickshell; };
             home-manager.users.makano = {
               imports = [
                 ./home.nix
+                ./unknown.nix
                 stylix.homeModules.stylix
                 catppuccin.homeModules.catppuccin
-               	caelestia-shell.homeManagerModules.default
+               	dankMaterialShell.homeModules.dankMaterialShell.default
                 # catppuccin.homeManagerModules.catppuccin
                 # nvimdots.homeManagerModules.nvimdots
               ];

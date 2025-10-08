@@ -38,6 +38,7 @@
   programs.sway.enable = true;
   programs.sway.package = pkgs.swayfx;
   # programs.sunshine.enable = true;
+  # programs.quickshell.enable = true;
 
   fonts.fontDir.enable = true;
   fonts.packages = with pkgs; [
@@ -189,6 +190,8 @@
       python312Packages.setuptools
       python312Packages.ds4drv
       pods
+
+      inputs.nixpkgs-unstable.legacyPackages.x86_64-linux.quickshell      
       # gstreamer
       # gst-plugins-base
       # gst-plugins-good
