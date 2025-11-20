@@ -203,10 +203,11 @@
       remmina
       rcm
       rofi
-      cargo
-      rustc
-      rustfmt
-      rust-analyzer
+      # cargo
+      # rustc
+      # rustfmt
+      rustup
+      # rust-analyzer
       scrcpy
       slurp
       smartmontools
