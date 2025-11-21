@@ -150,6 +150,7 @@
       lutris
       # lunarvim
       lxappearance
+      lapce
       mate.caja-with-extensions
       mate.caja-extensions
       micro
