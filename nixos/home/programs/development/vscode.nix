@@ -1,6 +1,9 @@
 { config, pkgs, lib, ... }:
 
 {
+  programs.lapce = {
+    enable = true;
+  };
   programs.vscode = {
     enable = true;
     # profiles.default = {
