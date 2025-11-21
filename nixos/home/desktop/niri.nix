@@ -6,68 +6,68 @@
 programs.dankMaterialShell.enable = true;
 
 
-	home.file.".config/niriswitcher/style.css".text = ''
-    :root {
-      --bg-color: rgb(30, 30, 46);
-      --label-color: rgb(205, 214, 244);
-      --alternate-label-color: rgb(168, 173, 200);
-      --dim-label-color: rgb(88, 91, 112);
-      --border-color: rgba(17, 17, 27, 0.95);
-      --highlight-color: rgba(203, 166, 247, 0.95);
-      --urgency-color: rgb(243, 139, 168);
-      --indicator-focus-color: rgba(137, 180, 250, 0.95);
-      --indicator-color: rgba(249, 226, 175, 0.95);
-    }
-'';
-	home.file.".config/niriswitcher/config.toml".text = ''
-separate_workspaces = false
-current_output_only = false
-double_click_to_hide = false
-center_on_focus = false
-log_level = "WARN"
+# 	home.file.".config/niriswitcher/style.css".text = ''
+#     :root {
+#       --bg-color: rgb(30, 30, 46);
+#       --label-color: rgb(205, 214, 244);
+#       --alternate-label-color: rgb(168, 173, 200);
+#       --dim-label-color: rgb(88, 91, 112);
+#       --border-color: rgba(17, 17, 27, 0.95);
+#       --highlight-color: rgba(203, 166, 247, 0.95);
+#       --urgency-color: rgb(243, 139, 168);
+#       --indicator-focus-color: rgba(137, 180, 250, 0.95);
+#       --indicator-color: rgba(249, 226, 175, 0.95);
+#     }
+# '';
+# 	home.file.".config/niriswitcher/config.toml".text = ''
+# separate_workspaces = false
+# current_output_only = false
+# double_click_to_hide = false
+# center_on_focus = false
+# log_level = "WARN"
 
-[appearance]
-icon_size = 128
-max_width = 800
-min_width = 600
-workspace_format = "{output}-{idx}" # {output}, {idx}, {name}
+# [appearance]
+# icon_size = 128
+# max_width = 800
+# min_width = 600
+# workspace_format = "{output}-{idx}" # {output}, {idx}, {name}
 
-[workspace]
-mru_sort_in_workspace = false
-mru_sort_across_workspace = true
+# [workspace]
+# mru_sort_in_workspace = false
+# mru_sort_across_workspace = true
 
-[appearance.animation.reveal]
-hide_duration = 200
-show_duration = 200
-easing = "ease-out-cubic"
+# [appearance.animation.reveal]
+# hide_duration = 200
+# show_duration = 200
+# easing = "ease-out-cubic"
 
-[appearance.animation.resize]
-duration = 200
-easing = "ease-in-out-cubic"
+# [appearance.animation.resize]
+# duration = 200
+# easing = "ease-in-out-cubic"
 
-[appearance.animation.workspace]
-duration = 200
-transition = "slide"
+# [appearance.animation.workspace]
+# duration = 200
+# transition = "slide"
 
-[appearance.animation.switch]
-duration = 200
-easing = "ease-out-cubic"
+# [appearance.animation.switch]
+# duration = 200
+# easing = "ease-out-cubic"
 
-[keys]
-modifier = "Super"
+# [keys]
+# modifier = "Super"
 
-[keys.switch]
-next = "Tab"
-prev = "Shift+Tab"
+# [keys.switch]
+# next = "Tab"
+# prev = "Shift+Tab"
 
-[keys.window]
-close = "q"
-abort = "Escape"
+# [keys.window]
+# close = "q"
+# abort = "Escape"
 
-[keys.workspace]
-next = "grave"
-prev = "Shift+asciitilde"    
-'';
+# [keys.workspace]
+# next = "grave"
+# prev = "Shift+asciitilde"    
+# '';
 
 	home.file.".config/niri/config.kdl".text = ''
 
@@ -168,7 +168,7 @@ spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
 spawn-at-startup "dms" "run"
 spawn-at-startup "kdeconnect-indicator"
 spawn-at-startup "hypr-autostart"
-spawn-at-startup "niriswitcher"
+//spawn-at-startup "niriswitcher"
 
 prefer-no-csd
 

@@ -4,6 +4,44 @@
   # programs.lapce = {
   #   enable = true;
   # };
+  # programs.zed-editor = {
+    # enable = true;
+    # mutableUserSettings = true;
+    # mutableUserKeymaps = true;
+
+    # userSettings = {
+    #   ui_font_size = 13;
+    #   buffer_font_size = 13;
+
+    #   theme = {
+    #     mode = "system";
+    #     light = "One Light";
+    #     dark = "Catppuccin Mocha";
+    #   };
+
+    #   buffer_font_family = "Fira Code";
+    # };
+
+    # userKeymaps = [
+    #   {
+    #     context = "Editor";
+    #     bindings = {
+    #       ctrl-d = "editor::DuplicateLineDown";
+    #       ctrl-shift-d = [
+    #         "editor::SelectNext"
+    #         { replace_newest = false; }
+    #       ];
+    #       "ctrl-`" = "workspace::ActivatePaneRight";
+    #     };
+    #   }
+    #   {
+    #     context = "Terminal";
+    #     bindings = {
+    #       "ctrl-`" = "workspace::ActivatePaneLeft";
+    #     };
+    #   }
+    # ];
+  # };
   programs.vscode = {
     enable = true;
     # profiles.default = {

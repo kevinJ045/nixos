@@ -123,8 +123,8 @@
       gparted
       grim
       glib
-      gpu-screen-recorder-gtk
-      grimblast
+      # gpu-screen-recorder-gtk
+      # grimblast
       gvfs
       gnome.gvfs
       htop
@@ -134,14 +134,14 @@
       jq
       killall
       krita
-      kando
+      # kando
       kdePackages.kdenlive
       kdePackages.kdeconnect-kde
       kdePackages.qt6ct
       libsForQt5.qt5ct
       librewolf
       # kooha
-      hyprpaper
+      # hyprpaper
       libnotify
       linuxHeaders
       lm_sensors
@@ -150,9 +150,8 @@
       lutris
       # lunarvim
       lxappearance
-      lapce
-      mate.caja-with-extensions
-      mate.caja-extensions
+      # mate.caja-with-extensions
+      # mate.caja-extensions
       micro
       mission-center
       musikcube
@@ -203,7 +202,7 @@
       ryubing
       remmina
       rcm
-      rofi
+      # rofi
       # cargo
       # rustc
       # rustfmt
@@ -212,11 +211,11 @@
       scrcpy
       slurp
       smartmontools
-      swappy
-      swww
+      # swappy
+      # swww
       sushi
       socat
-      stretchly
+      # stretchly
       # swaynotificationcenter
       # sunshine
       telegram-desktop
@@ -225,7 +224,7 @@
       upower
       upower-notify
       vlc
-      weechat
+      # weechat
       wine
       wine64
       wl-clipboard
@@ -235,6 +234,7 @@
       xdg-desktop-portal-gnome
       xdg-user-dirs
       xdg-utils
+      zed-editor
       zsh-autosuggestions
       zsh-completions
       zsh-powerlevel10k
@@ -244,17 +244,18 @@
       zip
       unzip
       usbutils
-      lan-mouse
+      # lan-mouse
       wineWowPackages.full
       winetricks
       wineWow64Packages.waylandFull
   	  wlrctl
   	  wayvnc
+  	  waypipe
       zenity
 
       warp-terminal
 
-      inputs.nixpkgs-unstable.legacyPackages.x86_64-linux.niriswitcher 
+      # inputs.nixpkgs-unstable.legacyPackages.x86_64-linux.niriswitcher 
       # python313Packages.pygobject3
       # libadwaita
       # gtk4-layer-shell
