@@ -2,9 +2,9 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     catppuccin.url = "github:catppuccin/nix/release-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -19,28 +19,28 @@
     nixvim = {
       # url = "github:nix-community/nixvim";
       # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
-      url = "github:nix-community/nixvim/nixos-25.05";
+      url = "github:nix-community/nixvim/nixos-25.11";
     
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    quickshell = {
+    # quickshell = {
       # add ?ref=<tag> to track a tag
-      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+      # url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
 
       # THIS IS IMPORTANT
       # Mismatched system dependencies will lead to crashes and other issues.
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+      # inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # };
     dankMaterialShell = {
       url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    stylix.url = "github:danth/stylix/release-25.05";
-    stylix.inputs.nixpkgs.follows = "nixpkgs";
-    catppuccin.inputs.nixpkgs.follows = "nixpkgs";
+    stylix.url = "github:danth/stylix/release-25.11";
+    # stylix.inputs.nixpkgs.follows = "nixpkgs";
+    # catppuccin.inputs.nixpkgs.follows = "nixpkgs";
     # nvimdots.url = "github:ayamir/nvimdots";
   };
-  outputs = inputs@{ nixpkgs, quickshell, dankMaterialShell, nixpkgs-unstable, home-manager, nixvim, stylix, catppuccin, ... }: {
+  outputs = inputs@{ nixpkgs, dankMaterialShell, nixpkgs-unstable, home-manager, nixvim, stylix, catppuccin, ... }: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -52,7 +52,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit nixvim; quickshell = quickshell.packages.x86_64-linux.quickshell; };
+            home-manager.extraSpecialArgs = { inherit nixvim; };
             home-manager.users.makano = {
               imports = [
                 ./home.nix

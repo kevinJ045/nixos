@@ -178,7 +178,7 @@
       pciutils
       pulseaudio
       playerctl
-      protonvpn-cli
+      # protonvpn-cli
       protonvpn-gui
       ppsspp
       python3
@@ -190,8 +190,8 @@
       python312Packages.setuptools
       python312Packages.ds4drv
       pods
-
-      inputs.nixpkgs-unstable.legacyPackages.x86_64-linux.quickshell      
+      quickshell
+      # inputs.nixpkgs-unstable.legacyPackages.x86_64-linux.quickshell      
       # gstreamer
       # gst-plugins-base
       # gst-plugins-good
