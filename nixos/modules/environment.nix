@@ -82,16 +82,16 @@
     systemPackages = with pkgs; [
       nushell
       stdenv
-      amberol
+      # amberol
       alacritty
       android-tools
-      android-studio
+      # android-studio
       appimage-run
       blueman
       blender
       # nanovdb
-      baobab
-      bottles
+      # baobab
+      # bottles
       bun
       brightnessctl
       chromium
@@ -106,14 +106,14 @@
       # droidmote
       dmenu
       dxvk
-      errands
+      # errands
       firefox
       flutter
       file-roller
-      folio
+      # folio
       freetype
       fragments
-      fractal
+      # fractal
       fd
       gcc-unwrapped
       gimp
@@ -135,11 +135,11 @@
       killall
       krita
       # kando
-      kdePackages.kdenlive
+      # kdePackages.kdenlive
       kdePackages.kdeconnect-kde
       kdePackages.qt6ct
       libsForQt5.qt5ct
-      librewolf
+      librewolf-bin
       # kooha
       # hyprpaper
       libnotify
@@ -147,7 +147,7 @@
       lm_sensors
       # logseq
       lshw
-      lutris
+      # lutris
       # lunarvim
       lxappearance
       # mate.caja-with-extensions
@@ -180,7 +180,7 @@
       playerctl
       # protonvpn-cli
       protonvpn-gui
-      ppsspp
+      # ppsspp
       python3
       python312Packages.pip
       python312Packages.inquirerpy
@@ -199,8 +199,8 @@
       # gst-libav
       # pipewire
       ranger
-      ryubing
-      remmina
+      # ryubing
+      # remmina
       rcm
       # rofi
       # cargo
@@ -213,13 +213,13 @@
       smartmontools
       # swappy
       # swww
-      sushi
+      # sushi
       socat
       # stretchly
       # swaynotificationcenter
       # sunshine
       telegram-desktop
-      turtle
+      # turtle
       umu-launcher
       upower
       upower-notify

@@ -4,7 +4,7 @@
   imports = [
     ./git.nix
     ./neovim.nix
-    ./vscode.nix
+    # ./vscode.nix
     ./gh.nix
   ];
 }

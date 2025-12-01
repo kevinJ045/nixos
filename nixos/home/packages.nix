@@ -88,9 +88,9 @@ main
       | awk -F'|' '{gsub(/^[ \t]+|[ \t]+$/, "", $1); print $1}' \
       | xargs -r -I {} niri msg action focus-window --id {}
     '')
-    (writeShellScriptBin "codew" ''
-      ${vscode}/bin/code --ozone-platform-hint=auto $*
-    '')
+    # (writeShellScriptBin "codew" ''
+    #   ${vscode}/bin/code --ozone-platform-hint=auto $*
+    # '')
     (writeShellScriptBin "almighty-push" ''
       ${git}/bin/git add .
       ${git}/bin/git commit -m "$2"
