@@ -23,9 +23,9 @@
   programs.steam = {
   	enable = true;
   	extraCompatPackages = [ pkgs.proton-ge-bin ];
-    extest = {
-    	enable = true;
-    };
+    # extest = {
+    # 	enable = true;
+    # };
     gamescopeSession = {
     	enable = true;
 		  args = [ "--expose-wayland" "-e" ];
@@ -33,7 +33,10 @@
   };
 
   programs.chromium.enable = true;
-  programs.niri.enable = true;
+  programs.niri = {
+    enable = true;
+  };
+  # programs.extest.excludePackages = [ pkgs.steam ];
   # programs.swayfx.enable = true;
   programs.sway.enable = true;
   programs.sway.package = pkgs.swayfx;
@@ -251,6 +254,8 @@
   	  wlrctl
   	  wayvnc
   	  waypipe
+  	  vscode
+  	  vivaldi
       zenity
 
       warp-terminal
