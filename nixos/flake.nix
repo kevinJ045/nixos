@@ -32,7 +32,7 @@
       # inputs.nixpkgs.follows = "nixpkgs-unstable";
     # };
     dankMaterialShell = {
-      url = "github:AvengeMedia/DankMaterialShell";
+      url = "github:AvengeMedia/DankMaterialShell/stable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix.url = "github:danth/stylix/release-25.11";

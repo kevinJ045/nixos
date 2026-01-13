@@ -142,7 +142,7 @@
       kdePackages.kdeconnect-kde
       kdePackages.qt6ct
       libsForQt5.qt5ct
-      librewolf-bin
+      # librewolf-bin
       # kooha
       # hyprpaper
       libnotify

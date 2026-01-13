@@ -97,6 +97,7 @@ in
   catppuccin.flavor = "mocha";
   catppuccin.swaync.enable = true;
   catppuccin.nvim.enable = true;
+  catppuccin.ghostty.enable = true;
 
   stylix = {
     enable = true;
